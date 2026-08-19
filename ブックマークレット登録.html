@@ -263,6 +263,9 @@ footer{margin-top:34px; color:var(--text-faint); font-size:.8rem; text-align:cen
   var btn  = document.getElementById('copyBtn');
   var msg  = document.getElementById('msg');
   var CODE = pre.textContent;
+  var LABEL_DEFAULT = '📋  コードをコピー';
+  var LABEL_OK = '✔︎  コピーしました';
+  btn.textContent = LABEL_DEFAULT;
   btn.hidden = false;
 
   /* ---------- タブ ---------- */
@@ -299,12 +302,12 @@ footer{margin-top:34px; color:var(--text-faint); font-size:.8rem; text-align:cen
   function flash(text, ok){
     msg.style.color = ok ? 'var(--ok)' : 'var(--danger)';
     msg.textContent = text;
-    if (ok) { btn.classList.add('done'); btn.innerHTML = '\\u2714\\uFE0E\\u00A0 \\u30b3\\u30d4\\u30fc\\u3057\\u307e\\u3057\\u305f'; }
+    if (ok) { btn.classList.add('done'); btn.textContent = LABEL_OK; }
     setTimeout(function(){
       if (msg.textContent === text) {
         msg.textContent = '';
         btn.classList.remove('done');
-        btn.innerHTML = '\\uD83D\\uDCCB\\u00A0 \\u30b3\\u30fc\\u30c9\\u3092\\u30b3\\u30d4\\u30fc';
+        btn.textContent = LABEL_DEFAULT;
       }
     }, 4000);
   }

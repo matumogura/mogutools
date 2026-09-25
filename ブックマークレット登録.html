@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>差分一括登録ブックマークレット — 登録ページ</title>
+<meta name="description" content="ココフォリアにアップロードした画像を、ファイル名をそのまま差分名にして駒へ一括登録するブックマークレットです。Chrome拡張は不要で、PC・iPad・スマホのどれでも使えます。">
+<meta property="og:title" content="差分一括登録ブックマークレット">
+<meta property="og:description" content="ココフォリアの駒に、アップロード済み画像を一括で差分登録します。Chrome拡張不要・PC / iPad / スマホ対応。">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%235a53c9'/%3E%3Ctext x='32' y='47' font-size='42' text-anchor='middle' fill='%23fff' font-family='sans-serif'%3E差%3C/text%3E%3C/svg%3E">
+<style>
+:root{
+  --bg-0:#f6f5f2; --glass:#ffffff; --glass-strong:#faf9f7;
+  --stroke:#e8e4dd; --stroke-bright:#d8d2c8;
+  --text:#2f2b26; --text-dim:#6b655c; --text-faint:#9b948a;
+  --accent:#5a53c9; --accent-strong:#3f38a8; --accent-soft:#ece9fb;
+  --gold:#b08733; --ok:#2f8f6b; --danger:#c0463b;
+  --shadow:0 1px 2px rgba(30,25,20,.05), 0 6px 24px rgba(30,25,20,.06);
+  --radius:14px; --radius-s:10px;
+  --mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg-0); color:var(--text);
+  font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",YuGothic,Meiryo,system-ui,sans-serif;
+  line-height:1.75; -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:820px; margin:0 auto; padding:36px 20px 80px}
+header{margin-bottom:22px}
+h1{font-size:1.55rem; margin:0 0 6px; letter-spacing:.02em}
+h1 .thin{color:var(--accent); font-weight:700}
+.lede{color:var(--text-dim); margin:0; font-size:.95rem}
+.card{
+  background:var(--glass); border:1px solid var(--stroke); border-radius:var(--radius);
+  box-shadow:var(--shadow); padding:22px 24px; margin:18px 0;
+}
+.card h2{font-size:1.05rem; margin:0 0 14px; display:flex; align-items:center; gap:9px}
+.num{
+  display:inline-grid; place-items:center; width:24px; height:24px; flex:0 0 24px;
+  border-radius:50%; background:var(--accent); color:#fff; font-size:.8rem; font-weight:700;
+}
+.step{font-weight:700; font-size:.95rem; margin:20px 0 8px; color:var(--accent-strong)}
+.step:first-child{margin-top:0}
+/* --- タブ --- */
+.tabs{display:flex; gap:8px; margin:0 0 18px; flex-wrap:wrap}
+.tab{
+  flex:1 1 auto; min-width:120px;
+  padding:10px 14px; border-radius:999px; border:1px solid var(--stroke);
+  background:var(--glass-strong); color:var(--text-dim); cursor:pointer;
+  font-size:.9rem; font-family:inherit; text-align:center;
+}
+.tab[aria-selected="true"]{
+  background:var(--accent); border-color:var(--accent); color:#fff; font-weight:700;
+  box-shadow:0 3px 10px rgba(90,83,201,.24);
+}
+.panel > h3{
+  font-size:.95rem; margin:0 0 14px; padding-bottom:6px;
+  border-bottom:1px solid var(--stroke); color:var(--text-dim);
+}
+/* JSが有効なときだけタブUIになる。無効なら3つとも表示される。 */
+.js .panel > h3{display:none}
+.js .panel[hidden]{display:none}
+[hidden]{display:none !important}
+/* --- ドラッグ用ボタン --- */
+.dropzone{
+  border:2px dashed var(--accent); border-radius:var(--radius);
+  background:var(--accent-soft); padding:26px 20px; text-align:center;
+}
+a.bm{
+  display:inline-block; padding:16px 40px; border-radius:var(--radius-s);
+  background:var(--accent); color:#fff !important; text-decoration:none;
+  font-weight:700; font-size:1.12rem; letter-spacing:.03em;
+  box-shadow:0 4px 14px rgba(90,83,201,.32);
+  cursor:grab; -webkit-user-select:none; user-select:none;
+}
+a.bm:active{cursor:grabbing}
+a.bm:hover{background:var(--accent-strong)}
+.dropzone .arrow{font-size:1.5rem; color:var(--accent); display:block; margin-bottom:8px}
+.dropzone .cap{margin:14px 0 0; color:var(--accent-strong); font-size:.95rem; font-weight:700}
+.dropzone .sub{margin:4px 0 0; color:var(--text-dim); font-size:.85rem; font-weight:400}
+/* --- コード --- */
+#codeSection{margin:6px 0 0}
+button.copy{
+  display:block; width:100%; padding:16px 12px; font-size:1.05rem;
+  border-radius:var(--radius-s); border:1px solid var(--accent);
+  background:var(--accent); color:#fff; font-weight:700; cursor:pointer;
+  font-family:inherit; box-shadow:0 4px 14px rgba(90,83,201,.28);
+}
+button.copy:hover{background:var(--accent-strong)}
+button.copy.done{background:var(--ok); border-color:var(--ok)}
+p.msg{margin:8px 0 0; text-align:center; min-height:1.2em; font-size:.88rem; font-weight:700}
+.taphint{
+  font-size:.83rem; color:var(--text-dim);
+  background:var(--glass-strong); border:1px solid var(--stroke); border-radius:var(--radius-s);
+  padding:9px 12px; margin:12px 0 8px;
+}
+pre.code{
+  -webkit-user-select:all; user-select:all;
+  margin:0; max-height:170px; overflow:auto;
+  font-family:var(--mono); font-size:.7rem; line-height:1.55;
+  color:var(--text-dim); background:var(--glass-strong);
+  border:2px solid var(--accent); border-radius:var(--radius-s);
+  padding:12px; white-space:pre-wrap; word-break:break-all;
+  -webkit-overflow-scrolling:touch;
+}
+details{margin-top:16px; border:1px solid var(--stroke); border-radius:var(--radius-s); background:var(--glass-strong)}
+summary{padding:10px 14px; cursor:pointer; font-size:.9rem; font-weight:700; color:var(--text-dim)}
+details > div{padding:0 14px 14px}
+/* --- 補足 --- */
+.note{
+  border-left:3px solid var(--gold); background:#fdfaf3;
+  padding:11px 15px; border-radius:0 var(--radius-s) var(--radius-s) 0;
+  font-size:.88rem; color:var(--text-dim); margin:14px 0 0;
+}
+.note.warn{border-left-color:var(--danger); background:#fdf5f4}
+ol,ul{margin:0; padding-left:1.35em}
+ol li,ul li{margin:.4em 0}
+table{width:100%; border-collapse:collapse; font-size:.89rem; margin-top:6px}
+th,td{border:1px solid var(--stroke); padding:9px 12px; text-align:left; vertical-align:top}
+th{background:var(--glass-strong); font-weight:700; color:var(--text-dim); white-space:nowrap}
+kbd{
+  font-family:var(--mono); font-size:.82em; background:var(--glass-strong);
+  border:1px solid var(--stroke-bright); border-bottom-width:2px;
+  border-radius:5px; padding:1px 6px;
+}
+code{font-family:var(--mono); font-size:.87em; background:var(--accent-soft); color:var(--accent-strong); padding:1px 5px; border-radius:4px; word-break:break-all}
+footer{margin-top:34px; color:var(--text-faint); font-size:.8rem; text-align:center}
+@media (max-width:560px){
+  .wrap{padding:22px 13px 60px}
+  .card{padding:18px 15px}
+  a.bm{width:100%; padding:16px 10px}
+  .tab{min-width:0; flex:1 1 30%; padding:10px 6px; font-size:.82rem}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>差分一括登録<span class="thin">ブックマークレット</span></h1>
+  <p class="lede">ココフォリアにアップロードした画像を、ファイル名をそのまま差分名にして駒へ一括登録します。Chrome拡張は不要で、PC・iPad・スマホのどれでも使えます。</p>
+</header>
+
+<div class="card">
+  <h2><span class="num">1</span>ブックマークに登録する</h2>
+
+  <div class="tabs" role="tablist" id="tabs" hidden>
+    <button class="tab" role="tab" type="button" data-p="pc"  aria-selected="true">PC</button>
+    <button class="tab" role="tab" type="button" data-p="ios" aria-selected="false">iPad / iPhone</button>
+    <button class="tab" role="tab" type="button" data-p="and" aria-selected="false">Android</button>
+  </div>
+
+  <!-- ===== PC ===== -->
+  <div class="panel" id="p-pc">
+    <h3>PC（Chrome / Edge / Firefox）</h3>
+    <div class="dropzone">
+      <span class="arrow">&#8679;</span>
+      <a class="bm" id="bm" href="javascript:!function(){&#x27;use strict&#x27;;var e=&#x27;sabun-bulk-panel&#x27;,t=document.getElementById(e);if(t)t.remove();else if(/ccfolia\.com/.test(location.host)){var n=function(){try{var e=document.getElementById(&#x27;root&#x27;);if(!e)return null;var t=Object.keys(e).find(function(e){return 0===e.indexOf(&#x27;__reactContainer$&#x27;)});if(!t)return null;for(var n=new Set,r=[e[t]],a=0;r.length&amp;&amp;a&lt;5e4;){var i=r.pop();if(i&amp;&amp;!n.has(i)){n.add(i),a++;try{var o=i.memoizedProps&amp;&amp;i.memoizedProps.value;if(o&amp;&amp;o.store&amp;&amp;&#x27;function&#x27;==typeof o.store.getState)return o.store;if(o&amp;&amp;&#x27;function&#x27;==typeof o.getState&amp;&amp;&#x27;function&#x27;==typeof o.dispatch)return o}catch(e){}i.child&amp;&amp;r.push(i.child),i.sibling&amp;&amp;r.push(i.sibling)}}}catch(e){}return null}();if(n){var r=R(&#x27;deleteRoomCharacter&#x27;,function(e){return&#x27;function&#x27;==typeof e.updateRoomCharacter}),a=R(&#x27;appStateMutate&#x27;,function(e){return&#x27;function&#x27;==typeof e.appStateMutate}),i=R(&#x27;subscribeUserFiles&#x27;,function(e){return&#x27;function&#x27;==typeof e.subscribeUserFiles});if(r){var o=n.getState(),l=o.app&amp;&amp;o.app.state&amp;&amp;o.app.state.roomId||null,d=[];try{var p=o.entities.roomCharacters;d=p.ids.map(function(e){return p.entities[e]}).filter(Boolean)}catch(e){}var c=document.createElement(&#x27;div&#x27;);c.id=e,c.setAttribute(&#x27;style&#x27;,&#x27;position:fixed;inset:auto 12px 12px 12px;max-width:520px;margin:0 auto;z-index:2147483647;background:#fff;color:#2f2b26;border:1px solid #5a53c9;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.28);font:14px/1.6 -apple-system,BlinkMacSystemFont,&quot;Hiragino Sans&quot;,sans-serif;max-height:82vh;display:flex;flex-direction:column;overflow:hidden&#x27;),c.innerHTML=&#x27;&lt;div style=&quot;display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid #e8e4dd;background:#ece9fb&quot;&gt;&lt;b style=&quot;font-size:13px;color:#3f38a8&quot;&gt;差分を一括登録&lt;/b&gt;&lt;span style=&quot;flex:1&quot;&gt;&lt;/span&gt;&lt;button data-x style=&quot;border:1px solid #e8e4dd;background:#fff;border-radius:8px;padding:4px 10px&quot;&gt;閉じる&lt;/button&gt;&lt;/div&gt;&lt;div data-body style=&quot;padding:12px;overflow:auto&quot;&gt;&lt;/div&gt;&#x27;,document.body.appendChild(c);var s=c.querySelector(&#x27;[data-body]&#x27;);c.querySelector(&#x27;[data-x]&#x27;).onclick=function(){c.remove()};var u=&#x27;display:block;font-size:11px;font-weight:700;color:#6b655c;margin:10px 0 3px&#x27;,f=&#x27;width:100%;padding:8px;border:1px solid #e8e4dd;border-radius:8px;font-size:14px;background:#fff;color:#2f2b26&#x27;;s.appendChild(O(&#x27;div&#x27;,&#x27;font-size:12px;color:#6b655c&#x27;,&#x27;アップロード済み画像のファイル名がそのまま差分名になります。先にZIP内のPNGをルームにアップロードしてください。&#x27;));var h=null,v=O(&#x27;div&#x27;,&#x27;margin:4px 0 2px;padding:8px 10px;border:1px dashed #d8d2c8;border-radius:9px;background:#faf9f7&#x27;);v.appendChild(O(&#x27;div&#x27;,&#x27;font-size:12px;color:#6b655c;margin-bottom:6px&#x27;,&#x27;ZIPの manifest.json を読み込むと、差分名・並び順・立ち絵をそのまま復元します（任意）&#x27;));var b=O(&#x27;input&#x27;);b.type=&#x27;file&#x27;,b.accept=&#x27;.json,application/json&#x27;,b.setAttribute(&#x27;style&#x27;,&#x27;font-size:12px;width:100%&#x27;),v.appendChild(b);var x=O(&#x27;div&#x27;,&#x27;font-size:11px;color:#6b655c;margin-top:6px&#x27;);v.appendChild(x),s.appendChild(v),b.onchange=function(){var e=b.files&amp;&amp;b.files[0];if(e){var t=new FileReader;t.onload=function(){try{var e=JSON.parse(String(t.result));if(!e||!Array.isArray(e.faces))throw new Error(&#x27;faces がありません&#x27;);h=e,v.style.borderStyle=&#x27;solid&#x27;,v.style.borderColor=&#x27;#2f8f6b&#x27;,e.character&amp;&amp;e.character.name&amp;&amp;!C.value&amp;&amp;(C.value=e.character.name),q()}catch(e){h=null,x.style.color=&#x27;#c0463b&#x27;,x.textContent=&#x27;読み込めませんでした: &#x27;+e.message}},t.readAsText(e)}},s.appendChild(O(&#x27;label&#x27;,u,&#x27;登録先の駒&#x27;));var m=O(&#x27;select&#x27;,f),g=O(&#x27;option&#x27;,null,&#x27;＋ 新しい駒を作る&#x27;);g.value=&#x27;__new__&#x27;,m.appendChild(g),d.forEach(function(e){var t=O(&#x27;option&#x27;,null,(e.name||&#x27;(無名)&#x27;)+&#x27;（差分&#x27;+(e.faces&amp;&amp;e.faces.length||0)+&#x27;）&#x27;);t.value=e._id,m.appendChild(t)}),s.appendChild(m);var y=O(&#x27;div&#x27;);y.appendChild(O(&#x27;label&#x27;,u,&#x27;新しい駒の名前&#x27;));var C=O(&#x27;input&#x27;,f);C.placeholder=&#x27;キャラクター名&#x27;,y.appendChild(C),s.appendChild(y),m.onchange=function(){y.style.display=&#x27;__new__&#x27;===m.value?&#x27;&#x27;:&#x27;none&#x27;,q()},s.appendChild(O(&#x27;label&#x27;,u,&#x27;ファイル名の絞り込み（先頭一致）&#x27;));var w=O(&#x27;input&#x27;,f);w.value=&#x27;@&#x27;,w.placeholder=&#x27;例: @  （空欄ならすべて）&#x27;,s.appendChild(w),s.appendChild(O(&#x27;label&#x27;,u,&#x27;並び順&#x27;));var k=O(&#x27;select&#x27;,f);[&#x27;ファイル名順&#x27;,&#x27;アップロードが新しい順&#x27;,&#x27;アップロードが古い順&#x27;].forEach(function(e,t){var n=O(&#x27;option&#x27;,null,e);n.value=String(t),k.appendChild(n)}),s.appendChild(k);var S=O(&#x27;div&#x27;,&#x27;margin-top:10px;font-size:13px&#x27;);S.innerHTML=&#x27;&lt;label style=&quot;margin-right:14px&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;sbmode&quot; value=&quot;replace&quot; checked&gt; 置き換え&lt;/label&gt;&lt;label&gt;&lt;input type=&quot;radio&quot; name=&quot;sbmode&quot; value=&quot;append&quot;&gt; 末尾に追加&lt;/label&gt;&#x27;,s.appendChild(S);var z=O(&#x27;label&#x27;,&#x27;display:block;margin-top:8px;font-size:13px&#x27;);z.innerHTML=&#x27;&lt;input type=&quot;checkbox&quot; checked&gt; 立ち絵（駒のアイコン）も設定する&#x27;,s.appendChild(z);var _=O(&#x27;div&#x27;,&#x27;margin-top:10px;font-size:12px;color:#6b655c&#x27;,&#x27;画像一覧を読み込んでいます…&#x27;);s.appendChild(_);var I=O(&#x27;div&#x27;,&#x27;display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;max-height:34vh;overflow:auto&#x27;);s.appendChild(I);var A=O(&#x27;div&#x27;,&#x27;display:none;margin-top:12px;padding:14px 12px;border-radius:10px;text-align:center;font-size:14px;line-height:1.5&#x27;);s.appendChild(A);var E=O(&#x27;button&#x27;,&#x27;width:100%;padding:11px;border:none;border-radius:9px;background:#5a53c9;color:#fff;font-weight:700;font-size:15px;margin-top:12px&#x27;,&#x27;登録する&#x27;);E.disabled=!0,s.appendChild(E);var M=[],U=[];w.oninput=q,k.onchange=q,new Promise(function(e){if(j().length)e(j());else{try{var t=n.getState(),r=t.app&amp;&amp;t.app.user&amp;&amp;t.app.user.uid||null;i&amp;&amp;r&amp;&amp;n.dispatch(i.subscribeUserFiles({uid:r}))}catch(e){}var o=0,l=!1,d=setInterval(function(){if(o+=300,j().length||o&gt;=9e3){if(clearInterval(d),l&amp;&amp;a)try{n.dispatch(a.appStateMutate(function(e){e.openRoomImageSelect=!1}))}catch(e){}e(j())}else if(!l&amp;&amp;o&gt;=2400&amp;&amp;a){l=!0;try{n.dispatch(a.appStateMutate(function(e){e.openRoomImageSelect=!0,e.openRoomImageSelectGroup=&#x27;all&#x27;}))}catch(e){}}},300)}}).then(function(e){(M=e).length?q():_.textContent=&#x27;画像一覧を取得できませんでした。一度ルームの画像アップロード画面を開いてから、もう一度実行してください。&#x27;}),E.onclick=function(){if(U.length){var e=U.map(function(e){return{label:e.label,iconUrl:e.url}}),t=e.length?e[0].iconUrl:&#x27;&#x27;;if(h&amp;&amp;h.portrait){var a=U.filter(function(e){return e.file===h.portrait})[0];a&amp;&amp;(t=a.url)}var i=c.querySelector(&#x27;input[name=sbmode]:checked&#x27;).value,o=z.querySelector(&#x27;input&#x27;).checked;E.disabled=!0,_.textContent=&#x27;登録しています…&#x27;;var l=function(t,n,r){_.textContent=&#x27;&#x27;,A.style.display=&#x27;block&#x27;,t?(A.style.background=&#x27;#e7f5ef&#x27;,A.style.border=&#x27;2px solid #2f8f6b&#x27;,A.style.color=&#x27;#1f6b4f&#x27;,A.innerHTML=&#x27;&lt;div style=&quot;font-size:26px;line-height:1.1;margin-bottom:4px&quot;&gt;✔&lt;/div&gt;&lt;div style=&quot;font-weight:700;font-size:15px&quot;&gt;登録しました&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:13px&quot;&gt;&#x27;+(r?&#x27;「&#x27;+L(r)+&#x27;」に &#x27;:&#x27;&#x27;)+&#x27;差分 &#x27;+e.length+&#x27; 件&lt;/div&gt;&#x27;,E.textContent=&#x27;閉じる&#x27;,E.style.background=&#x27;#2f8f6b&#x27;,E.disabled=!1,E.onclick=function(){c.remove()}):(A.style.background=&#x27;#fdf0ee&#x27;,A.style.border=&#x27;2px solid #c0463b&#x27;,A.style.color=&#x27;#a33529&#x27;,A.innerHTML=&#x27;&lt;div style=&quot;font-weight:700;font-size:15px&quot;&gt;登録できませんでした&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:12px;word-break:break-all&quot;&gt;&#x27;+L(String(n))+&#x27;&lt;/div&gt;&#x27;,E.disabled=!1);try{A.scrollIntoView({block:&#x27;nearest&#x27;})}catch(e){}};try{if(&#x27;__new__&#x27;===m.value){var p=(C.value||&#x27;&#x27;).trim();if(!p){l(!1,&#x27;駒の名前を入力してください&#x27;);try{C.focus()}catch(e){}return}if(&#x27;function&#x27;!=typeof r.addRoomCharacter)return void l(!1,&#x27;駒を作る機能が見つかりません&#x27;);var s=h&amp;&amp;h.character||{};Promise.resolve(n.dispatch(r.addRoomCharacter({name:p,memo:s.memo||&#x27;&#x27;,externalUrl:s.externalUrl||&#x27;&#x27;,iconUrl:o?t:&#x27;&#x27;,faces:e,status:Array.isArray(s.status)?s.status:[],params:Array.isArray(s.params)?s.params:[],commands:s.commands||&#x27;&#x27;,color:s.color||&#x27;#888888&#x27;,secret:!1,invisible:!1,hideStatus:!1,initiative:0,width:s.width||4,height:s.height||4,active:!1,x:0,y:0}))).then(function(){l(!0,null,p)},function(e){l(!1,String(e))})}else{var u=d.filter(function(e){return e._id===m.value})[0],f={faces:&#x27;append&#x27;===i&amp;&amp;u&amp;&amp;u.faces?u.faces.concat(e):e};o&amp;&amp;(f.iconUrl=t),Promise.resolve(n.dispatch(r.updateRoomCharacter(m.value,f))).then(function(){l(!0,null,u&amp;&amp;u.name)},function(e){l(!1,String(e))})}}catch(e){l(!1,String(e))}}}}else alert(&#x27;駒を更新する機能が見つかりませんでした。ココフォリアの更新で仕様が変わった可能性があります。&#x27;)}else alert(&#x27;ココフォリアの内部データが見つかりませんでした。ルームを開いてから、ページを再読み込みして試してください。&#x27;)}else alert(&#x27;ココフォリアのルームを開いた状態で実行してください。&#x27;);function R(e,t){try{var n=(o=window.webpackChunkccfolia)?(window.__sabunWp||o.push([[&#x27;sabun_rt&#x27;],{},function(e){window.__sabunWp=e}]),window.__sabunWp||null):null;if(!n||!n.m)return null;for(var r=Object.keys(n.m),a=0;a&lt;r.length;a++)if(n.m[r[a]].toString().indexOf(e)&gt;=0){var i=n(r[a]);if(i&amp;&amp;t(i))return i}}catch(e){}var o;return null}function j(){var e=n.getState(),t=e.entities&amp;&amp;e.entities.userFiles;return t&amp;&amp;t.ids?t.ids.map(function(e){return t.entities[e]}).filter(Boolean):[]}function P(e){return e&amp;&amp;(e.name||e.filename||e.fileName)||&#x27;&#x27;}function H(e){return e&amp;&amp;(e.url||e.imageUrl||e.thumbUrl)||&#x27;&#x27;}function T(e){var t=e&amp;&amp;e.createdAt;return&#x27;number&#x27;==typeof t?t:t&amp;&amp;&#x27;number&#x27;==typeof t.seconds?1e3*t.seconds:0}function F(e){return String(e).replace(/\.[a-zA-Z0-9]+$/,&#x27;&#x27;)}function L(e){return String(null==e?&#x27;&#x27;:e).replace(/[&amp;&lt;&gt;&quot;]/g,function(e){return{&#x27;&amp;&#x27;:&#x27;&amp;amp;&#x27;,&#x27;&lt;&#x27;:&#x27;&amp;lt;&#x27;,&#x27;&gt;&#x27;:&#x27;&amp;gt;&#x27;,&#x27;&quot;&#x27;:&#x27;&amp;quot;&#x27;}[e]})}function O(e,t,n){var r=document.createElement(e);return t&amp;&amp;r.setAttribute(&#x27;style&#x27;,t),null!=n&amp;&amp;(r.textContent=n),r}function q(){var e=w.value||&#x27;&#x27;,t={},n=M.filter(function(t){if(t.archived)return!1;var n=P(t);return!(!n||!H(t))&amp;&amp;((!e||0===n.indexOf(e))&amp;&amp;(!l||!t.roomId||t.roomId===l))});if(n.sort(function(e,t){var n=k.value;return&#x27;1&#x27;===n?T(t)-T(e):&#x27;2&#x27;===n?T(e)-T(t):P(e).localeCompare(P(t),&#x27;ja&#x27;)}),U=[],h){var r={};n.forEach(function(e){var t=P(e);t&amp;&amp;!r[t]&amp;&amp;(r[t]=e)});var a=[];h.faces.slice().sort(function(e,t){return(e.order||0)-(t.order||0)}).forEach(function(e){var t=r[e.file];t?U.push({label:e.label||F(e.file),url:H(t),file:e.file}):a.push(e.file)}),x.style.color=a.length?&#x27;#b08733&#x27;:&#x27;#2f8f6b&#x27;,x.textContent=&#x27;manifest 適用中: &#x27;+U.length+&#x27;/&#x27;+h.faces.length+&#x27;件&#x27;+(a.length?&#x27;（未アップロード: &#x27;+a.slice(0,3).join(&#x27;, &#x27;)+(a.length&gt;3?&#x27; 他&#x27;+(a.length-3):&#x27;&#x27;)+&#x27;）&#x27;:&#x27;&#x27;)}else n.forEach(function(e){var n=F(P(e));t[n]||(t[n]=1,U.push({label:n,url:H(e),file:P(e)}))});I.innerHTML=&#x27;&#x27;,U.slice(0,60).forEach(function(e){var t=O(&#x27;div&#x27;,&#x27;width:62px;text-align:center;font-size:10px;color:#2f2b26&#x27;),n=O(&#x27;img&#x27;,&#x27;width:56px;height:56px;object-fit:contain;border:1px solid #e8e4dd;border-radius:6px;background:#faf9f7;display:block;margin:0 auto&#x27;);n.src=e.url,n.loading=&#x27;lazy&#x27;,t.appendChild(n),t.appendChild(O(&#x27;div&#x27;,&#x27;overflow:hidden;text-overflow:ellipsis;white-space:nowrap&#x27;,e.label)),I.appendChild(t)}),_.textContent=U.length+&#x27;件の画像が対象です&#x27;+(U.length&gt;60?&#x27;（表示は先頭60件）&#x27;:&#x27;&#x27;),E.disabled=0===U.length}}();">差分一括登録</a>
+      <p class="cap">このボタンをブックマークバーへドラッグ＆ドロップ</p>
+      <p class="sub">これだけで登録完了です</p>
+    </div>
+    <div class="note">ブックマークバーが出ていないときは <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd>（Macは <kbd>&#8984;</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd>）で表示できます。</div>
+    <details>
+      <summary>ドラッグがうまくいかないとき</summary>
+      <div>
+        <ol>
+          <li>下の<strong>「コードをコピー」</strong>を押す</li>
+          <li>ブックマークバーの空いている場所で<strong>右クリック → 「ページを追加」</strong></li>
+          <li><strong>名前</strong>に <code>差分一括登録</code>、<strong>URL</strong> にコピーしたコードを貼り付けて保存</li>
+        </ol>
+        <div class="codeslot"></div>
+      </div>
+    </details>
+  </div>
+
+  <!-- ===== iOS ===== -->
+  <div class="panel" id="p-ios">
+    <h3>iPad / iPhone（Safari）</h3>
+    <p class="step">STEP 1 &nbsp;コードをコピーする</p>
+    <div class="codeslot"></div>
+    <p class="step">STEP 2 &nbsp;ブックマークとして保存する</p>
+    <ol>
+      <li>Safariで適当なページを開き、下部の<strong>共有ボタン（&#8593;）→「ブックマークを追加」</strong></li>
+      <li>開いた画面で<strong>タイトルを <code>差分一括登録</code></strong> にする</li>
+      <li><strong>URL欄の中身をすべて消して</strong>、コピーしたコードを貼り付ける</li>
+      <li><strong>「保存」</strong>をタップ</li>
+    </ol>
+    <div class="note warn">貼り付けたときに<strong>先頭の <code>javascript:</code> が消えてしまうことがあります</strong>。消えていたら手で足してください。ここが一番つまずきやすいポイントです。</div>
+    <p class="step">STEP 3 &nbsp;呼び出しかた</p>
+    <p style="margin:0; font-size:.93rem">ココフォリアのルームを開いた状態で、<strong>アドレスバーに <code>差分一括登録</code> と入力</strong>し、出てきたブックマーク候補をタップします。</p>
+    <div class="note">あとから直したいときは、<strong>ブックマーク一覧（&#128214;）→ 右下の「編集」</strong>から同じ項目を開いて修正できます。</div>
+  </div>
+
+  <!-- ===== Android ===== -->
+  <div class="panel" id="p-and">
+    <h3>Android（Chrome）</h3>
+    <p class="step">STEP 1 &nbsp;コードをコピーする</p>
+    <div class="codeslot"></div>
+    <p class="step">STEP 2 &nbsp;ブックマークとして保存する</p>
+    <ol>
+      <li>適当なページで <strong>&#8942; → &#9734;</strong> を押してブックマークを作る</li>
+      <li>作ったブックマークを<strong>編集</strong>する</li>
+      <li>名前を <code>差分一括登録</code>、URLをコピーしたコードに書き換えて保存</li>
+    </ol>
+    <p class="step">STEP 3 &nbsp;呼び出しかた</p>
+    <p style="margin:0; font-size:.93rem">ココフォリアのルームを開いた状態で、<strong>アドレスバーに <code>差分一括登録</code> と入力</strong>し、出てきた候補をタップします。</p>
+    <div class="note warn">Androidでは<strong>ブックマーク一覧からタップしても動きません</strong>。かならずアドレスバーから名前で呼び出してください。</div>
+  </div>
+
+  <!-- JSが無効なときはここに残る。有効なときは各タブのcodeslotへ移動する。 -->
+  <div id="codeSection">
+    <button class="copy" id="copyBtn" type="button" hidden>&#128203;&nbsp; コードをコピー</button>
+    <p class="msg" id="msg"></p>
+    <p class="taphint">コピーボタンが使えないときは、下の枠を<strong>長押し</strong>して「すべてを選択」→「コピー」（PCは枠をクリックで全選択 → <kbd>Ctrl</kbd>+<kbd>C</kbd>）</p>
+    <pre class="code" id="code">javascript:!function(){'use strict';var e='sabun-bulk-panel',t=document.getElementById(e);if(t)t.remove();else if(/ccfolia\.com/.test(location.host)){var n=function(){try{var e=document.getElementById('root');if(!e)return null;var t=Object.keys(e).find(function(e){return 0===e.indexOf('__reactContainer$')});if(!t)return null;for(var n=new Set,r=[e[t]],a=0;r.length&amp;&amp;a&lt;5e4;){var i=r.pop();if(i&amp;&amp;!n.has(i)){n.add(i),a++;try{var o=i.memoizedProps&amp;&amp;i.memoizedProps.value;if(o&amp;&amp;o.store&amp;&amp;'function'==typeof o.store.getState)return o.store;if(o&amp;&amp;'function'==typeof o.getState&amp;&amp;'function'==typeof o.dispatch)return o}catch(e){}i.child&amp;&amp;r.push(i.child),i.sibling&amp;&amp;r.push(i.sibling)}}}catch(e){}return null}();if(n){var r=R('deleteRoomCharacter',function(e){return'function'==typeof e.updateRoomCharacter}),a=R('appStateMutate',function(e){return'function'==typeof e.appStateMutate}),i=R('subscribeUserFiles',function(e){return'function'==typeof e.subscribeUserFiles});if(r){var o=n.getState(),l=o.app&amp;&amp;o.app.state&amp;&amp;o.app.state.roomId||null,d=[];try{var p=o.entities.roomCharacters;d=p.ids.map(function(e){return p.entities[e]}).filter(Boolean)}catch(e){}var c=document.createElement('div');c.id=e,c.setAttribute('style','position:fixed;inset:auto 12px 12px 12px;max-width:520px;margin:0 auto;z-index:2147483647;background:#fff;color:#2f2b26;border:1px solid #5a53c9;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.28);font:14px/1.6 -apple-system,BlinkMacSystemFont,"Hiragino Sans",sans-serif;max-height:82vh;display:flex;flex-direction:column;overflow:hidden'),c.innerHTML='&lt;div style="display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid #e8e4dd;background:#ece9fb"&gt;&lt;b style="font-size:13px;color:#3f38a8"&gt;差分を一括登録&lt;/b&gt;&lt;span style="flex:1"&gt;&lt;/span&gt;&lt;button data-x style="border:1px solid #e8e4dd;background:#fff;border-radius:8px;padding:4px 10px"&gt;閉じる&lt;/button&gt;&lt;/div&gt;&lt;div data-body style="padding:12px;overflow:auto"&gt;&lt;/div&gt;',document.body.appendChild(c);var s=c.querySelector('[data-body]');c.querySelector('[data-x]').onclick=function(){c.remove()};var u='display:block;font-size:11px;font-weight:700;color:#6b655c;margin:10px 0 3px',f='width:100%;padding:8px;border:1px solid #e8e4dd;border-radius:8px;font-size:14px;background:#fff;color:#2f2b26';s.appendChild(O('div','font-size:12px;color:#6b655c','アップロード済み画像のファイル名がそのまま差分名になります。先にZIP内のPNGをルームにアップロードしてください。'));var h=null,v=O('div','margin:4px 0 2px;padding:8px 10px;border:1px dashed #d8d2c8;border-radius:9px;background:#faf9f7');v.appendChild(O('div','font-size:12px;color:#6b655c;margin-bottom:6px','ZIPの manifest.json を読み込むと、差分名・並び順・立ち絵をそのまま復元します（任意）'));var b=O('input');b.type='file',b.accept='.json,application/json',b.setAttribute('style','font-size:12px;width:100%'),v.appendChild(b);var x=O('div','font-size:11px;color:#6b655c;margin-top:6px');v.appendChild(x),s.appendChild(v),b.onchange=function(){var e=b.files&amp;&amp;b.files[0];if(e){var t=new FileReader;t.onload=function(){try{var e=JSON.parse(String(t.result));if(!e||!Array.isArray(e.faces))throw new Error('faces がありません');h=e,v.style.borderStyle='solid',v.style.borderColor='#2f8f6b',e.character&amp;&amp;e.character.name&amp;&amp;!C.value&amp;&amp;(C.value=e.character.name),q()}catch(e){h=null,x.style.color='#c0463b',x.textContent='読み込めませんでした: '+e.message}},t.readAsText(e)}},s.appendChild(O('label',u,'登録先の駒'));var m=O('select',f),g=O('option',null,'＋ 新しい駒を作る');g.value='__new__',m.appendChild(g),d.forEach(function(e){var t=O('option',null,(e.name||'(無名)')+'（差分'+(e.faces&amp;&amp;e.faces.length||0)+'）');t.value=e._id,m.appendChild(t)}),s.appendChild(m);var y=O('div');y.appendChild(O('label',u,'新しい駒の名前'));var C=O('input',f);C.placeholder='キャラクター名',y.appendChild(C),s.appendChild(y),m.onchange=function(){y.style.display='__new__'===m.value?'':'none',q()},s.appendChild(O('label',u,'ファイル名の絞り込み（先頭一致）'));var w=O('input',f);w.value='@',w.placeholder='例: @  （空欄ならすべて）',s.appendChild(w),s.appendChild(O('label',u,'並び順'));var k=O('select',f);['ファイル名順','アップロードが新しい順','アップロードが古い順'].forEach(function(e,t){var n=O('option',null,e);n.value=String(t),k.appendChild(n)}),s.appendChild(k);var S=O('div','margin-top:10px;font-size:13px');S.innerHTML='&lt;label style="margin-right:14px"&gt;&lt;input type="radio" name="sbmode" value="replace" checked&gt; 置き換え&lt;/label&gt;&lt;label&gt;&lt;input type="radio" name="sbmode" value="append"&gt; 末尾に追加&lt;/label&gt;',s.appendChild(S);var z=O('label','display:block;margin-top:8px;font-size:13px');z.innerHTML='&lt;input type="checkbox" checked&gt; 立ち絵（駒のアイコン）も設定する',s.appendChild(z);var _=O('div','margin-top:10px;font-size:12px;color:#6b655c','画像一覧を読み込んでいます…');s.appendChild(_);var I=O('div','display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;max-height:34vh;overflow:auto');s.appendChild(I);var A=O('div','display:none;margin-top:12px;padding:14px 12px;border-radius:10px;text-align:center;font-size:14px;line-height:1.5');s.appendChild(A);var E=O('button','width:100%;padding:11px;border:none;border-radius:9px;background:#5a53c9;color:#fff;font-weight:700;font-size:15px;margin-top:12px','登録する');E.disabled=!0,s.appendChild(E);var M=[],U=[];w.oninput=q,k.onchange=q,new Promise(function(e){if(j().length)e(j());else{try{var t=n.getState(),r=t.app&amp;&amp;t.app.user&amp;&amp;t.app.user.uid||null;i&amp;&amp;r&amp;&amp;n.dispatch(i.subscribeUserFiles({uid:r}))}catch(e){}var o=0,l=!1,d=setInterval(function(){if(o+=300,j().length||o&gt;=9e3){if(clearInterval(d),l&amp;&amp;a)try{n.dispatch(a.appStateMutate(function(e){e.openRoomImageSelect=!1}))}catch(e){}e(j())}else if(!l&amp;&amp;o&gt;=2400&amp;&amp;a){l=!0;try{n.dispatch(a.appStateMutate(function(e){e.openRoomImageSelect=!0,e.openRoomImageSelectGroup='all'}))}catch(e){}}},300)}}).then(function(e){(M=e).length?q():_.textContent='画像一覧を取得できませんでした。一度ルームの画像アップロード画面を開いてから、もう一度実行してください。'}),E.onclick=function(){if(U.length){var e=U.map(function(e){return{label:e.label,iconUrl:e.url}}),t=e.length?e[0].iconUrl:'';if(h&amp;&amp;h.portrait){var a=U.filter(function(e){return e.file===h.portrait})[0];a&amp;&amp;(t=a.url)}var i=c.querySelector('input[name=sbmode]:checked').value,o=z.querySelector('input').checked;E.disabled=!0,_.textContent='登録しています…';var l=function(t,n,r){_.textContent='',A.style.display='block',t?(A.style.background='#e7f5ef',A.style.border='2px solid #2f8f6b',A.style.color='#1f6b4f',A.innerHTML='&lt;div style="font-size:26px;line-height:1.1;margin-bottom:4px"&gt;✔&lt;/div&gt;&lt;div style="font-weight:700;font-size:15px"&gt;登録しました&lt;/div&gt;&lt;div style="margin-top:4px;font-size:13px"&gt;'+(r?'「'+L(r)+'」に ':'')+'差分 '+e.length+' 件&lt;/div&gt;',E.textContent='閉じる',E.style.background='#2f8f6b',E.disabled=!1,E.onclick=function(){c.remove()}):(A.style.background='#fdf0ee',A.style.border='2px solid #c0463b',A.style.color='#a33529',A.innerHTML='&lt;div style="font-weight:700;font-size:15px"&gt;登録できませんでした&lt;/div&gt;&lt;div style="margin-top:4px;font-size:12px;word-break:break-all"&gt;'+L(String(n))+'&lt;/div&gt;',E.disabled=!1);try{A.scrollIntoView({block:'nearest'})}catch(e){}};try{if('__new__'===m.value){var p=(C.value||'').trim();if(!p){l(!1,'駒の名前を入力してください');try{C.focus()}catch(e){}return}if('function'!=typeof r.addRoomCharacter)return void l(!1,'駒を作る機能が見つかりません');var s=h&amp;&amp;h.character||{};Promise.resolve(n.dispatch(r.addRoomCharacter({name:p,memo:s.memo||'',externalUrl:s.externalUrl||'',iconUrl:o?t:'',faces:e,status:Array.isArray(s.status)?s.status:[],params:Array.isArray(s.params)?s.params:[],commands:s.commands||'',color:s.color||'#888888',secret:!1,invisible:!1,hideStatus:!1,initiative:0,width:s.width||4,height:s.height||4,active:!1,x:0,y:0}))).then(function(){l(!0,null,p)},function(e){l(!1,String(e))})}else{var u=d.filter(function(e){return e._id===m.value})[0],f={faces:'append'===i&amp;&amp;u&amp;&amp;u.faces?u.faces.concat(e):e};o&amp;&amp;(f.iconUrl=t),Promise.resolve(n.dispatch(r.updateRoomCharacter(m.value,f))).then(function(){l(!0,null,u&amp;&amp;u.name)},function(e){l(!1,String(e))})}}catch(e){l(!1,String(e))}}}}else alert('駒を更新する機能が見つかりませんでした。ココフォリアの更新で仕様が変わった可能性があります。')}else alert('ココフォリアの内部データが見つかりませんでした。ルームを開いてから、ページを再読み込みして試してください。')}else alert('ココフォリアのルームを開いた状態で実行してください。');function R(e,t){try{var n=(o=window.webpackChunkccfolia)?(window.__sabunWp||o.push([['sabun_rt'],{},function(e){window.__sabunWp=e}]),window.__sabunWp||null):null;if(!n||!n.m)return null;for(var r=Object.keys(n.m),a=0;a&lt;r.length;a++)if(n.m[r[a]].toString().indexOf(e)&gt;=0){var i=n(r[a]);if(i&amp;&amp;t(i))return i}}catch(e){}var o;return null}function j(){var e=n.getState(),t=e.entities&amp;&amp;e.entities.userFiles;return t&amp;&amp;t.ids?t.ids.map(function(e){return t.entities[e]}).filter(Boolean):[]}function P(e){return e&amp;&amp;(e.name||e.filename||e.fileName)||''}function H(e){return e&amp;&amp;(e.url||e.imageUrl||e.thumbUrl)||''}function T(e){var t=e&amp;&amp;e.createdAt;return'number'==typeof t?t:t&amp;&amp;'number'==typeof t.seconds?1e3*t.seconds:0}function F(e){return String(e).replace(/\.[a-zA-Z0-9]+$/,'')}function L(e){return String(null==e?'':e).replace(/[&amp;&lt;&gt;"]/g,function(e){return{'&amp;':'&amp;amp;','&lt;':'&amp;lt;','&gt;':'&amp;gt;','"':'&amp;quot;'}[e]})}function O(e,t,n){var r=document.createElement(e);return t&amp;&amp;r.setAttribute('style',t),null!=n&amp;&amp;(r.textContent=n),r}function q(){var e=w.value||'',t={},n=M.filter(function(t){if(t.archived)return!1;var n=P(t);return!(!n||!H(t))&amp;&amp;((!e||0===n.indexOf(e))&amp;&amp;(!l||!t.roomId||t.roomId===l))});if(n.sort(function(e,t){var n=k.value;return'1'===n?T(t)-T(e):'2'===n?T(e)-T(t):P(e).localeCompare(P(t),'ja')}),U=[],h){var r={};n.forEach(function(e){var t=P(e);t&amp;&amp;!r[t]&amp;&amp;(r[t]=e)});var a=[];h.faces.slice().sort(function(e,t){return(e.order||0)-(t.order||0)}).forEach(function(e){var t=r[e.file];t?U.push({label:e.label||F(e.file),url:H(t),file:e.file}):a.push(e.file)}),x.style.color=a.length?'#b08733':'#2f8f6b',x.textContent='manifest 適用中: '+U.length+'/'+h.faces.length+'件'+(a.length?'（未アップロード: '+a.slice(0,3).join(', ')+(a.length&gt;3?' 他'+(a.length-3):'')+'）':'')}else n.forEach(function(e){var n=F(P(e));t[n]||(t[n]=1,U.push({label:n,url:H(e),file:P(e)}))});I.innerHTML='',U.slice(0,60).forEach(function(e){var t=O('div','width:62px;text-align:center;font-size:10px;color:#2f2b26'),n=O('img','width:56px;height:56px;object-fit:contain;border:1px solid #e8e4dd;border-radius:6px;background:#faf9f7;display:block;margin:0 auto');n.src=e.url,n.loading='lazy',t.appendChild(n),t.appendChild(O('div','overflow:hidden;text-overflow:ellipsis;white-space:nowrap',e.label)),I.appendChild(t)}),_.textContent=U.length+'件の画像が対象です'+(U.length&gt;60?'（表示は先頭60件）':''),E.disabled=0===U.length}}();</pre>
+  </div>
+</div>
+
+<div class="card">
+  <h2><span class="num">2</span>使いかた</h2>
+  <ol>
+    <li>差分書き出しツールのZIPを解凍し、<strong>PNGを全部ココフォリアのルームにアップロード</strong>する</li>
+    <li>そのルームを開いたまま、登録した <strong>「差分一括登録」ブックマークを実行</strong>する</li>
+    <li>画面下にパネルが出ます
+      <ul>
+        <li><strong>manifest.json</strong> … ZIPに入っているものを読み込むと、<strong>差分の名前・並び順・立ち絵</strong>がツールで決めたとおりに復元されます（読み込まなくても、ファイル名がそのまま差分名になります）</li>
+        <li><strong>登録先の駒</strong> … 既存の駒を選ぶか「＋ 新しい駒を作る」</li>
+        <li><strong>ファイル名の絞り込み</strong> … 既定は <code>@</code>（書き出したPNGは <code>@微笑み.png</code> のような名前なので、これで他の画像が混ざりません）</li>
+        <li><strong>並び順</strong> … ファイル名順／アップロードが新しい順／古い順</li>
+        <li><strong>置き換え / 末尾に追加</strong> … 既存の差分をどうするか</li>
+        <li><strong>先頭の画像を立ち絵にする</strong></li>
+      </ul>
+    </li>
+    <li>サムネイル一覧で確認して<strong>「登録する」</strong>。緑の「✔ 登録しました」が出れば完了です</li>
+  </ol>
+  <div class="note">manifest.json を読ませない場合、差分名はファイル名から拡張子を除いたものになります（<code>@微笑み.png</code> → <code>@微笑み</code>）。</div>
+  <div class="note"><strong>ココフォリアの画像を消したあと</strong>でも、同じPNGをアップロードし直して manifest.json を読ませれば、同じ名前・同じ並び順で登録し直せます。</div>
+</div>
+
+<div class="card">
+  <h2><span class="num">3</span>うまくいかないとき</h2>
+  <table>
+    <tr><th>症状</th><th>対処</th></tr>
+    <tr><td>実行しても何も起きない</td><td>ブックマークのURLの先頭が <code>javascript:</code> になっているか確認してください</td></tr>
+    <tr><td>「内部データが見つかりません」</td><td>ルームを開いた状態で実行してください。ページを再読み込みしてから再実行してみてください</td></tr>
+    <tr><td>画像が0件</td><td>一度ルームの画像アップロード画面を開いてから、もう一度実行してください（画像一覧の読み込みが始まります）</td></tr>
+    <tr><td>目的の画像が出てこない</td><td>絞り込み欄を空にしてみてください。別のルームにアップロードした画像は対象外です</td></tr>
+    <tr><td>登録が失敗する</td><td>その駒を操作する権限がない可能性があります（他人の駒はGM権限が必要です）</td></tr>
+    <tr><td>ブックマークのアイコンが白いまま</td><td>ブックマークレットにはアイコンを設定できません。名前の頭に絵文字を入れる（例 <code>&#127917;差分一括登録</code>）と見分けやすくなります</td></tr>
+  </table>
+  <div class="note warn"><strong>v0.3です。</strong>まずはテスト用のルームでお試しください。ココフォリア本体の更新で内部構造が変わると動かなくなることがあります。</div>
+</div>
+
+<footer>差分書き出しツール — 差分一括登録ブックマークレット v0.3</footer>
+</div>
+
+<script>
+(function(){
+  var doc = document.documentElement;
+  doc.className += ' js';
+
+  var codeSection = document.getElementById('codeSection');
+  var pre  = document.getElementById('code');
+  var btn  = document.getElementById('copyBtn');
+  var msg  = document.getElementById('msg');
+  var CODE = pre.textContent;
+  var LABEL_DEFAULT = '📋  コードをコピー';
+  var LABEL_OK = '✔︎  コピーしました';
+  btn.textContent = LABEL_DEFAULT;
+  btn.hidden = false;
+
+  /* ---------- タブ ---------- */
+  var tabs = document.getElementById('tabs');
+  var tabBtns = tabs.querySelectorAll('.tab');
+  tabs.hidden = false;
+
+  function pick(id){
+    var target = null;
+    for (var i = 0; i < tabBtns.length; i++) {
+      var t = tabBtns[i];
+      var on = t.dataset.p === id;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      var panel = document.getElementById('p-' + t.dataset.p);
+      panel.hidden = !on;
+      if (on) target = panel;
+    }
+    /* コード欄は1つだけ持ち、アクティブなタブの所定位置へ移動する */
+    if (target) {
+      var slot = target.querySelector('.codeslot');
+      if (slot && codeSection.parentNode !== slot) slot.appendChild(codeSection);
+    }
+  }
+  for (var i = 0; i < tabBtns.length; i++) {
+    (function(t){ t.addEventListener('click', function(){ pick(t.dataset.p); }); })(tabBtns[i]);
+  }
+
+  var ua = navigator.userAgent;
+  var isIOS = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && 'ontouchend' in document);
+  var isAndroid = /Android/.test(ua);
+  pick(isIOS ? 'ios' : (isAndroid ? 'and' : 'pc'));
+
+  /* ---------- コピー ---------- */
+  function flash(text, ok){
+    msg.style.color = ok ? 'var(--ok)' : 'var(--danger)';
+    msg.textContent = text;
+    if (ok) { btn.classList.add('done'); btn.textContent = LABEL_OK; }
+    setTimeout(function(){
+      if (msg.textContent === text) {
+        msg.textContent = '';
+        btn.classList.remove('done');
+        btn.textContent = LABEL_DEFAULT;
+      }
+    }, 4000);
+  }
+
+  /* iOS Safari は readonly の要素だと execCommand('copy') が効かないので、
+     contentEditable な textarea を一時的に作って選択する */
+  function iosCopy(text){
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.contentEditable = 'true';
+    ta.readOnly = false;
+    ta.setAttribute('style','position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;font-size:16px');
+    document.body.appendChild(ta);
+    var ok = false;
+    try {
+      var range = document.createRange();
+      range.selectNodeContents(ta);
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      ta.setSelectionRange(0, text.length);
+      ok = document.execCommand('copy');
+    } catch (e) { ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  function selectPre(){
+    try {
+      var r = document.createRange();
+      r.selectNodeContents(pre);
+      var s = window.getSelection();
+      s.removeAllRanges();
+      s.addRange(r);
+    } catch (e) { }
+  }
+
+  btn.addEventListener('click', function(){
+    if (navigator.clipboard && navigator.clipboard.writeText && window.isSecureContext) {
+      navigator.clipboard.writeText(CODE).then(function(){ flash('コピーしました', true); })
+        .catch(function(){ fallback(); });
+      return;
+    }
+    fallback();
+  });
+  function fallback(){
+    if (iosCopy(CODE)) { flash('コピーしました', true); return; }
+    selectPre();
+    var done = false;
+    try { done = document.execCommand('copy'); } catch(e){}
+    if (done) { flash('コピーしました', true); return; }
+    flash('枠を長押しして「すべてを選択」→「コピー」してください', false);
+  }
+
+  pre.addEventListener('click', selectPre);
+
+  var bm = document.getElementById('bm');
+  if (bm) bm.addEventListener('click', function(e){
+    e.preventDefault();
+    flash('ここでは実行しません。ブックマークバーへドラッグしてください', false);
+  });
+})();
+</script>
+</body>
+</html>

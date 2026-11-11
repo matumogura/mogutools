@@ -8,6 +8,7 @@
 <meta property="og:title" content="mogutools｜モグラのTRPG道具箱">
 <meta property="og:description" content="キパビュー・Saböön・CCDial・Macchan Bot。卓のためのちいさな道具たち。">
 <meta property="og:type" content="website">
+<meta name="theme-color" content="#d8eff7">
 <link rel="icon" href="img/kpviewer.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,31 +16,37 @@
 <style>
 :root{
   --sky:#d8eff7; --cream:#fff8ec; --sun:#ffd45c; --coral:#ff8f7a; --mint:#9fdcc6; --sage:#a9cf8f;
-  --soil:#f3e1c5; --soil2:#e9cfa6;
-  --ink:#2e3a5e; --ink2:#5b6585;
+  --grass:#cfe8b9; --soil:#f3e1c5; --soil2:#e9cfa6; --deep:#c9a07a;
+  --ink:#2e3a5e; --ink2:#535d7e; --bark:#3f2a1d;
+  --ease:cubic-bezier(.16,1,.3,1);
   --pop:"Mochiy Pop One","Zen Maru Gothic",sans-serif;
   --body:"Zen Maru Gothic","Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",sans-serif;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scrollbar-color:var(--deep) var(--cream)}
+::selection{background:var(--sun);color:var(--ink)}
 body{margin:0;color:var(--ink);font:500 16px/1.8 var(--body);letter-spacing:.04em;background:var(--cream);-webkit-text-size-adjust:100%}
-img{max-width:100%;display:block}
-a{color:inherit}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit;text-underline-offset:.25em;text-decoration-thickness:.08em}
+h1,h2,.catch{text-wrap:balance;word-break:auto-phrase}
 :focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:12px}
 
 /* ===== 上：空 ===== */
-.top-wrap{background:linear-gradient(180deg,var(--sky) 0%, #eef8fb 60%, var(--cream) 100%);padding:0 16px;overflow:hidden}
+.top-wrap{background:linear-gradient(180deg,var(--sky) 0%, #eef8fb 100%);padding:0 16px;overflow:hidden}
 .top{max-width:1120px;margin:0 auto;display:flex;align-items:center;gap:16px;padding:18px 0}
 .logo{font:400 22px/1 var(--pop);text-decoration:none;letter-spacing:.02em}
 .top .sp{flex:1}
-.mini{display:flex;gap:8px;list-style:none;margin:0;padding:0}
-.mini a{display:block;width:44px;height:44px;border-radius:14px;background:#fff;box-shadow:0 3px 0 rgba(46,58,94,.12);padding:4px;transition:transform .15s}
-.mini a:hover{transform:translateY(-3px)}
-.mini img,.mini .ico{width:100%;height:100%;border-radius:10px;object-fit:cover}
+.top .ask{font-weight:700;font-size:15px;text-decoration:none;padding:10px 4px;border-bottom:3px solid transparent;transition:border-color .2s}
+.top .ask:hover{border-color:var(--sun)}
 
-.hero{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:1fr 1.1fr;align-items:center;gap:32px;padding:30px 0 70px}
+.hero{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:1fr 1.1fr;align-items:center;gap:32px;padding:30px 0 36px}
 .hero h1{font:400 clamp(34px,5.2vw,60px)/1.3 var(--pop);margin:0 0 16px;letter-spacing:.02em}
 .hero p{margin:0;font-size:clamp(15px,1.6vw,18px);color:var(--ink2);font-weight:700}
+.jump{display:flex;flex-wrap:wrap;gap:10px;list-style:none;margin:28px 0 0;padding:0}
+.jump a{display:flex;align-items:center;gap:8px;padding:6px 16px 6px 6px;border-radius:999px;background:#fff;text-decoration:none;font-weight:700;font-size:15px;line-height:1.4;box-shadow:0 3px 0 rgba(46,58,94,.12);transition:transform .2s var(--ease)}
+.jump a:hover{transform:translateY(-3px)}
+.jump img,.jump .ico{width:32px;height:32px;border-radius:50%;flex:none;object-fit:cover}
+.ground{display:block;width:calc(100% + 32px);margin:0 -16px;height:clamp(56px,9vw,120px)}
 .stack{position:relative;aspect-ratio:1.25}
 .stack img{position:absolute;border-radius:18px;border:6px solid #fff;box-shadow:0 18px 40px rgba(46,58,94,.18);object-fit:cover}
 .stack .s1{width:78%;left:0;top:6%;transform:rotate(-4deg)}
@@ -55,13 +62,12 @@ a{color:inherit}
 .tool:nth-child(even) .shot{order:2}
 .shot{border-radius:22px;overflow:hidden;border:6px solid #fff;box-shadow:0 14px 34px rgba(46,58,94,.16);background:#fff}
 .shot img{width:100%;height:auto}
-.shot.icon-only{aspect-ratio:1.5;display:grid;place-items:center;background:#fff}
-.shot.icon-only .ico{width:38%;height:auto;border-radius:28%}
-.kind{display:block;font-size:13px;font-weight:700;color:var(--ink2);margin:0 0 6px}
-.name{display:flex;align-items:center;gap:14px;margin:0 0 4px}
+.shot.dial svg{display:block;width:100%;height:auto}
+.kind{font-size:13px;font-weight:700;color:var(--ink2);margin:10px 0 0}
+.name{display:flex;align-items:center;gap:14px;margin:0}
 .name img,.name .ico{width:64px;height:64px;border-radius:18px;flex:none;box-shadow:0 4px 0 rgba(46,58,94,.12)}
 .name h2{font:400 clamp(26px,3.2vw,36px)/1.2 var(--pop);margin:0;letter-spacing:.02em}
-.catch{font:700 clamp(19px,2.2vw,23px)/1.6 var(--body);margin:12px 0 16px}
+.catch{font:700 clamp(19px,2.2vw,23px)/1.6 var(--body);margin:14px 0 16px}
 .bubbles{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0 0 24px;padding:0}
 .bubbles li{padding:6px 14px;border-radius:999px;background:#fff;font-weight:700;font-size:14.5px}
 .btns{display:flex;flex-wrap:wrap;gap:10px}
@@ -70,36 +76,51 @@ a{color:inherit}
 .btn:active{transform:translateY(4px);box-shadow:none}
 .btn.sub{background:#fff;color:var(--ink);box-shadow:0 4px 0 rgba(46,58,94,.25)}
 .btn.sub:hover{box-shadow:0 2px 0 rgba(46,58,94,.25)}
-.btn[aria-disabled="true"]{opacity:.5;pointer-events:none}
+.btn[aria-disabled="true"]{background:transparent;color:var(--ink2);box-shadow:inset 0 0 0 2px rgba(46,58,94,.35);cursor:default;pointer-events:none}
 .kp{--tint:#fde7ee}
 .sb{--tint:#fdeed8}
 .cd{--tint:#ddf3ea}
 .mc{--tint:#eaf3dc}
 
 /* ===== 下：連絡 ===== */
-.den{background:linear-gradient(180deg,var(--cream),var(--soil) 40%,var(--soil2));padding:60px 16px 70px;text-align:center}
-.den h2{font:400 clamp(24px,3vw,32px)/1.4 var(--pop);margin:0 0 10px;color:#4a3426}
-.den p{margin:0 0 22px;color:#5c4636;font-weight:700}
+.den{background:linear-gradient(180deg,var(--soil),var(--soil2));padding:0 16px 76px;text-align:center}
+.den .lid{display:block;width:calc(100% + 32px);margin:0 -16px 44px;height:clamp(40px,7vw,90px)}
+.den h2{font:400 clamp(24px,3vw,32px)/1.4 var(--pop);margin:0 0 10px;color:var(--bark)}
+.den p{margin:0 0 22px;color:#553d2d;font-weight:700}
 .den .btns{justify-content:center}
-.den .btn{background:#5865f2;box-shadow:0 4px 0 #3c45b0}
-.den .btn:hover{box-shadow:0 2px 0 #3c45b0}
+.den .btn{background:#4752c4;box-shadow:0 4px 0 #343c94}
+.den .btn:hover{box-shadow:0 2px 0 #343c94}
 .den .btn.x{background:#fff;color:var(--ink);box-shadow:0 4px 0 rgba(74,52,38,.3)}
-.foot{background:#c9a07a;color:#4a3426;padding:20px 16px 26px;font-size:13px;line-height:1.9}
+.foot{background:var(--deep);color:var(--bark);padding:20px 16px 26px;font-size:13px;line-height:1.9}
 .foot .in{max-width:1120px;margin:0 auto;display:flex;flex-wrap:wrap;gap:6px 24px;align-items:center}
 .foot a{font-weight:700}
-.foot small{display:block;width:100%;font-size:12px;opacity:.85}
+.foot small{display:block;width:100%;font-size:12px}
+
+@media (prefers-reduced-motion:no-preference){
+  .stack img{animation:land .9s var(--ease) backwards}
+  .stack .s2{animation-delay:.08s}
+  .stack .s3{animation-delay:.16s}
+  .stack .chip{animation-delay:.3s}
+  @keyframes land{from{opacity:0;translate:0 -36px;scale:.96}}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .btn,.jump a{transition:none}
+}
 
 @media (max-width:860px){
-  .hero{grid-template-columns:1fr;padding:16px 0 50px;text-align:center}
+  .hero{grid-template-columns:1fr;padding:16px 0 24px;text-align:center}
+  .jump{justify-content:center;margin-top:22px}
   .stack{max-width:560px;width:100%;margin:0 auto}
   .tool{grid-template-columns:1fr;gap:24px;padding:22px 20px 28px;border-radius:30px}
   .tool:nth-child(even) .shot{order:0}
   .tools{gap:36px}
 }
 @media (max-width:520px){
-  .mini a{width:36px;height:36px;border-radius:11px;padding:3px}
   .logo{font-size:18px}
-  .mini{gap:5px}
+  .jump{gap:8px}
+  .jump a{font-size:14px;padding:5px 13px 5px 5px}
+  .jump img,.jump .ico{width:28px;height:28px}
   .name img,.name .ico{width:52px;height:52px;border-radius:15px}
   .btn{padding:11px 16px;font-size:14px}
   .stack .chip{width:56px;height:56px;border-radius:16px}
@@ -116,37 +137,42 @@ a{color:inherit}
 </svg>
 
 <header class="top-wrap" id="top">
-  <nav class="top" aria-label="ツール">
+  <nav class="top" aria-label="サイト">
     <a class="logo" href="#top">mogutools</a>
     <span class="sp"></span>
-    <ul class="mini">
-      <li><a href="#kpviewer" title="キパビュー"><img src="img/kpviewer.png" alt="キパビュー"></a></li>
-      <li><a href="#saboon" title="Saböön"><img src="img/saboon.png" alt="Saböön"></a></li>
-      <li><a href="#ccdial" title="CCDial"><svg class="ico" viewBox="0 0 64 64" role="img" aria-label="CCDial"><use href="#ico-dial"/></svg></a></li>
-      <li><a href="#macchan" title="Macchan Bot"><img src="img/macchan.png" alt="Macchan Bot"></a></li>
-    </ul>
+    <a class="ask" href="#den">おといあわせ</a>
   </nav>
   <div class="hero">
     <div>
       <h1>TRPGの道具、<br>掘ってます。</h1>
       <p>モグラがつくる、卓のためのちいさな道具たち</p>
+      <ul class="jump" aria-label="ツール一覧">
+        <li><a href="#kpviewer"><img src="img/kpviewer.png" alt="" width="32" height="32">キパビュー</a></li>
+        <li><a href="#saboon"><img src="img/saboon.png" alt="" width="32" height="32">Saböön</a></li>
+        <li><a href="#ccdial"><svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><use href="#ico-dial"/></svg>CCDial</a></li>
+        <li><a href="#macchan"><img src="img/macchan.png" alt="" width="32" height="32">Macchan Bot</a></li>
+      </ul>
     </div>
     <div class="stack" aria-hidden="true">
-      <img class="s1" src="img/kpviewer-shot.jpg" alt="">
-      <img class="s2" src="img/macchan-shot.jpg" alt="">
-      <img class="s3" src="img/saboon-shot.jpg" alt="">
-      <img class="chip c1" src="img/kpviewer.png" alt="">
-      <img class="chip c2" src="img/saboon.png" alt="">
+      <img class="s1" src="img/kpviewer-shot.jpg" alt="" width="1400" height="787">
+      <img class="s2" src="img/macchan-shot.jpg" alt="" width="1280" height="720">
+      <img class="s3" src="img/saboon-shot.jpg" alt="" width="785" height="760">
+      <img class="chip c1" src="img/kpviewer.png" alt="" width="256" height="256">
+      <img class="chip c2" src="img/saboon.png" alt="" width="256" height="256">
     </div>
   </div>
+  <svg class="ground" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+    <path fill="#cfe8b9" d="M0 62C240 12 480 12 720 52S1200 102 1440 42V120H0Z"/>
+    <path fill="#fff8ec" d="M0 92C300 44 560 112 860 82S1260 44 1440 82V120H0Z"/>
+  </svg>
 </header>
 
 <main class="tools">
   <section class="tool kp" id="kpviewer" aria-labelledby="h-kp">
-    <div class="shot"><img src="img/kpviewer-shot.jpg" alt="キパビューでシナリオを開いた画面" loading="lazy"></div>
+    <div class="shot"><img src="img/kpviewer-shot.jpg" alt="キパビューでシナリオを開いた画面" width="1400" height="787" loading="lazy"></div>
     <div>
-      <span class="kind">KP 向けシナリオビューア ／ Windows・HTML</span>
       <div class="name"><img src="img/kpviewer.png" alt=""><h2 id="h-kp">キパビュー</h2></div>
+      <p class="kind">KP 向けシナリオビューア ／ Windows・HTML</p>
       <p class="catch">シナリオを、クリックでココフォリアへ。</p>
       <ul class="bubbles"><li>1行ずつ送信</li><li>秘匿もおまかせ</li><li>シナリオ本棚</li></ul>
       <div class="btns">
@@ -157,10 +183,10 @@ a{color:inherit}
   </section>
 
   <section class="tool sb" id="saboon" aria-labelledby="h-sb">
-    <div class="shot"><img src="img/saboon-shot.jpg" alt="Saböön で表情差分を並べた画面" loading="lazy"></div>
+    <div class="shot"><img src="img/saboon-shot.jpg" alt="Saböön で表情差分を並べた画面" width="785" height="760" loading="lazy"></div>
     <div>
-      <span class="kind">差分書き出しツール ／ ブラウザ・Windows</span>
       <div class="name"><img src="img/saboon.png" alt=""><h2 id="h-sb">Saböön</h2></div>
+      <p class="kind">差分書き出しツール ／ ブラウザ・Windows</p>
       <p class="catch">表情差分を、まとめて書き出し。</p>
       <ul class="bubbles"><li>.clip ・ .psd</li><li>組み合わせを全部</li><li>絵は手元から出ない</li></ul>
       <div class="btns">
@@ -171,10 +197,10 @@ a{color:inherit}
   </section>
 
   <section class="tool cd" id="ccdial" aria-labelledby="h-cd">
-    <div class="shot icon-only"><svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><use href="#ico-dial"/></svg></div>
+    <div class="shot dial"><svg viewBox="0 0 300 200" role="img" aria-label="最近の12部屋がタイルで並び、先頭の1部屋がピン留めされている図"><rect x="20" y="31" width="56" height="38" rx="9" fill="#ffd45c"/><rect x="88" y="31" width="56" height="38" rx="9" fill="#cdeee0"/><rect x="156" y="31" width="56" height="38" rx="9" fill="#cdeee0"/><rect x="224" y="31" width="56" height="38" rx="9" fill="#cdeee0"/><rect x="20" y="81" width="56" height="38" rx="9" fill="#cdeee0"/><rect x="88" y="81" width="56" height="38" rx="9" fill="#cdeee0"/><rect x="156" y="81" width="56" height="38" rx="9" fill="#cdeee0"/><rect x="224" y="81" width="56" height="38" rx="9" fill="#cdeee0"/><rect x="20" y="131" width="56" height="38" rx="9" fill="#cdeee0"/><rect x="88" y="131" width="56" height="38" rx="9" fill="#cdeee0"/><rect x="156" y="131" width="56" height="38" rx="9" fill="#cdeee0"/><rect x="224" y="131" width="56" height="38" rx="9" fill="#cdeee0"/><circle cx="66" cy="41" r="4" fill="#2e3a5e"/></svg></div>
     <div>
-      <span class="kind">新しいタブの拡張機能 ／ Chrome</span>
       <div class="name"><svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><use href="#ico-dial"/></svg><h2 id="h-cd">CCDial</h2></div>
+      <p class="kind">新しいタブの拡張機能 ／ Chrome</p>
       <p class="catch">あの部屋に、ワンクリックで戻る。</p>
       <ul class="bubbles"><li>最近の12部屋</li><li>スクショで一目</li><li>ピン留め</li></ul>
       <div class="btns">
@@ -184,10 +210,10 @@ a{color:inherit}
   </section>
 
   <section class="tool mc" id="macchan" aria-labelledby="h-mc">
-    <div class="shot"><img src="img/macchan-shot.jpg" alt="Macchan Bot でダイスを振った Discord の画面" loading="lazy"></div>
+    <div class="shot"><img src="img/macchan-shot.jpg" alt="Macchan Bot でダイスを振った Discord の画面" width="1280" height="720" loading="lazy"></div>
     <div>
-      <span class="kind">TRPG ダイスボット ／ Discord</span>
       <div class="name"><img src="img/macchan.png" alt=""><h2 id="h-mc">Macchan Bot</h2></div>
+      <p class="kind">TRPG ダイスボット ／ Discord</p>
       <p class="catch">ダイスも日程も、Discord で。</p>
       <ul class="bubbles"><li>/ダイス</li><li>探索者づくり</li><li>日程調整「ヒヨリ」</li></ul>
       <div class="btns">
@@ -197,7 +223,10 @@ a{color:inherit}
   </section>
 </main>
 
-<section class="den" aria-labelledby="h-den">
+<section class="den" id="den" aria-labelledby="h-den">
+  <svg class="lid" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true">
+    <path fill="#fff8ec" d="M0 0H1440V38C1180 92 900 8 600 48S140 84 0 30Z"/>
+  </svg>
   <h2 id="h-den">こまったら、巣穴へどうぞ。</h2>
   <p>質問・要望・不具合のご連絡は Discord で。</p>
   <div class="btns">
@@ -226,7 +255,7 @@ const LINKS={
   discord:'https://discord.gg/8BdpUKfqCT',
   x:'https://x.com/mogum00gura'
 };
-document.querySelectorAll('[data-link]').forEach(a=>{ const u=LINKS[a.dataset.link]; if(u) a.href=u; else { a.removeAttribute('href'); a.setAttribute('aria-disabled','true'); a.title='準備中'; } });
+document.querySelectorAll('[data-link]').forEach(a=>{ const u=LINKS[a.dataset.link]; if(u) a.href=u; else { a.removeAttribute('href'); a.removeAttribute('target'); a.setAttribute('role','link'); a.setAttribute('aria-disabled','true'); a.textContent+='（準備中）'; } });
 </script>
 </body>
 </html>

@@ -1,10 +1,40 @@
 {
-  "_説明": "稼働状況ページに出すサービス。since は公開した日（YYYY-MM-DD）。空ならページに出しません。",
+  "_説明": "稼働状況ページに出すサービス。since は公開した日。YYYY-MM なら「〇年〇月ごろから」、YYYY-MM-DD なら「〇年〇月〇日から」と出す。空ならページに出しません。",
   "services": [
-    { "id": "bot",    "name": "Macchan Bot",            "sub": "Discord のダイス・TRPG ボット",      "icon": "../img/macchan.png", "since": "" },
-    { "id": "web",    "name": "管理コンソール",          "sub": "サーバー設定・オリジナル表・キャラクター記録", "icon": "../img/macchan.png", "since": "" },
-    { "id": "sched",  "name": "ヒヨリ",                  "sub": "日程調整・メンバー募集",              "icon": "",                   "since": "" },
-    { "id": "saboon", "name": "Saböön 購入者ログイン",   "sub": "製品版の機能を使うためのログイン",    "icon": "../img/saboon.png",  "since": "" },
-    { "id": "sbweb",  "name": "Saböön ブラウザ版",       "sub": "saboon.pages.dev",                    "icon": "../img/saboon.png",  "since": "" }
+    {
+      "id": "bot",
+      "name": "Macchan Bot",
+      "sub": "Discord のダイス・TRPG ボット",
+      "icon": "../img/macchan.png",
+      "since": "2026-01"
+    },
+    {
+      "id": "web",
+      "name": "管理コンソール",
+      "sub": "サーバー設定・オリジナル表・キャラクター記録",
+      "icon": "../img/macchan.png",
+      "since": "2026-09"
+    },
+    {
+      "id": "sched",
+      "name": "ヒヨリ",
+      "sub": "日程調整・メンバー募集",
+      "icon": "",
+      "since": "2026-09"
+    },
+    {
+      "id": "saboon",
+      "name": "Saböön 購入者ログイン",
+      "sub": "製品版の機能を使うためのログイン",
+      "icon": "../img/saboon.png",
+      "since": "2026-09"
+    },
+    {
+      "id": "sbweb",
+      "name": "Saböön ブラウザ版",
+      "sub": "saboon.pages.dev",
+      "icon": "../img/saboon.png",
+      "since": "2026-09"
+    }
   ]
 }

@@ -27,6 +27,7 @@ async function twice(fn) {
 
 async function checkMacchan() {
   const r = await get(MACCHAN);
+  if (r.status === 404) return { skip: true, allOk: true };   // /status がまだ反映されていない（数えない）
   if (!r.ok) throw new Error("HTTP " + r.status);
   const j = await r.json();
   const res = {
@@ -52,7 +53,7 @@ function jstDay(d = new Date()) {
 const now = new Date();
 const m = (await twice(checkMacchan)) || { bot: false, web: false, sched: false, saboon: false };
 const s = (await twice(checkSaboonWeb)) || { sbweb: false };
-const result = { bot: m.bot, web: m.web, sched: m.sched, saboon: m.saboon, sbweb: s.sbweb };
+const result = m.skip ? { sbweb: s.sbweb } : { bot: m.bot, web: m.web, sched: m.sched, saboon: m.saboon, sbweb: s.sbweb };
 
 let data = {};
 try { data = JSON.parse(fs.readFileSync(OUT, "utf8")); } catch {}

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>mogutools｜モグラのTRPG道具箱</title>
-<meta name="description" content="TRPG の卓をもっと楽しくする、モグラの手づくりツール。キパビュー・Saböön・CCDial・Macchan Bot の紹介ページです。">
+<meta name="description" content="TRPG の卓をもっと楽しくする、モグラの手づくりツール。キパビュー・Saböön・CCDial・ココフォリアパレット・Macchan Bot・ヒヨリの紹介ページです。">
 <meta property="og:title" content="mogutools｜モグラのTRPG道具箱">
 <meta property="og:description" content="キパビュー・Saböön・CCDial・Macchan Bot。卓のためのちいさな道具たち。">
 <meta property="og:type" content="website">
@@ -81,6 +81,11 @@ a{color:inherit}
 .sb{--tint:#fdeed8}
 .cd{--tint:#ddf3ea}
 .mc{--tint:#eaf3dc}
+.hy{--tint:#fff3cf}
+.pl{--tint:#ece6fb}
+.hylogo{padding:0 12%}
+.hylogo img{width:100%;height:auto}
+.memo{margin:10px 0 0;font-size:13px;color:var(--ink2);font-weight:700}
 
 /* ===== 下：連絡 ===== */
 .den{background:linear-gradient(180deg,var(--cream),var(--soil) 40%,var(--soil2));padding:60px 16px 70px;text-align:center}
@@ -119,6 +124,17 @@ a{color:inherit}
     <g fill="#fff"><rect x="12" y="14" width="17" height="14" rx="4"/><rect x="35" y="14" width="17" height="14" rx="4"/><rect x="12" y="34" width="17" height="14" rx="4"/></g>
     <rect x="35" y="34" width="17" height="14" rx="4" fill="#ffd45c"/>
   </symbol>
+  <symbol id="ico-hiyori" viewBox="0 0 64 64">
+    <rect width="64" height="64" rx="16" fill="#ffd45c"/>
+    <rect x="13" y="17" width="38" height="33" rx="6" fill="#fff"/><rect x="13" y="17" width="38" height="9" rx="4" fill="#ff8f7a"/>
+    <g fill="#2e3a5e"><circle cx="22" cy="33" r="2.6"/><circle cx="32" cy="33" r="2.6"/><circle cx="22" cy="42" r="2.6"/></g>
+    <circle cx="42" cy="38" r="6.5" fill="none" stroke="#3fb68b" stroke-width="3"/>
+  </symbol>
+  <symbol id="ico-palette" viewBox="0 0 64 64">
+    <rect width="64" height="64" rx="16" fill="#b9a6e6"/>
+    <path d="M32 13c11 0 20 7.6 20 17 0 6-4.6 9-9.4 9h-4.2c-2.3 0-3.6 2.3-2.5 4.3l.9 1.7c1.5 3-.7 6-4 6C21.6 51 13 42.4 13 32s8.5-19 19-19z" fill="#fff"/>
+    <circle cx="24" cy="27" r="3.6" fill="#ff8f7a"/><circle cx="34" cy="22" r="3.6" fill="#ffd45c"/><circle cx="43" cy="28" r="3.6" fill="#9fdcc6"/><circle cx="22" cy="38" r="3.6" fill="#8ec5f0"/>
+  </symbol>
 </svg>
 
 <header class="top-wrap" id="top">
@@ -129,13 +145,15 @@ a{color:inherit}
       <li><a href="#kpviewer" title="キパビュー"><img src="img/kpviewer.png" alt="キパビュー"></a></li>
       <li><a href="#saboon" title="Saböön"><img src="img/saboon.png" alt="Saböön"></a></li>
       <li><a href="#ccdial" title="CCDial"><svg class="ico" viewBox="0 0 64 64" role="img" aria-label="CCDial"><use href="#ico-dial"/></svg></a></li>
+      <li><a href="#palette" title="ココフォリアパレット"><svg class="ico" viewBox="0 0 64 64" role="img" aria-label="ココフォリアパレット"><use href="#ico-palette"/></svg></a></li>
       <li><a href="#macchan" title="Macchan Bot"><img src="img/macchan.png" alt="Macchan Bot"></a></li>
+      <li><a href="#hiyori" title="ヒヨリ"><svg class="ico" viewBox="0 0 64 64" role="img" aria-label="ヒヨリ"><use href="#ico-hiyori"/></svg></a></li>
     </ul>
   </nav>
   <div class="hero">
     <div>
       <h1>TRPGツール<br>開発中</h1>
-      <p>モグラがつくる、卓のためのちいさな道具たち</p>
+      <p>便利に楽しく！遊ぶ時間を最大化</p>
     </div>
     <div class="stack" aria-hidden="true">
       <img class="s1" src="img/kpviewer-shot.jpg" alt="">
@@ -193,6 +211,20 @@ a{color:inherit}
     </div>
   </section>
 
+  <section class="tool pl" id="palette" aria-labelledby="h-pl">
+    <div class="shot icon-only"><svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><use href="#ico-palette"/></svg></div>
+    <div>
+      <span class="kind">ココフォリアの拡張機能 ／ Chrome</span>
+      <div class="name"><svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><use href="#ico-palette"/></svg><h2 id="h-pl">ココフォリアパレット</h2></div>
+      <p class="catch">表情も台詞も、パレットからひと押し。</p>
+      <ul class="bubbles"><li>表情差分パレット</li><li>キパビューから送信</li><li>読み上げ</li></ul>
+      <div class="btns">
+        <a class="btn" data-link="discord" href="#" target="_blank" rel="noopener">Discord サーバーで入手</a>
+      </div>
+      <p class="memo">Chrome ウェブストアの限定公開です。入れ方は Discord サーバーで案内しています。</p>
+    </div>
+  </section>
+
   <section class="tool mc" id="macchan" aria-labelledby="h-mc">
     <div class="shot"><img src="img/macchan-shot.jpg" alt="Macchan Bot でダイスを振った Discord の画面" loading="lazy"></div>
     <div>
@@ -202,6 +234,19 @@ a{color:inherit}
       <ul class="bubbles"><li>/ダイス</li><li>探索者づくり</li><li>日程調整「ヒヨリ」</li></ul>
       <div class="btns">
         <a class="btn" data-link="macchanNote" href="#" target="_blank" rel="noopener">説明書を読む</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="tool hy" id="hiyori" aria-labelledby="h-hy">
+    <div class="shot icon-only hylogo"><img src="img/hiyori.svg" alt="ヒヨリ"></div>
+    <div>
+      <span class="kind">日程調整・メンバー募集 ／ ブラウザ</span>
+      <div class="name"><svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><use href="#ico-hiyori"/></svg><h2 id="h-hy">ヒヨリ</h2></div>
+      <p class="catch">みんなの空いてる日、すぐ見つかる。</p>
+      <ul class="bubbles"><li>候補日に ○ △ ×</li><li>カレンダーから入力</li><li>キパビューから募集</li></ul>
+      <div class="btns">
+        <a class="btn" data-link="hiyori" href="#" target="_blank" rel="noopener">ヒヨリを使う</a>
       </div>
     </div>
   </section>
@@ -234,6 +279,7 @@ const LINKS={
   saboonStore:'https://apps.microsoft.com/detail/9NMC0Z2D49SC',
   ccdialStore:'',   // Chrome ウェブストアの CCDial のページ
   macchanNote:'https://note.com/m0gu/n/n8a4bb468b568',
+  hiyori:'https://macchan.onrender.com/sched/',
   discord:'https://discord.gg/8BdpUKfqCT',
   x:'https://x.com/mogum00gura'
 };

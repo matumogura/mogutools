@@ -11,103 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg:#faf7fb; --paper:#fff; --ink:#2e3448; --fg:#4a5068; --sub:#6b7088; --dim:#9a9db0; --line:#ece6f0; --line2:#ddd5e6;
-  --pk:#e0609a; --cy:#2f9fc7; --cy-bg:#e8f5fa; --pk-bg:#fdeef5; --yel:#f5c84c;
-  --grad:linear-gradient(90deg,#b79be8,#d892c8 42%,#eda4a6 74%,#f3b28e);
-  --f:"Noto Sans JP","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic UI","Yu Gothic","Meiryo",sans-serif;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:76px}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-body{margin:0;background:var(--bg);color:var(--fg);font:400 16px/1.85 var(--f);letter-spacing:.02em;-webkit-text-size-adjust:100%}
-a{color:var(--cy)}
-:focus-visible{outline:3px solid var(--cy);outline-offset:3px;border-radius:6px}
-img{max-width:100%;height:auto;display:block}
-
-/* 上の帯 */
-.top{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.topin{max-width:1180px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:14px}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:900;font-size:17px;white-space:nowrap}
-.brand img{width:32px;height:32px;border-radius:8px}
-.brand small{font-weight:700;font-size:13px;color:var(--sub)}
-.top .sp{flex:1}
-.toplink{font-size:13px;font-weight:700;color:var(--sub);text-decoration:none;padding:6px 12px;border-radius:999px;border:1px solid var(--line2);background:#fff;white-space:nowrap}
-.toplink:hover{border-color:var(--cy);color:var(--ink)}
-
-/* 見出しの帯 */
-.hero{max-width:1180px;margin:0 auto;padding:40px 20px 8px}
-.hero .kicker{display:inline-block;font-size:13px;font-weight:700;color:#fff;background:var(--grad);padding:3px 14px;border-radius:999px;margin-bottom:12px}
-.hero h1{margin:0 0 10px;font-size:clamp(28px,4.4vw,42px);line-height:1.3;color:var(--ink);font-weight:900}
-.hero p{margin:0;max-width:44em;color:var(--fg)}
-.quick{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin:22px 0 0;padding:0;list-style:none}
-.quick a{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:14px;background:#fff;border:1px solid var(--line);text-decoration:none;color:var(--ink);font-weight:700;font-size:15px;box-shadow:0 6px 18px -14px rgba(60,40,90,.35)}
-.quick a:hover{border-color:var(--cy)}
-.quick .n{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--cy-bg);color:var(--cy);font-size:13px;font-weight:900}
-
-/* 本文：左に目次、右に中身 */
-.wrap{max-width:1180px;margin:0 auto;padding:28px 20px 60px;display:grid;grid-template-columns:230px minmax(0,1fr);gap:36px;align-items:start}
-nav.toc{position:sticky;top:84px;max-height:calc(100vh - 100px);overflow:auto;font-size:14px}
-nav.toc b{display:block;font-size:12px;color:var(--dim);letter-spacing:.1em;margin:0 0 6px 10px}
-nav.toc ol{list-style:none;margin:0;padding:0}
-nav.toc a{display:block;padding:6px 10px;border-radius:9px;color:var(--fg);text-decoration:none;line-height:1.5}
-nav.toc a:hover{background:#fff;color:var(--ink)}
-nav.toc a.on{background:var(--cy-bg);color:var(--ink);font-weight:700}
-
-main section{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:30px 34px 32px;margin:0 0 22px;box-shadow:0 10px 30px -24px rgba(60,40,90,.4)}
-main h2{display:flex;align-items:center;gap:12px;margin:0 0 6px;font-size:24px;line-height:1.4;color:var(--ink);font-weight:900}
-main h2 .n{flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--grad);color:#fff;font-size:16px}
-main .lead{margin:0 0 18px;color:var(--sub)}
-main h3{margin:26px 0 8px;font-size:17px;color:var(--ink);font-weight:700;display:flex;align-items:center;gap:8px}
-main h3::before{content:"";width:6px;height:18px;border-radius:3px;background:var(--cy)}
-main p{margin:0 0 10px}
-ol.steps{counter-reset:s;list-style:none;margin:6px 0 14px;padding:0}
-ol.steps>li{counter-increment:s;position:relative;padding:2px 0 8px 40px}
-ol.steps>li::before{content:counter(s);position:absolute;left:0;top:2px;width:26px;height:26px;border-radius:50%;background:var(--cy-bg);color:var(--cy);font-weight:900;font-size:13px;display:grid;place-items:center}
-ul.pts{margin:6px 0 14px;padding-left:1.3em}
-ul.pts li{margin:2px 0}
-.k{display:inline-block;padding:0 8px;margin:0 2px;border-radius:7px;background:#f3eff7;border:1px solid var(--line2);color:var(--ink);font-size:.9em;font-weight:700;line-height:1.7;white-space:nowrap}
-kbd{display:inline-block;padding:0 7px;border-radius:6px;border:1px solid var(--line2);border-bottom-width:2px;background:#fff;font:700 .85em var(--f);color:var(--ink)}
-figure{margin:14px 0 18px}
-figure a{display:block;border-radius:14px;overflow:hidden;border:1px solid var(--line);box-shadow:0 10px 26px -18px rgba(60,40,90,.45);cursor:zoom-in}
-figure.narrow{max-width:420px}
-figcaption{font-size:13px;color:var(--sub);margin-top:8px}
-.note{display:flex;gap:10px;padding:12px 16px;border-radius:14px;background:var(--cy-bg);color:var(--ink);font-size:14.5px;margin:12px 0}
-.note.warn{background:#fff6dd}
-.note b{flex:none}
-table.os{width:100%;border-collapse:collapse;margin:8px 0 16px;font-size:15px}
-table.os th,table.os td{border-bottom:1px solid var(--line);padding:10px 8px;text-align:left;vertical-align:top}
-table.os th{color:var(--ink);white-space:nowrap;width:9em}
-dl.faq dt{font-weight:700;color:var(--ink);margin-top:14px}
-dl.faq dd{margin:4px 0 0 0;padding-left:1.1em;border-left:3px solid var(--line2)}
-.help{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:12px;background:var(--cy);color:#fff;text-decoration:none;font-weight:700;font-size:15px}
-.btn.sub{background:#fff;color:var(--ink);border:1px solid var(--line2)}
-.btn:hover{filter:brightness(1.05)}
-footer{text-align:center;padding:10px 20px 40px;font-size:13px;color:var(--dim)}
-
-/* 画像を大きく */
-.zoom{position:fixed;inset:0;z-index:50;background:rgba(20,18,30,.82);display:none;align-items:center;justify-content:center;padding:24px;cursor:zoom-out}
-.zoom.on{display:flex}
-.zoom img{max-width:100%;max-height:100%;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,.4)}
-
-@media (max-width:900px){
-  .wrap{grid-template-columns:1fr;gap:16px}
-  nav.toc{display:none}   /* 上の「やりたいこと」の一覧で選ぶ */
-}
-@media (max-width:600px){
-  .topin{padding:10px 16px}
-  .brand small{display:none}
-  .hero{padding:26px 16px 4px}
-  .wrap{padding:18px 16px 40px}
-  main section{padding:22px 18px 24px;border-radius:18px}
-  main h2{font-size:20px}
-  table.os th{width:auto}
-  table.os tr{display:block;border-bottom:1px solid var(--line);padding:8px 0}
-  table.os th,table.os td{display:block;border:0;padding:2px 4px}
-}
-</style>
+<link rel="stylesheet" href="guide.css">
 </head>
 <body>
 <header class="top"><div class="topin">
@@ -120,6 +24,7 @@ footer{text-align:center;padding:10px 20px 40px;font-size:13px;color:var(--dim)}
   <span class="kicker">やりたいこと別</span>
   <h1>キパビューの使い方</h1>
   <p>キパビューは、KP（キーパー）のためのシナリオビューアです。シナリオを読み込んで、本文をクリックするだけでオンセのチャットに送れます。卓の予定・記録や探索者の管理もまとめてできます。やりたいことから選んでください。</p>
+  <a class="qsban" href="quickstart.html"><span class="qsi">▶</span><span><b>はじめての方は「クイックスタート」から</b><small>シナリオを取り込んで、募集・メンバー登録・本文の調整・卓報告まで、5 つの手順で通して使えます</small></span><span class="qsgo">見る →</span></a>
   <ul class="quick">
     <li><a href="#start"><span class="n">1</span>はじめに</a></li>
     <li><a href="#import"><span class="n">2</span>シナリオを読み込む</a></li>

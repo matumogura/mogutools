@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>稼働状況｜mogutools</title>
+<meta name="description" content="Macchan Bot・ヒヨリ・Saböön などの、モグラのツールのサーバーがいま動いているか、これまでどれだけ止まらずに動いてきたかを載せています。">
+<meta property="og:title" content="稼働状況｜mogutools">
+<meta property="og:description" content="Macchan Bot・ヒヨリ・Saböön のサーバーの稼働状況">
+<link rel="icon" href="../img/macchan.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky:#d8eff7; --cream:#fff8ec; --sun:#ffd45c; --coral:#ff8f7a; --mint:#9fdcc6; --sage:#a9cf8f;
+  --ink:#2e3a5e; --ink2:#5b6585; --line:#efe3cf;
+  --ok:#3fb68b; --part:#f2b632; --down:#ef6a55; --none:#cfd3de;
+  --body:"Noto Sans JP","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic UI","Yu Gothic","Meiryo",sans-serif;
+  --pop:var(--body);
+}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);font:500 16px/1.8 var(--body);letter-spacing:.02em;background:var(--cream);-webkit-text-size-adjust:100%}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:10px}
+
+.top-wrap{background:linear-gradient(180deg,var(--sky) 0%, #eef8fb 60%, var(--cream) 100%);padding:0 16px}
+.top{max-width:1000px;margin:0 auto;display:flex;align-items:center;gap:12px;padding:18px 0}
+.logo{font:700 22px/1 var(--pop);text-decoration:none}
+.top .sp{flex:1}
+.back{font-weight:700;font-size:14px;text-decoration:none;padding:8px 14px;border-radius:999px;background:#fff;box-shadow:0 3px 0 rgba(46,58,94,.12)}
+
+.hero{max-width:1000px;margin:0 auto;padding:22px 0 34px}
+.hero h1{font:700 clamp(30px,5vw,46px)/1.3 var(--pop);margin:0 0 6px}
+.hero .lead{margin:0 0 22px;color:var(--ink2);font-weight:700;font-size:clamp(14px,1.6vw,16px)}
+.now{display:flex;align-items:center;gap:16px;padding:18px 22px;border-radius:24px;background:#fff;box-shadow:0 10px 28px -14px rgba(46,58,94,.28)}
+.now .big{flex:none;width:52px;height:52px}
+.now b{display:block;font:700 clamp(19px,2.6vw,24px)/1.35 var(--pop)}
+.now small{display:block;color:var(--ink2);font-weight:700;font-size:13.5px;margin-top:2px}
+
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+.fact{background:rgba(255,255,255,.7);border-radius:18px;padding:12px 16px}
+.fact small{display:block;font-weight:700;font-size:12.5px;color:var(--ink2)}
+.fact b{display:block;font:700 clamp(18px,2.4vw,22px)/1.4 var(--pop);font-variant-numeric:tabular-nums}
+
+main{max-width:1000px;margin:0 auto;padding:0 16px 40px}
+.card{background:#fff;border-radius:28px;box-shadow:0 10px 28px -16px rgba(46,58,94,.25);overflow:hidden}
+.card h2{font:700 20px/1.3 var(--pop);margin:0}
+.head{display:flex;align-items:center;gap:10px;padding:20px 22px 14px;flex-wrap:wrap}
+.head .sp{flex:1}
+.nav{display:flex;align-items:center;gap:6px;font-weight:700;font-size:14px;font-variant-numeric:tabular-nums}
+.nav button{width:34px;height:34px;border-radius:50%;border:0;background:var(--cream);color:var(--ink);font:700 16px/1 var(--body);cursor:pointer}
+.nav button:disabled{opacity:.35;cursor:default}
+.nav button:not(:disabled):hover{background:var(--sky)}
+
+table{width:100%;border-collapse:collapse;table-layout:fixed}
+th,td{padding:12px 4px;text-align:center}
+thead th{font-weight:700;font-size:13px;color:var(--ink2);border-top:2px solid var(--line);border-bottom:2px solid var(--line)}
+thead th .wd{display:block;font-size:11px;font-weight:700;opacity:.8}
+thead th.tdy{color:var(--ink)}
+thead th .dd{display:none}
+tbody tr:nth-child(odd){background:#fdfaf3}
+th.svc,td.svc{text-align:left;padding-left:22px;width:34%}
+th.up,td.up{width:12%}
+.sv{display:flex;align-items:center;gap:12px}
+.ic{flex:none;width:40px;height:40px;border-radius:12px;object-fit:cover;box-shadow:0 3px 0 rgba(46,58,94,.1)}
+.ic.txt{display:grid;place-items:center;background:var(--sun);font:700 18px/1 var(--pop)}
+.nm{min-width:0}
+.nm b{display:block;font-weight:900;font-size:15.5px;line-height:1.4}
+.nm small{display:block;font-size:12.5px;color:var(--ink2);font-weight:700;line-height:1.5}
+.nm .since{display:inline-block;margin-top:3px;padding:1px 9px;border-radius:999px;background:#e9f6f0;color:#2b7f62;font-size:11.5px;font-weight:900}
+.nm .upm{display:none}
+td.up{font-weight:900;font-variant-numeric:tabular-nums;font-size:15px}
+.dot{display:inline-block;width:24px;height:24px;vertical-align:middle}
+
+.legend{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 20px;padding:14px 18px;border-top:2px solid var(--line);font-weight:700;font-size:13px;color:var(--ink2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend .dot{width:18px;height:18px}
+
+.inc{margin-top:22px;padding:20px 22px}
+.inc ul{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+.inc li{display:flex;gap:12px;align-items:baseline;padding:10px 14px;border-radius:14px;background:#fff4f1;font-size:14.5px}
+.inc li.ongoing{background:#ffe7e1}
+.inc li time{font-weight:900;font-variant-numeric:tabular-nums;white-space:nowrap}
+.inc .empty{margin:10px 0 0;padding:14px 16px;border-radius:14px;background:#eef8f3;font-weight:700;color:#2b7f62}
+
+.notes{margin:22px 4px 0;padding:0;list-style:none;color:var(--ink2);font-size:13.5px;font-weight:700;line-height:1.8}
+.notes li{padding-left:1.1em;text-indent:-1.1em}
+.notes li::before{content:"・"}
+.err{margin:0 0 16px;padding:12px 16px;border-radius:14px;background:#fff1d6;font-weight:700;font-size:14px}
+
+footer{padding:26px 16px 40px;text-align:center;font-size:13px;color:var(--ink2);font-weight:700}
+
+@media (max-width:640px){
+  .facts{grid-template-columns:1fr 1fr}
+  .facts .fact:last-child{grid-column:span 2}
+  .head{padding:16px 14px 10px}
+  th.svc,td.svc{padding-left:12px;width:38%}
+  th.up,td.up{display:none}
+  .nm .upm{display:block;white-space:nowrap}
+  .ic{width:30px;height:30px;border-radius:9px}
+  .ic.txt{font-size:14px}
+  .sv{gap:8px}
+  .nm b{font-size:13.5px}
+  .nm small.sub{display:none}
+  th,td{padding:10px 1px}
+  .dot{width:20px;height:20px}
+  thead th{font-size:12px}
+  thead th .md{display:none}
+  thead th .dd{display:block}
+  .nm .since{font-size:10.5px;padding:0 7px}
+  .inc{padding:16px 14px}
+  .inc li{flex-direction:column;gap:0}
+}
+</style>
+</head>
+<body>
+<div class="top-wrap">
+  <div class="top">
+    <a class="logo" href="../">mogutools</a>
+    <span class="sp"></span>
+    <a class="back" href="../">ツールの紹介へ</a>
+  </div>
+  <div class="hero">
+    <h1>稼働状況</h1>
+    <p class="lead">ボットやサーバーが、いま動いているか・これまで止まらずに動いてきたかを載せています。</p>
+    <div class="now" id="now" aria-live="polite">
+      <svg class="big" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="var(--none)"/></svg>
+      <div><b>確認しています…</b><small>&nbsp;</small></div>
+    </div>
+    <div class="facts">
+      <div class="fact"><small>直近30日の稼働率</small><b id="f30">—</b></div>
+      <div class="fact"><small>止まらずに動いている期間</small><b id="fRun">—</b></div>
+      <div class="fact"><small>Macchan Bot の導入サーバー</small><b id="fG">—</b></div>
+    </div>
+  </div>
+</div>
+
+<main>
+  <p class="err" id="err" hidden></p>
+  <section class="card" aria-labelledby="h-hist">
+    <div class="head">
+      <h2 id="h-hist">日ごとの記録</h2>
+      <span class="sp"></span>
+      <div class="nav">
+        <button type="button" id="prev" aria-label="前の7日">‹</button>
+        <span id="range">—</span>
+        <button type="button" id="next" aria-label="次の7日">›</button>
+      </div>
+    </div>
+    <table>
+      <thead><tr id="thead"></tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+    <div class="legend" id="legend"></div>
+  </section>
+
+  <section class="card inc" aria-labelledby="h-inc">
+    <h2 id="h-inc">止まっていた時間</h2>
+    <div id="incs"></div>
+  </section>
+
+  <ul class="notes">
+    <li>5分おきに、外からサーバーに問い合わせて確かめています（GitHub の定期実行を使っているため、間隔が空くことがあります）。</li>
+    <li>1回うまくいかなくても、少し待ってもう一度確かめてから「止まっている」とします。</li>
+    <li id="nSince">記録は監視を始めた日からのものです。それより前の分はありません。</li>
+    <li>稼働率は「確かめた回数のうち、動いていた回数」の割合です。</li>
+  </ul>
+</main>
+
+<footer>© mogumogura ／ 個人で作って動かしているツールです</footer>
+
+<script>
+const DATA_URL=new URLSearchParams(location.search).get('data')||'https://raw.githubusercontent.com/matumogura/mogutools/status-data/status.json';
+const SVC_URL='services.json';
+const DOT={
+  ok:'<svg class="dot" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="var(--ok)"/><path d="M7 12.4l3.2 3.1L17 8.8" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  part:'<svg class="dot" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="var(--part)"/><path d="M12 6.5v6.5" stroke="#fff" stroke-width="2.8" stroke-linecap="round"/><circle cx="12" cy="17" r="1.6" fill="#fff"/></svg>',
+  down:'<svg class="dot" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="var(--down)"/><path d="M8.3 8.3l7.4 7.4M15.7 8.3l-7.4 7.4" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/></svg>',
+  none:'<svg class="dot" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="var(--none)" stroke-width="2" stroke-dasharray="3 3"/></svg>'
+};
+const LABEL={ok:'正常',part:'一部で停止',down:'停止',none:'記録なし'};
+const WD='日月火水木金土';
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const jst=d=>new Date(new Date(d).getTime()+9*3600e3);   // 表示は日本時間
+const dayKey=d=>jst(d).toISOString().slice(0,10);
+const md=k=>{ const [y,m,d]=k.split('-').map(Number); return m+'/'+d; };
+const fmtTime=d=>{ const t=jst(d); return (t.getUTCMonth()+1)+'月'+t.getUTCDate()+'日 '+String(t.getUTCHours()).padStart(2,'0')+':'+String(t.getUTCMinutes()).padStart(2,'0'); };
+const fmtDate=s=>{ const [y,m,d]=s.split('-').map(Number); return y+'年'+m+'月'+(d?d+'日':''); };
+const pct=(ok,ng)=>{ const n=ok+ng; if(!n) return '—'; const v=ok/n*100; return (v===100?'100':v>=99.995?'99.99':v.toFixed(2))+' %'; };
+const dur=ms=>{ const m=Math.round(ms/60000); if(m<60) return Math.max(m,1)+'分'; const h=Math.floor(m/60); if(h<48) return h+'時間'+(m%60?(m%60)+'分':''); return Math.floor(h/24)+'日'+(h%24?(h%24)+'時間':''); };
+const ago=d=>{ const m=Math.round((Date.now()-new Date(d))/60000); return m<1?'たった今':m<60?m+'分前':Math.floor(m/60)+'時間前'; };
+
+let SV=[], D=null, END=null;   // END: 表の右端の日
+const stOf=c=>!c||!(c[0]+c[1])?'none':!c[1]?'ok':!c[0]?'down':'part';
+
+function sum(id, days){ let ok=0,ng=0; days.forEach(k=>{ const c=(D.days[k]||{})[id]; if(c){ ok+=c[0]; ng+=c[1]; } }); return [ok,ng]; }
+function lastDays(n, end){ const a=[]; const e=new Date(end+'T00:00:00Z'); for(let i=n-1;i>=0;i--) a.push(new Date(e.getTime()-i*864e5).toISOString().slice(0,10)); return a; }
+
+function drawNow(){
+  const L=D.last, now=document.getElementById('now');
+  if(!L){ return; }
+  const stale=Date.now()-new Date(L.at)>60*60e3;
+  const down=SV.filter(s=>L.result[s.id]===false);
+  let st, msg;
+  if(stale){ st='none'; msg='しばらく確認できていません'; }
+  else if(!down.length){ st='ok'; msg='すべて動いています'; }
+  else if(down.length===SV.length){ st='down'; msg='いま、止まっています'; }
+  else { st='part'; msg=down.map(s=>s.name).join('・')+' が止まっています'; }
+  now.innerHTML=DOT[st].replace('class="dot"','class="big"')+'<div><b>'+esc(msg)+'</b><small>最後に確かめた時刻：'+fmtTime(L.at)+'（'+ago(L.at)+'）</small></div>';
+}
+function drawFacts(){
+  const today=dayKey(new Date());
+  const d30=lastDays(30,today);
+  let ok=0,ng=0; SV.forEach(s=>{ const [a,b]=sum(s.id,d30); ok+=a; ng+=b; });
+  document.getElementById('f30').textContent=pct(ok,ng);
+  // 止まらずに動いている期間：いちばん最近の停止の終わり（なければ監視開始）から
+  const done=(D.incidents||[]).filter(x=>x.to).map(x=>x.to).sort();
+  const open=(D.incidents||[]).some(x=>!x.to);
+  const from=done.length?done[done.length-1]:D.monitoringSince;
+  document.getElementById('fRun').textContent=open?'—':dur(Date.now()-new Date(from));
+  const g=D.last&&D.last.guilds; document.getElementById('fG').textContent=g?g.toLocaleString('ja-JP')+' サーバー':'—';
+}
+function drawTable(){
+  const today=dayKey(new Date());
+  if(!END) END=today;
+  const days=lastDays(7,END).reverse();   // 新しい日を左に
+  const first=dayKey(D.monitoringSince);
+  document.getElementById('range').textContent=md(days[0])+' 〜 '+md(days[6]);
+  document.getElementById('next').disabled=END>=today;
+  document.getElementById('prev').disabled=days[6]<=first;
+  document.getElementById('thead').innerHTML='<th class="svc">サービス</th><th class="up">稼働率<span class="wd">直近90日</span></th>'+days.map(k=>'<th'+(k===today?' class="tdy"':'')+'><span class="md">'+md(k)+'</span><span class="dd">'+(+k.slice(8))+'</span><span class="wd">'+(k===today?'今日':WD[new Date(k+'T00:00:00Z').getUTCDay()])+'</span></th>').join('');
+  const d90=lastDays(90,today);
+  document.getElementById('tbody').innerHTML=SV.map(s=>{
+    const up=pct(...sum(s.id,d90));
+    const ic=s.icon?'<img class="ic" src="'+esc(s.icon)+'" alt="">':'<span class="ic txt" aria-hidden="true">'+esc(s.name[0])+'</span>';
+    return '<tr><td class="svc"><div class="sv">'+ic+'<div class="nm"><b>'+esc(s.name)+'</b><small class="sub">'+esc(s.sub)+'</small>'+(s.since?'<span class="since">'+esc(fmtDate(s.since))+(s.since.length<=7?'ごろ':'')+'から稼働</span>':'')+'<small class="upm">稼働率 '+up+'</small></div></div></td><td class="up">'+up+'</td>'
+      +days.map(k=>{ const c=(D.days[k]||{})[s.id], st=stOf(c); const t=LABEL[st]+(c&&(c[0]+c[1])?'（'+pct(c[0],c[1]).replace(' ','')+'）':''); return '<td title="'+md(k)+' '+t+'">'+DOT[st].replace('<svg','<svg role="img" aria-label="'+t+'"')+'</td>'; }).join('')+'</tr>';
+  }).join('');
+}
+function drawInc(){
+  const name=id=>(SV.find(s=>s.id===id)||{}).name||id;
+  const G=new Map();   // 同じ時間帯に止まったものは1行にまとめる
+  (D.incidents||[]).forEach(x=>{ const k=x.from+'|'+(x.to||''); if(!G.has(k)) G.set(k,Object.assign({},x,{ids:[]})); G.get(k).ids.push(x.id); });
+  const list=[...G.values()].sort((a,b)=>a.from<b.from?1:-1).slice(0,20);
+  const el=document.getElementById('incs');
+  if(!list.length){ el.innerHTML='<p class="empty">監視を始めてから、止まった記録はありません。</p>'; return; }
+  el.innerHTML='<ul>'+list.map(x=>{
+    const end=x.to||(x.last||x.from);
+    const len=x.to?dur(new Date(x.to)-new Date(x.from)):'続いています';
+    const to=!x.to?'':dayKey(x.from)===dayKey(x.to)?fmtTime(x.to).split(' ')[1]:fmtTime(x.to);
+    return '<li'+(x.to?'':' class="ongoing"')+'><time>'+fmtTime(x.from)+' 〜 '+to+'</time><span>'+(x.ids.length===SV.length?'すべて':esc(SV.filter(s=>x.ids.includes(s.id)).map(s=>s.name).join('・')))+'（'+len+'）</span></li>';
+  }).join('')+'</ul>';
+}
+function drawLegend(){ document.getElementById('legend').innerHTML=['ok','part','down','none'].map(k=>'<span>'+DOT[k]+LABEL[k]+'</span>').join(''); }
+
+document.getElementById('prev').onclick=()=>{ END=new Date(new Date(END+'T00:00:00Z').getTime()-7*864e5).toISOString().slice(0,10); drawTable(); };
+document.getElementById('next').onclick=()=>{ const t=dayKey(new Date()); const n=new Date(new Date(END+'T00:00:00Z').getTime()+7*864e5).toISOString().slice(0,10); END=n>t?t:n; drawTable(); };
+
+async function load(){
+  try{
+    const [sv, d]=await Promise.all([fetch(SVC_URL).then(r=>r.json()), fetch(DATA_URL,{cache:'no-store'}).then(r=>{ if(!r.ok) throw new Error(r.status); return r.json(); })]);
+    SV=sv.services; D=d;
+    document.getElementById('nSince').textContent='記録は監視を始めた '+fmtDate(dayKey(D.monitoringSince))+' からのものです。それより前の分はありません。';
+    drawNow(); drawFacts(); drawTable(); drawInc();
+  }catch(e){
+    const er=document.getElementById('err'); er.hidden=false; er.textContent='記録を読み込めませんでした。少し時間をおいて開き直してください。';
+  }
+}
+drawLegend(); load();
+setInterval(load, 5*60e3);
+</script>
+</body>
+</html>

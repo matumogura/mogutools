@@ -34,13 +34,13 @@ h1,h2,.catch{text-wrap:balance;word-break:auto-phrase}
 /* ===== 上：空 ===== */
 .top-wrap{background:linear-gradient(180deg,var(--sky) 0%, #eef8fb 100%);padding:0 16px;overflow:hidden}
 .top{max-width:1120px;margin:0 auto;display:flex;align-items:center;gap:16px;padding:18px 0}
-.logo{font:400 22px/1 var(--pop);text-decoration:none;letter-spacing:.02em}
+.logo{font:700 22px/1 var(--pop);text-decoration:none;letter-spacing:.02em}
 .top .sp{flex:1}
 .top .ask{font-weight:700;font-size:15px;text-decoration:none;padding:10px 4px;border-bottom:3px solid transparent;transition:border-color .2s}
 .top .ask:hover{border-color:var(--sun)}
 
 .hero{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:1fr 1.1fr;align-items:center;gap:32px;padding:30px 0 36px}
-.hero h1{font:400 clamp(34px,5.2vw,60px)/1.3 var(--pop);margin:0 0 16px;letter-spacing:.02em}
+.hero h1{font:700 clamp(34px,5.2vw,60px)/1.3 var(--pop);margin:0 0 16px;letter-spacing:.02em}
 .hero p{margin:0;font-size:clamp(15px,1.6vw,18px);color:var(--ink2);font-weight:700}
 .jump{display:flex;flex-wrap:wrap;gap:10px;list-style:none;margin:28px 0 0;padding:0}
 .jump a{display:flex;align-items:center;gap:8px;padding:6px 16px 6px 6px;border-radius:999px;background:#fff;text-decoration:none;font-weight:700;font-size:15px;line-height:1.4;box-shadow:0 3px 0 rgba(46,58,94,.12);transition:transform .2s var(--ease)}
@@ -66,11 +66,17 @@ h1,h2,.catch{text-wrap:balance;word-break:auto-phrase}
 .kind{font-size:13px;font-weight:700;color:var(--ink2);margin:10px 0 0}
 .name{display:flex;align-items:center;gap:14px;margin:0}
 .name img,.name .ico{width:64px;height:64px;border-radius:18px;flex:none;box-shadow:0 4px 0 rgba(46,58,94,.12)}
-.name h2{font:400 clamp(26px,3.2vw,36px)/1.2 var(--pop);margin:0;letter-spacing:.02em}
+.name h2{font:700 clamp(26px,3.2vw,36px)/1.2 var(--pop);margin:0;letter-spacing:.02em}
 .catch{font:700 clamp(19px,2.2vw,23px)/1.6 var(--body);margin:14px 0 16px}
 .bubbles{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0 0 24px;padding:0}
 .bubbles li{padding:6px 14px;border-radius:999px;background:#fff;font-weight:700;font-size:14.5px}
 .btns{display:flex;flex-wrap:wrap;gap:10px}
+.guide{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-top:14px;max-width:520px}
+.guide a{display:block;padding:12px 16px 12px 46px;position:relative;border-radius:18px;background:#fff;text-decoration:none;color:var(--ink);box-shadow:0 3px 0 rgba(46,58,94,.12);border:2px solid var(--sky)}
+.guide a::before{content:"";position:absolute;left:14px;top:50%;width:22px;height:22px;margin-top:-11px;border-radius:50%;background:var(--sky) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232e3a5e' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 6l6 6-6 6'/%3E%3C/svg%3E") center/14px no-repeat}
+.guide a:hover{border-color:var(--ink2)}
+.guide b{display:block;font-size:15px;line-height:1.4}
+.guide small{display:block;font-size:12.5px;color:var(--ink2);font-weight:700;line-height:1.5}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;background:var(--ink);color:#fff;text-decoration:none;font-weight:700;font-size:15px;box-shadow:0 4px 0 #1d2645;transition:transform .12s, box-shadow .12s}
 .btn:hover{transform:translateY(2px);box-shadow:0 2px 0 #1d2645}
 .btn:active{transform:translateY(4px);box-shadow:none}
@@ -85,7 +91,7 @@ h1,h2,.catch{text-wrap:balance;word-break:auto-phrase}
 /* ===== 下：連絡 ===== */
 .den{background:linear-gradient(180deg,var(--soil),var(--soil2));padding:0 16px 76px;text-align:center}
 .den .lid{display:block;width:calc(100% + 32px);margin:0 -16px 44px;height:clamp(40px,7vw,90px)}
-.den h2{font:400 clamp(24px,3vw,32px)/1.4 var(--pop);margin:0 0 10px;color:var(--bark)}
+.den h2{font:700 clamp(24px,3vw,32px)/1.4 var(--pop);margin:0 0 10px;color:var(--bark)}
 .den p{margin:0 0 22px;color:#553d2d;font-weight:700}
 .den .btns{justify-content:center}
 .den .btn{background:#4752c4;box-shadow:0 4px 0 #343c94}
@@ -179,6 +185,10 @@ h1,h2,.catch{text-wrap:balance;word-break:auto-phrase}
         <a class="btn" data-link="kpviewerStore" href="#" target="_blank" rel="noopener">体験版を Microsoft Store で見る</a>
         <a class="btn sub" data-link="kpviewerBooth" href="#" target="_blank" rel="noopener">BOOTH で見る</a>
       </div>
+      <div class="guide">
+        <a href="kipaview/guide/quickstart.html"><b>クイックスタート</b><small>取り込みから卓報告まで 5 つの手順</small></a>
+        <a href="kipaview/guide/"><b>使い方ガイド</b><small>やりたいこと別・画面の写真つき</small></a>
+      </div>
     </div>
   </section>
 
@@ -239,6 +249,7 @@ h1,h2,.catch{text-wrap:balance;word-break:auto-phrase}
   <div class="in">
     <span>© mogumogura</span>
     <a href="saboonmarklet.html">差分一括登録ブックマークレット</a>
+    <a href="status/">稼働状況</a>
     <small>どのツールも個人制作の非公式ツールです。ココフォリア・Discord の公式とは関係ありません。</small>
   </div>
 </footer>

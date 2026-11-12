@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>キパビュー 使い方ガイド｜mogutools</title>
+<meta name="description" content="KP 向けシナリオビューア「キパビュー」の使い方を、やりたいこと別にまとめたガイドです。シナリオの読み込み、ココフォリア・Tekey への送信、編集、卓や探索者の記録まで。">
+<meta property="og:title" content="キパビュー 使い方ガイド">
+<meta property="og:description" content="やりたいこと別に、キパビューの使い方をまとめました。">
+<link rel="icon" href="../../img/kpviewer.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="guide.css">
+</head>
+<body>
+<header class="top"><div class="topin">
+  <a class="brand" href="./"><img src="../../img/kpviewer.png" alt=""><span>キパビュー</span><small>使い方ガイド</small></a>
+  <span class="sp"></span>
+  <a class="toplink" href="../../">ツールの紹介へ</a>
+</div></header>
+
+<div class="hero">
+  <span class="kicker">やりたいこと別</span>
+  <h1>キパビューの使い方</h1>
+  <p>キパビューは、KP（キーパー）のためのシナリオビューアです。シナリオを読み込んで、本文をクリックするだけでオンセのチャットに送れます。卓の予定・記録や探索者の管理もまとめてできます。やりたいことから選んでください。</p>
+  <a class="qsban" href="quickstart.html"><span class="qsi">▶</span><span><b>はじめての方は「クイックスタート」から</b><small>シナリオを取り込んで、募集・メンバー登録・本文の調整・卓報告まで、5 つの手順で通して使えます</small></span><span class="qsgo">見る →</span></a>
+  <ul class="quick">
+    <li><a href="#start"><span class="n">1</span>はじめに</a></li>
+    <li><a href="#import"><span class="n">2</span>シナリオを読み込む</a></li>
+    <li><a href="#send"><span class="n">3</span>ココフォリアに送る</a></li>
+    <li><a href="#tekey"><span class="n">4</span>Tekey に送る</a></li>
+    <li><a href="#edit"><span class="n">5</span>本文を直す</a></li>
+    <li><a href="#play"><span class="n">6</span>セッションを進める</a></li>
+    <li><a href="#shelf"><span class="n">7</span>シナリオを管理する</a></li>
+    <li><a href="#home"><span class="n">8</span>卓の予定と記録</a></li>
+    <li><a href="#pc"><span class="n">9</span>探索者を管理する</a></li>
+    <li><a href="#make"><span class="n">10</span>素材を作る</a></li>
+    <li><a href="#faq"><span class="n">?</span>困ったとき</a></li>
+  </ul>
+</div>
+
+<div class="wrap">
+<nav class="toc" aria-label="目次"><b>目次</b><ol>
+  <li><a href="#start">はじめに</a></li>
+  <li><a href="#import">シナリオを読み込む</a></li>
+  <li><a href="#send">ココフォリアに送る</a></li>
+  <li><a href="#tekey">Tekey に送る</a></li>
+  <li><a href="#edit">本文を直す</a></li>
+  <li><a href="#play">セッションを進める</a></li>
+  <li><a href="#shelf">シナリオを管理する</a></li>
+  <li><a href="#home">卓の予定と記録</a></li>
+  <li><a href="#pc">探索者を管理する</a></li>
+  <li><a href="#make">素材を作る</a></li>
+  <li><a href="#faq">困ったとき</a></li>
+</ol></nav>
+
+<main>
+<section id="start">
+  <h2><span class="n">1</span>はじめに</h2>
+  <p class="lead">使う PC と、送り先のツールに合わせて準備します。</p>
+  <table class="os">
+    <tr><th>Windows</th><td>Microsoft Store の「Windowsアプリ版」を使います。ココフォリアへは、拡張機能なしでクリックから直接送れます。</td></tr>
+    <tr><th>Mac</th><td>「Macアプリ版」を使います。ココフォリアへ送るときは、Chrome の拡張機能「ココフォリアパレット」を入れてください。拡張なしでも、クリックでコピーして貼り付けられます。</td></tr>
+    <tr><th>Tekey</th><td>Windows・Mac とも、アプリから Tekey の部屋に直接送れます（<a href="#tekey">Tekey に送る</a>）。</td></tr>
+    <tr><th>そのほかのツール</th><td>クリックでコピーして、チャット欄に貼り付けます。</td></tr>
+  </table>
+  <div class="note"><b>ヒント</b><span>アプリを開くと、まず「ホーム」が出ます。左上のロゴを押すと、いつでもホームに戻れます。上の <span class="k">シナリオ</span> <span class="k">卓</span> <span class="k">探索者</span> で画面を切り替えます。</span></div>
+</section>
+
+<section id="import">
+  <h2><span class="n">2</span>シナリオを読み込む</h2>
+  <p class="lead">PDF・テキスト・Word・Web 公開型の HTML を読み込めます。章や見出しは自動で目次になります。</p>
+  <ol class="steps">
+    <li><span class="k">シナリオ</span> の画面で、右上の <span class="k">＋ 追加</span> を押してファイルを選びます（画面にファイルをドラッグしても入ります）。</li>
+    <li>「解析の設定」が開きます。左に目次、真ん中に本文、右に見出しの決まりが出ます。</li>
+    <li>見出しの記号（■ や ▼ など）ごとに「章」「見出し」「小見出し」などを選び、<span class="k">この設定で再解析して開く</span> を押します。</li>
+  </ol>
+  <figure><a href="img/import.webp"><img src="img/import.webp" alt="解析の設定の画面。左に目次、中央に本文、右に見出しの記号ごとの役割" loading="lazy" width="1300" height="800"></a><figcaption>解析の設定：記号ごとに、章・見出し・小見出しなどを決めます</figcaption></figure>
+  <ul class="pts">
+    <li>2 段組みの PDF も、左の段から順に読みます。</li>
+    <li>本文と資料集など、複数のファイルを 1 つのシナリオにまとめられます。</li>
+    <li>「漢字（かな）」と書いてある読みは、ふりがなにして表示します。</li>
+    <li>見出しの決まりは、あとから <span class="k">設定</span> の「見出し」で変えられます。</li>
+  </ul>
+</section>
+
+<section id="send">
+  <h2><span class="n">3</span>ココフォリアに送る</h2>
+  <p class="lead">本文をクリックすると、ココフォリアのチャットに届きます。</p>
+  <figure><a href="img/read.webp"><img src="img/read.webp" alt="シナリオの本文。HO ごとに色分けされた秘匿のカード" loading="lazy" width="1300" height="800"></a><figcaption>本文：クリックで 1 行、左の余白で段落・見出し・章をまとめて送ります</figcaption></figure>
+  <h3>送り方</h3>
+  <ul class="pts">
+    <li>本文の文をクリック：その 1 行を送ります。</li>
+    <li>左の余白をクリック：段落・見出し・章をまとめて送ります。</li>
+    <li>文字をドラッグして選んでから押す：選んだところだけを送ります。</li>
+    <li>【HO1秘匿】などの秘匿は、人ごとに色分けされ、その人の秘匿タブに送られます。</li>
+  </ul>
+  <h3>送り先の部屋とタブを決める</h3>
+  <ol class="steps">
+    <li>上のバーの <span class="k">設定</span> を押し、<span class="k">送信先</span> を開きます。</li>
+    <li>「送り先の部屋」で <span class="k">ココフォリア</span> を選び、部屋の URL を貼ります（開いている部屋が 1 つなら自動で選ばれます）。</li>
+    <li>「タブ名」で、メイン・情報・秘匿などのタブを、ココフォリアのタブの名前に合わせます。</li>
+  </ol>
+  <figure><a href="img/send.webp"><img src="img/send.webp" alt="送信先の設定。ココフォリアと Tekey の切り替え、送り先の部屋、タブ名" loading="lazy" width="1300" height="800"></a><figcaption>送信先：つなぎ方と、送るタブを決めます</figcaption></figure>
+  <h3>NPC の名前・PC の名前</h3>
+  <p><span class="k">設定</span> の <span class="k">登場人物</span> で、NPC のセリフをその NPC の名前で送るか、本文の「PC1」などを探索者の名前に置き換えるかを決められます。</p>
+  <figure><a href="img/names.webp"><img src="img/names.webp" alt="登場人物の設定。KP の名前、探索者の呼び方と人数" loading="lazy" width="1300" height="800"></a></figure>
+</section>
+
+<section id="tekey">
+  <h2><span class="n">4</span>Tekey に送る</h2>
+  <p class="lead">Tekey の部屋に、アプリから直接送れます。タブの振り分け・発言者・文字色にも対応しています。</p>
+  <ol class="steps">
+    <li><span class="k">設定</span> → <span class="k">送信先</span> で、つなぎ方を <span class="k">Tekey</span> にします。</li>
+    <li>Tekey の部屋の URL（または部屋の ID）を貼ります。</li>
+    <li>タブの設定は、ココフォリアのときと同じ並べ方で決められます。</li>
+  </ol>
+  <figure class="narrow"><a href="img/tekey-pal.webp"><img src="img/tekey-pal.webp" alt="Tekey のパレット。発言者・色・タブを選んで送る" loading="lazy" width="640" height="1600"></a><figcaption>Tekey のパレット：発言者や色を選んで、自分で書いた文も送れます</figcaption></figure>
+</section>
+
+<section id="edit">
+  <h2><span class="n">5</span>本文を直す</h2>
+  <p class="lead">読み込んだシナリオの本文を、その場で直せます。元のファイルは書き換えません。</p>
+  <ol class="steps">
+    <li>上のバーの <span class="k">編集</span> を押すと、右に「編集モード」のパネルが開きます。</li>
+    <li>本文の段落を押して選び、文字を書き直します。</li>
+    <li>パネルで、段落の種類（セリフ・見出し・情報・技能判定など）や、送り先のタブ・発言者を決めます。</li>
+  </ol>
+  <figure><a href="img/edit.webp"><img src="img/edit.webp" alt="編集モード。右のパネルで段落の種類や書式を選ぶ" loading="lazy" width="1300" height="800"></a><figcaption>編集モード：選んだ段落を、右のパネルで設定します</figcaption></figure>
+  <div class="note"><b>戻す</b><span><kbd>Ctrl</kbd>+<kbd>Z</kbd> で元に戻し、<kbd>Ctrl</kbd>+<kbd>Y</kbd> でやり直せます（Mac は <kbd>⌘</kbd>）。</span></div>
+</section>
+
+<section id="play">
+  <h2><span class="n">6</span>セッションを進める</h2>
+  <p class="lead">探索箇所や技能判定は、自動でカードになります。</p>
+  <figure><a href="img/play.webp"><img src="img/play.webp" alt="探索箇所のカードと技能判定のカード" loading="lazy" width="1300" height="800"></a><figcaption>探索箇所の名前を押すと、その場所の本文へ移ります</figcaption></figure>
+  <ul class="pts">
+    <li><b>記録</b>：SAN 喪失の合計・時間・ギミックの数値・フラグ・メモを、探索者ごとに残せます（<span class="k">設定</span> → <span class="k">記録</span> でオン）。</li>
+    <li><b>KPレスモード</b>：本文を伏字にして、マウスを乗せた間だけ見せます（上のバーの <span class="k">⋯</span> から）。</li>
+    <li><b>表情・カットイン</b>：セリフに「@笑顔」のように書くと、表情差分やカットインを一緒に送れます。</li>
+  </ul>
+</section>
+
+<section id="shelf">
+  <h2><span class="n">7</span>シナリオを管理する</h2>
+  <p class="lead">「本棚」で、持っているシナリオを表紙・タグ・ステータスで並べます。</p>
+  <figure><a href="img/shelf.webp"><img src="img/shelf.webp" alt="本棚。表紙が並び、上にタグやステータスの絞り込み" loading="lazy" width="1300" height="800"></a></figure>
+  <ul class="pts">
+    <li>表紙を押すと、作者・人数・時間・ステータス（未読／回したい／準備中／KP済 など）を見たり直したりできます。</li>
+    <li><span class="k">概要をコピー</span> で、Discord にそのまま貼れる募集用の文を作れます。</li>
+    <li>BOOTH Library Manager（Windows）のフォルダや、BOOTH・TALTO・pixiv のページから登録できます。</li>
+    <li>本棚は毎日自動でバックアップします。</li>
+  </ul>
+  <figure><a href="img/drawer.webp"><img src="img/drawer.webp" alt="本棚でシナリオを開いた詳細の画面" loading="lazy" width="1300" height="800"></a></figure>
+</section>
+
+<section id="home">
+  <h2><span class="n">8</span>卓の予定と記録</h2>
+  <p class="lead">ホームで、次の卓までの時間・カレンダー・記録や準備をまとめて見られます。</p>
+  <figure><a href="img/home.webp"><img src="img/home.webp" alt="ホーム。時計と次の卓までの時間、直近の卓、カレンダー、右に記録のスクショ" loading="lazy" width="1300" height="800"></a><figcaption>ホーム：右は「記録」（スクショやログ）と「準備」を切り替えられます</figcaption></figure>
+  <h3>卓を登録する</h3>
+  <ol class="steps">
+    <li><span class="k">卓</span> の画面で <span class="k">＋ 卓を追加</span>（ホームでは <span class="k">新規登録する</span>）を押します。</li>
+    <li>卓名・日程・KP・PL・探索者を入れます。本棚のシナリオとつなぐと、表紙が出ます。</li>
+    <li>終わったら、エンド・スクショ・ココフォリアのログを入れておけます。</li>
+  </ol>
+  <figure><a href="img/tkedit.webp"><img src="img/tkedit.webp" alt="卓の記録の入力画面" loading="lazy" width="1300" height="800"></a></figure>
+  <h3>便利な使い方</h3>
+  <ul class="pts">
+    <li><b>5分前にアラーム</b>：ホームのアラームをオンにすると、卓の 5 分前に止めるまで鳴らします（キパビューを開いている間だけ）。音も選べます。</li>
+    <li><b>まとめて開く</b>：直近の卓のカードから、シナリオの本文・ココフォリアの部屋・VC を一度に開けます。</li>
+    <li><b>準備のチェック</b>：「準備」で、招待・日程確定・秘匿配布などを卓ごとにチェックできます。</li>
+    <li><b>カレンダー</b>：Google カレンダーの予定や、探索者の誕生日も重ねて見られます。</li>
+  </ul>
+  <figure><a href="img/cal.webp"><img src="img/cal.webp" alt="卓のカレンダー" loading="lazy" width="1300" height="800"></a></figure>
+</section>
+
+<section id="pc">
+  <h2><span class="n">9</span>探索者を管理する</h2>
+  <p class="lead">探索者のキャラシ・立ち絵・能力値・技能をまとめて管理できます。</p>
+  <ul class="pts">
+    <li>いあきゃら・キャラクター保管所などの URL や、ココフォリアの駒から取り込めます。</li>
+    <li>表・カード・立ち絵・分布（マトリクス）で並べられます。</li>
+    <li>卓で育った技能の値は、拡張機能を使っていあきゃらに反映できます。</li>
+  </ul>
+  <figure><a href="img/pc.webp"><img src="img/pc.webp" alt="探索者の一覧" loading="lazy" width="1300" height="800"></a></figure>
+  <figure><a href="img/dist.webp"><img src="img/dist.webp" alt="探索者の分布（マトリクス）" loading="lazy" width="1300" height="800"></a></figure>
+</section>
+
+<section id="make">
+  <h2><span class="n">10</span>素材を作る</h2>
+  <p class="lead">上のバーの画像のボタンから「画像を作る」を開きます。</p>
+  <ul class="pts">
+    <li>場所の帯・探索箇所の一覧・ToDo を、透過画像で書き出せます。</li>
+    <li>「文字（縦・横）」では、自分のフォントを選んで、縦書き・横書きの文字を作れます。文字が現れるアニメーションにもできます。</li>
+    <li>形式は PNG と WebP（軽い）から選べます。</li>
+  </ul>
+  <figure><a href="img/img.webp"><img src="img/img.webp" alt="画像を作るの画面" loading="lazy" width="1300" height="800"></a></figure>
+  <figure><a href="img/imgtext.webp"><img src="img/imgtext.webp" alt="画像を作る：文字（縦書き）" loading="lazy" width="1300" height="900"></a></figure>
+</section>
+
+<section id="faq">
+  <h2><span class="n">?</span>困ったとき</h2>
+  <dl class="faq">
+    <dt>クリックしても送られない</dt>
+    <dd><span class="k">設定</span> → <span class="k">送信先</span> で、つなぎ方と送り先の部屋を確かめてください。Mac は拡張機能「ココフォリアパレット」とつながっている必要があります。</dd>
+    <dt>見出しや章がうまく分かれない</dt>
+    <dd><span class="k">設定</span> → <span class="k">見出し</span>（解析の設定）で、記号ごとの役割を変えて再解析してください。1 行だけ変えたいときは、編集モードで段落の種類を選びます。</dd>
+    <dt>間違えて消した・変えてしまった</dt>
+    <dd><kbd>Ctrl</kbd>+<kbd>Z</kbd> で戻せます。本棚は毎日自動でバックアップしています。</dd>
+    <dt>ほかのウィンドウの後ろに回らない</dt>
+    <dd><span class="k">設定</span> → <span class="k">送信先</span> → 「送り方」の「このウィンドウを常に手前に表示」を外してください。</dd>
+  </dl>
+  <p style="margin-top:18px">わからないことや不具合は、Discord サーバーか X でお知らせください。</p>
+  <div class="help">
+    <a class="btn" href="https://discord.gg/h3uGnbw7Nj" target="_blank" rel="noopener">Discord サーバー</a>
+    <a class="btn sub" href="https://x.com/mogum00gura" target="_blank" rel="noopener">X（@mogum00gura）</a>
+  </div>
+</section>
+</main>
+</div>
+
+<footer>© mogumogura ／ キパビューは個人制作のツールです。ココフォリア・Tekey の公式とは関係ありません。</footer>
+
+<div class="zoom" id="zoom" role="dialog" aria-label="画像を大きく表示"><img alt=""></div>
+<script>
+// 画像を押すと大きく（Esc・どこかを押すと閉じる）
+const Z=document.getElementById('zoom'), ZI=Z.querySelector('img');
+document.addEventListener('click', e=>{ const a=e.target.closest('figure a'); if(!a) return; e.preventDefault(); ZI.src=a.getAttribute('href'); ZI.alt=(a.querySelector('img')||{}).alt||''; Z.classList.add('on'); });
+Z.addEventListener('click', ()=>Z.classList.remove('on'));
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') Z.classList.remove('on'); });
+// 目次：いま見ている所に印
+const links=[...document.querySelectorAll('nav.toc a')];
+const io=new IntersectionObserver(es=>{ es.forEach(en=>{ if(en.isIntersecting){ links.forEach(a=>a.classList.toggle('on', a.getAttribute('href')==='#'+en.target.id)); } }); }, {rootMargin:'-30% 0px -60% 0px'});
+document.querySelectorAll('main section').forEach(s=>io.observe(s));
+</script>
+</body>
+</html>

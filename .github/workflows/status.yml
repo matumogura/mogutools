@@ -1,0 +1,37 @@
+# 稼働状況ページ（status/）のための確認。5分おきに Macchan などを見に行き、
+# 結果を status-data ブランチの status.json に残す（main には書かないので、ページの作り直しは起きない）。
+name: 稼働状況の確認
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: status
+  cancel-in-progress: false
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: これまでの記録を取ってくる
+        run: |
+          if git fetch -q --depth=1 origin status-data; then
+            git show FETCH_HEAD:status.json > "$RUNNER_TEMP/status.json" || true
+          fi
+      - name: 確認する
+        run: node status/check.mjs "$RUNNER_TEMP/status.json"
+      - name: 記録を残す（1つのコミットに上書き）
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir "$RUNNER_TEMP/out" && cd "$RUNNER_TEMP/out"
+          git init -q && cp "$RUNNER_TEMP/status.json" .
+          git add status.json
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -qm "稼働状況の記録"
+          git push -qf "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:status-data

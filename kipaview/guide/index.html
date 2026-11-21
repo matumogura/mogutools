@@ -36,6 +36,7 @@
     <li><a href="#home"><span class="n">8</span>卓の予定と記録</a></li>
     <li><a href="#pc"><span class="n">9</span>探索者を管理する</a></li>
     <li><a href="#make"><span class="n">10</span>素材を作る</a></li>
+    <li><a href="#mobile"><span class="n">11</span>スマホ・iPad で使う</a></li>
     <li><a href="#faq"><span class="n">?</span>困ったとき</a></li>
   </ul>
 </div>
@@ -52,6 +53,7 @@
   <li><a href="#home">卓の予定と記録</a></li>
   <li><a href="#pc">探索者を管理する</a></li>
   <li><a href="#make">素材を作る</a></li>
+  <li><a href="#mobile">スマホ・iPad で使う</a></li>
   <li><a href="#faq">困ったとき</a></li>
 </ol></nav>
 
@@ -63,6 +65,7 @@
     <tr><th>Windows</th><td>Microsoft Store の「Windowsアプリ版」を使います。ココフォリアへは、拡張機能なしでクリックから直接送れます。</td></tr>
     <tr><th>Mac</th><td>「Macアプリ版」を使います。ココフォリアへ送るときは、Chrome の拡張機能「ココフォリアパレット」を入れてください。拡張なしでも、クリックでコピーして貼り付けられます。</td></tr>
     <tr><th>Tekey</th><td>Windows・Mac とも、アプリから Tekey の部屋に直接送れます（<a href="#tekey">Tekey に送る</a>）。</td></tr>
+    <tr><th>スマホ・iPad</th><td>ブラウザで <a href="https://kp-viewer.pages.dev" target="_blank" rel="noopener">kp-viewer.pages.dev</a> を開きます。購入者ログインで製品版になります（<a href="#mobile">スマホ・iPad で使う</a>）。ココフォリアへは、タップでコピーして貼り付けます。</td></tr>
     <tr><th>そのほかのツール</th><td>クリックでコピーして、チャット欄に貼り付けます。</td></tr>
   </table>
   <div class="note"><b>ヒント</b><span>アプリを開くと、まず「ホーム」が出ます。左上のロゴを押すと、いつでもホームに戻れます。上の <span class="k">シナリオ</span> <span class="k">卓</span> <span class="k">探索者</span> で画面を切り替えます。</span></div>
@@ -93,6 +96,8 @@
   <ul class="pts">
     <li>本文の文をクリック：その 1 行を送ります。</li>
     <li>左の余白をクリック：段落・見出し・章をまとめて送ります。</li>
+    <li>章見出しの番号（00 など）をクリック：その章をまるごと送ります。</li>
+    <li>カードの見出し・左端をクリック：カードの中身をまとめて送ります。右上の札（→ 送信先・発言者）の文字は送りません。</li>
     <li>文字をドラッグして選んでから押す：選んだところだけを送ります。</li>
     <li>【HO1秘匿】などの秘匿は、人ごとに色分けされ、その人の秘匿タブに送られます。</li>
   </ul>
@@ -180,7 +185,10 @@
     <li><b>5分前にアラーム</b>：ホームのアラームをオンにすると、卓の 5 分前に止めるまで鳴らします（キパビューを開いている間だけ）。音も選べます。</li>
     <li><b>まとめて開く</b>：直近の卓のカードから、シナリオの本文・ココフォリアの部屋・VC を一度に開けます。</li>
     <li><b>準備のチェック</b>：「準備」で、招待・日程確定・秘匿配布などを卓ごとにチェックできます。</li>
+    <li><b>準備の項目を変える</b>：準備の表の右端の <span class="k">＋ 項目</span>（または <span class="k">項目の編集</span>）から、項目を足す・消す・名前を変える・並べ替える・出さないを決められます。名前を変えても、卓ごとの済みの印はそのまま残ります。</li>
+    <li><b>卓の並べ替え・隠す</b>：準備の一覧の卓は、名前の横の ↑↓（つまんで動かすこともできます）で並べ替えられます（<span class="k">日付順</span> と <span class="k">自分の並び</span> を切り替え）。<span class="k">隠す</span> で一覧から外し、<span class="k">隠した卓も出す</span> から戻せます。</li>
     <li><b>カレンダー</b>：Google カレンダーの予定や、探索者の誕生日も重ねて見られます。</li>
+    <li><b>別の端末へまとめて渡す</b>：<span class="k">連携</span> → <span class="k">自分の別の端末へ</span> で、卓の記録と探索者を 1 つのファイルにして、スマホ・iPad や別の PC に渡せます（<a href="#mobile">スマホ・iPad で使う</a>）。</li>
   </ul>
   <figure><a href="img/cal.webp"><img src="img/cal.webp" alt="卓のカレンダー" loading="lazy" width="1300" height="800"></a></figure>
 </section>
@@ -209,6 +217,43 @@
   <figure><a href="img/imgtext.webp"><img src="img/imgtext.webp" alt="画像を作る：文字（縦書き）" loading="lazy" width="1300" height="900"></a></figure>
 </section>
 
+<section id="mobile">
+  <h2><span class="n">11</span>スマホ・iPad で使う</h2>
+  <p class="lead">移動中のシナリオ整理や、iPad での KP に。シナリオは端末の中だけに置き、サーバーには送りません。</p>
+  <h3>はじめて使う</h3>
+  <ol class="steps">
+    <li>Safari で <a href="https://kp-viewer.pages.dev" target="_blank" rel="noopener">kp-viewer.pages.dev</a> を開きます。はじめは体験版です。</li>
+    <li>右下の <span class="k">購入者ログイン（製品版を開く）</span> を押して、Discord でログインします。キパビュー購入者のロールがあると、製品版が開きます。</li>
+    <li>共有ボタン → <span class="k">ホーム画面に追加</span> で、アプリのように使えます。一度開けば、電波がないところでも開きます。</li>
+    <li>ホーム画面のアプリは Safari と別に保存するので、アプリの中でもう一度 <span class="k">購入者ログイン</span> を押します。ブラウザでログインして「ログインできました」と出たら、アプリに戻ってください。</li>
+  </ol>
+  <h3>指での操作</h3>
+  <ul class="pts">
+    <li>長押しすると、パソコンの右クリックと同じメニューが出ます（本棚のカード・卓の表・探索者の札など）。本文の長押しは、編集モードのときだけです。ふだんは文字を選べます。</li>
+    <li>マウスを乗せたときだけ出るボタン（カードの ★ など）は、その場所をタップすると出ます。</li>
+    <li>絞り込みや並び替えの行は、横にスワイプすると続きが出ます。</li>
+  </ul>
+  <h3>PC と調整データをやりとりする</h3>
+  <ul class="pts">
+    <li>シナリオを開いて <span class="k">設定</span> → <span class="k">調整データを書き出す</span> を押すと、下に <span class="k">共有する</span> が出ます。AirDrop・ファイルに保存・Discord などで送れます。</li>
+    <li>受け取る側では、同じシナリオを開いて <span class="k">調整データを読み込む</span> を押し、ファイルを選びます。同じ PDF を読み込んでいれば、そのまま当たります。</li>
+    <li>調整データには、シナリオの本文は入りません。</li>
+  </ul>
+  <h3>卓の記録と探索者をまとめて渡す</h3>
+  <ol class="steps">
+    <li>渡す側で、<span class="k">卓</span> か <span class="k">探索者</span> の <span class="k">連携</span> → <span class="k">自分の別の端末へ</span> を押します。</li>
+    <li>スクショ・ログ・立ち絵・差分を入れるか選んで、<span class="k">ファイルに書き出す</span> を押します。入れるほどファイルが大きくなるので、スマホに渡すときは少なめがおすすめです。</li>
+    <li>できたファイルを、AirDrop・ファイルに保存・Discord などで渡します。</li>
+    <li>受け取る側で <span class="k">連携</span> を開き、そのファイルを選びます。新しく入る数・直す数を確かめてから取り込みます。</li>
+  </ol>
+  <ul class="pts">
+    <li>同じ卓・探索者は、あとから直したほうに合わせます。受け取る側のほうが新しければ、そのままです。</li>
+    <li>画像を入れずに渡したときは、受け取る側にある画像を残します。</li>
+    <li>シナリオの本文は入りません。</li>
+  </ul>
+  <div class="note"><b>できないこと</b><span>ココフォリアパレット（Chrome の拡張機能）・Tekey への直接送信・フォルダからの自動の取り込み・まるごとバックアップは、パソコンのアプリ版だけです。</span></div>
+</section>
+
 <section id="faq">
   <h2><span class="n">?</span>困ったとき</h2>
   <dl class="faq">
@@ -218,6 +263,8 @@
     <dd><span class="k">設定</span> → <span class="k">見出し</span>（解析の設定）で、記号ごとの役割を変えて再解析してください。1 行だけ変えたいときは、編集モードで段落の種類を選びます。</dd>
     <dt>間違えて消した・変えてしまった</dt>
     <dd><kbd>Ctrl</kbd>+<kbd>Z</kbd> で戻せます。本棚は毎日自動でバックアップしています。</dd>
+    <dt>書き出したファイルが見つからない</dt>
+    <dd>アプリ版では、書き出したファイル（takuhoko 用の書き出し・画像を作る・バックアップなど）は「ダウンロード」フォルダに保存されます。保存すると画面の下にお知らせが出るので、「フォルダを開く」で開けます。保存できなかったときは、わけが表示されます。</dd>
     <dt>ほかのウィンドウの後ろに回らない</dt>
     <dd><span class="k">設定</span> → <span class="k">送信先</span> → 「送り方」の「このウィンドウを常に手前に表示」を外してください。</dd>
   </dl>

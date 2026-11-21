@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>キパビュー プライバシーポリシー｜mogutools</title>
+<meta name="description" content="KP 向けシナリオビューア「キパビュー」が扱う情報と、Google カレンダー連携で受け取る Google のユーザーデータの扱いについて。">
+<link rel="icon" href="../img/kpviewer.png">
+<link rel="stylesheet" href="guide/guide.css">
+<style>
+  .doc{max-width:860px;margin:0 auto;padding:28px 20px 80px;line-height:1.85}
+  .doc h1{font-size:26px;margin:8px 0 4px}.doc h2{font-size:19px;margin:34px 0 8px;padding-top:6px;border-top:1px solid #e6e2ef}
+  .doc table{border-collapse:collapse;width:100%;font-size:14px;margin:8px 0}.doc th,.doc td{border:1px solid #e3dfeb;padding:7px 9px;text-align:left;vertical-align:top}.doc th{background:#f6f3fb}
+  .doc .en{background:#f7f9fc;border:1px solid #e1e8f3;border-radius:12px;padding:4px 18px 10px;margin-top:30px}
+  .doc .lu{font-weight:700}
+  .doc td:first-child{white-space:nowrap}
+  .doc small{color:#777}
+</style>
+</head>
+<body>
+<header class="top"><div class="topin">
+  <a class="brand" href="./"><img src="../img/kpviewer.png" alt=""><span>キパビュー</span><small>プライバシーポリシー</small></a>
+  <span class="sp"></span>
+  <a class="toplink" href="./">キパビューの紹介へ</a>
+</div></header>
+<main class="doc">
+<h1>キパビュー プライバシーポリシー</h1>
+<p><small>最終更新日：2026年11月15日</small></p>
+<p>この文書は、KP 向けシナリオビューア「キパビュー（KP Viewer）」（以下「本アプリ」）が扱う情報と、その扱い方を説明するものです。本アプリは個人（モグラ）が作っています。</p>
+
+<h2>1. 基本の考え方</h2>
+<ul>
+  <li>本アプリのデータ（シナリオ、卓の記録、探索者、設定など）は、<b>あなたのパソコンの中</b>に保存します。作者のサーバーには送りません。</li>
+  <li>広告、アクセス解析、利用状況の収集は行いません。</li>
+  <li>情報を販売したり、第三者に渡したりすることはありません。</li>
+  <li>外のサービスと通信するのは、あなたがその機能を使うと決めたとき（ボタンを押す・設定でオンにする）だけです。</li>
+</ul>
+
+<h2>2. Google カレンダー連携で扱う Google のユーザーデータ</h2>
+<p>本アプリには、卓（セッション）の日程を、あなたの Google カレンダーに予定として送る機能があります。設定で「Google にログイン」を押したときだけ動きます。</p>
+<table>
+  <tr><th>項目</th><th>内容</th></tr>
+  <tr><td>求める権限</td><td><code>https://www.googleapis.com/auth/calendar.app.created</code>（本アプリが作ったカレンダーを作り、その中の予定を見る・作る・変える・消す）。<br>あなたが持っているほかのカレンダーや、ほかの予定は読みません。書き換えもしません。</td></tr>
+  <tr><td>アクセスするデータ</td><td>本アプリが作る「キパビュー 卓予定」カレンダーと、本アプリがそこに入れた予定だけです。</td></tr>
+  <tr><td>使いみち</td><td>本アプリに入っている卓の日程（題名、日時、KP・PL・探索者の名前、形式、部屋、VC の URL のうち、あなたが選んだもの）を予定にして入れ、卓が変わったら直し、消したら消すためだけに使います。</td></tr>
+  <tr><td>保存</td><td>Google から受け取る更新用のトークンは、あなたのパソコンの本アプリの設定フォルダ（<code>gcal.json</code>）にだけ保存します。予定の ID は、本アプリのデータの中に保存します。作者のサーバーや第三者には送りません。</td></tr>
+  <tr><td>共有</td><td>Google のユーザーデータを第三者に渡したり、売ったり、広告に使ったりすることはありません。人が読むこともありません。</td></tr>
+  <tr><td>やめるとき</td><td>設定の「つながりを外す」を押すと、トークンを Google 側でも取り消し、パソコンからも消します。Google アカウントの「サードパーティ アプリとサービス」からも、いつでもアクセスを取り消せます。Google カレンダーの「キパビュー 卓予定」は、あなたが消すまで残ります（Google カレンダーで、カレンダーごと削除できます）。</td></tr>
+</table>
+<p class="lu">本アプリが Google API から受け取った情報の使用と、ほかのアプリへの転送は、<a href="https://developers.google.com/terms/api-services-user-data-policy">Google API サービスのユーザーデータに関するポリシー</a>（限定使用の要件を含む）に従います。</p>
+
+<h2>3. ほかに通信する相手</h2>
+<p>次の機能を使ったときだけ、それぞれの相手と通信します。</p>
+<table>
+  <tr><th>相手</th><th>送るもの</th><th>いつ</th></tr>
+  <tr><td>ココフォリア（あなたのブラウザと、Chrome 拡張機能を通して）</td><td>あなたが送る本文・セリフ</td><td>本文を押して送ったとき</td></tr>
+  <tr><td>Tekey</td><td>あなたが送る本文</td><td>Tekey への送信を使ったとき</td></tr>
+  <tr><td>Discord（あなたが設定した Webhook）</td><td>あなたが送る本文</td><td>Discord への送信を使ったとき</td></tr>
+  <tr><td>Google カレンダー</td><td>2. のとおり</td><td>Google カレンダー連携をオンにしたとき</td></tr>
+  <tr><td>あなたが入れたカレンダーの URL（iCal）</td><td>なし（予定を読むだけ）</td><td>卓のカレンダーにほかの予定を重ねる設定をしたとき</td></tr>
+  <tr><td>アプリの更新の置き場</td><td>なし（新しい版があるかを確かめるだけ）</td><td>更新の確認をするとき（Mac 版）</td></tr>
+</table>
+
+<h2>4. お問い合わせ</h2>
+<p>このポリシーや本アプリについてのお問い合わせは、<a href="../#den">mogutools のお問い合わせ</a>（Discord サーバー・X）からお願いします。</p>
+
+<h2>5. 変更</h2>
+<p>このポリシーを変えるときは、このページを更新し、最終更新日を書き換えます。</p>
+
+<section class="en" lang="en">
+<h2 style="border:none">Summary in English</h2>
+<p><b>KP Viewer</b> is a desktop scenario viewer for tabletop RPG game masters, made by an individual developer (Mogura). All app data stays on your computer. The app does not collect analytics, show ads, or send your data to the developer.</p>
+<p><b>Google Calendar integration (optional).</b> When you sign in with Google in the app settings, KP Viewer requests the scope <code>https://www.googleapis.com/auth/calendar.app.created</code>. It creates one secondary calendar named “キパビュー 卓予定” and creates, updates and deletes events <i>only in that calendar</i>, to mirror the session schedule you keep in the app (title, date/time, and the participant/format/room/VC fields you choose to include). It never reads or changes your other calendars or events.</p>
+<p>The OAuth refresh token is stored only on your computer (the app's config folder). Google user data is not sent to the developer or any third party, not sold, not used for advertising, and not read by humans. You can disconnect at any time with “つながりを外す” in the app (which revokes the token) or from your Google Account's third-party access page.</p>
+<p class="lu">KP Viewer's use and transfer to any other app of information received from Google APIs will adhere to the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including the Limited Use requirements.</p>
+<p>Contact: via the <a href="../#den">mogutools contact section</a>.</p>
+</section>
+</main>
+</body>
+</html>

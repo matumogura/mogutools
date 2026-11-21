@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>キパビュー（KP Viewer）｜mogutools</title>
+<meta name="description" content="キパビュー（KP Viewer）は、TRPG の KP（キーパー）のためのシナリオビューアです。本文をクリックするだけでオンセのチャットへ送れ、卓の予定・記録や探索者もまとめて管理できます。">
+<meta property="og:title" content="キパビュー（KP Viewer）">
+<meta property="og:description" content="シナリオを、クリックでココフォリアへ。KP のためのシナリオビューア。">
+<link rel="icon" href="../img/kpviewer.png">
+<link rel="stylesheet" href="guide/guide.css">
+<style>
+  .doc{max-width:900px;margin:0 auto;padding:10px 20px 80px;line-height:1.85}
+  .doc h2{font-size:20px;margin:36px 0 8px}
+  .doc .shot{margin:18px 0;border-radius:14px;overflow:hidden;box-shadow:0 6px 24px rgba(60,40,90,.12)}.doc .shot img{display:block;width:100%;height:auto}
+  .doc .feat{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;padding:0;list-style:none}
+  .doc .feat li{background:#faf8fd;border:1px solid #ebe6f3;border-radius:12px;padding:12px 14px}.doc .feat b{display:block;margin-bottom:2px}
+  .doc .links{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0}.doc .links a{display:inline-block;padding:9px 16px;border-radius:999px;border:1px solid #d9d2e6;text-decoration:none;font-weight:600}
+  .doc .gc{background:#f7f9fc;border:1px solid #e1e8f3;border-radius:14px;padding:6px 20px 14px}
+  .doc .en{color:#555;font-size:14px}
+  .doc footer{margin-top:40px;font-size:13px;color:#777}
+</style>
+</head>
+<body>
+<header class="top"><div class="topin">
+  <a class="brand" href="./"><img src="../img/kpviewer.png" alt=""><span>キパビュー</span><small>KP Viewer</small></a>
+  <span class="sp"></span>
+  <a class="toplink" href="../">ツールの紹介へ</a>
+</div></header>
+<main class="doc">
+<div class="hero" style="padding-left:0;padding-right:0">
+  <span class="kicker">KP 向けシナリオビューア ／ Windows</span>
+  <h1>キパビュー（KP Viewer）</h1>
+  <p>キパビューは、TRPG の KP（キーパー）のためのシナリオビューアです。シナリオを読み込んで、本文をクリックするだけでオンラインセッションのチャット（ココフォリア・Tekey・Discord）に送れます。卓の予定と記録、探索者の管理もまとめてできます。名前は「KP ビューア」を縮めたものです。</p>
+</div>
+<div class="shot"><img src="../img/kpviewer-shot.jpg" alt="キパビューでシナリオを開いた画面" width="1400" height="787"></div>
+
+<h2>できること</h2>
+<ul class="feat">
+  <li><b>クリックで送る</b>本文・セリフを 1 行ずつ、ココフォリアなどのチャットへ。</li>
+  <li><b>シナリオ本棚</b>買ったシナリオや自作のシナリオをまとめて管理。</li>
+  <li><b>本文を直す</b>見出し・カード・秘匿など、送りやすい形に整える。</li>
+  <li><b>卓の予定と記録</b>日程・参加者・ログ・感想を卓ごとに残す。</li>
+  <li><b>探索者の管理</b>能力値・技能・立ち絵・差分をまとめて。</li>
+  <li><b>Google カレンダー連携</b>卓の日程を、自分の Google カレンダーへ（下を見てください）。</li>
+</ul>
+
+<h2 id="gcal">Google カレンダー連携</h2>
+<div class="gc">
+  <p>設定で「Google にログイン」を押すと、キパビューが Google カレンダーに「キパビュー 卓予定」というカレンダーを作り、キパビューに入っている卓の日程を予定として入れます。卓の日程を変えたり消したりすると、予定も直したり消したりします（キパビュー → Google の片方向）。</p>
+  <ul>
+    <li>使う権限は、<b>キパビューが作ったカレンダーだけ</b>を読み書きするもの（<code>calendar.app.created</code>）です。ほかのカレンダーや予定は読みませんし、書き換えません。</li>
+    <li>送る卓（自分が KP・PL の卓だけなど）、予定の説明に入れる項目、色、通知は、設定で選べます。</li>
+    <li>Google のトークンは、あなたのパソコンにだけ保存します。作者のサーバーには送りません。</li>
+    <li>設定の「つながりを外す」で、いつでもやめられます。</li>
+  </ul>
+  <p class="en" lang="en">KP Viewer can mirror your session schedule to a calendar it creates in your Google Calendar (“キパビュー 卓予定”). It uses the <code>calendar.app.created</code> scope, so it can only access the calendar it created and the events in it. Tokens stay on your computer. See the <a href="privacy.html">privacy policy</a>.</p>
+</div>
+
+<h2>手に入れる・使い方</h2>
+<div class="links">
+  <a href="https://apps.microsoft.com/detail/9NQ1XQCCXHS6">体験版（Microsoft Store）</a>
+  <a href="https://barr00n.booth.pm/items/8960394">製品版（BOOTH）</a>
+  <a href="guide/quickstart.html">クイックスタート</a>
+  <a href="guide/">使い方ガイド</a>
+</div>
+
+<footer>
+  <a href="privacy.html">プライバシーポリシー（Privacy Policy）</a> ・ お問い合わせ：<a href="../#den">Discord・X</a><br>
+  © mogumogura　個人制作の非公式ツールです。ココフォリア・Tekey・Discord・Google の公式とは関係ありません。
+</footer>
+</main>
+</body>
+</html>

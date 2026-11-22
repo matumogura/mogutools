@@ -28,11 +28,26 @@ table.cmd code{white-space:normal}
 /* 最終更新の表示 */
 .updated{margin:14px 0 0;font-size:13px;color:var(--dim)}
 
+/* 言語の切り替え（帯の右） */
+details.lang{position:relative}
+details.lang>summary{list-style:none;cursor:pointer;user-select:none}
+details.lang>summary::-webkit-details-marker{display:none}
+details.lang>summary::after{content:"▾";margin-left:6px;font-size:11px;color:var(--dim)}
+details.lang ul{position:absolute;right:0;top:calc(100% + 8px);z-index:30;margin:0;padding:6px;list-style:none;min-width:150px;background:#fff;border:1px solid var(--line2);border-radius:14px;box-shadow:0 10px 30px rgba(46,52,72,.12)}
+details.lang a{display:block;padding:7px 12px;border-radius:9px;color:var(--ink);text-decoration:none;font-size:14px;font-weight:500;white-space:nowrap}
+details.lang a:hover{background:var(--cy-bg)}
+details.lang a[aria-current]{background:var(--pk-bg);color:var(--pk);font-weight:700}
+
+/* 日本語以外のブラウザ向けの「ほかの言語版があります」 */
+.langhint{display:table;margin:0 0 14px;padding:6px 14px;border-radius:999px;background:var(--cy-bg);color:var(--cy);font-size:13.5px;font-weight:700;text-decoration:none}
+.langhint:hover{text-decoration:underline}
+
 main{min-width:0}
 
 @media (max-width:600px){
   main code{white-space:normal;word-break:break-all}
   .top .toplink + .toplink{display:none}  /* 帯には別のガイドへのリンクだけ残す */
+  details.lang + .toplink{display:none}  /* 言語メニューがあるページは、帯に言語メニューだけ残す */
   table.cmd,table.cmd tbody,table.cmd tr,table.cmd td{display:block;width:auto}
   table.cmd thead{display:none}
   table.cmd tr{border-bottom:1px solid var(--line);padding:8px 0}

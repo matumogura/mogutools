@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Macchan Bot 사용 가이드｜mogutools</title>
+<meta name="description" content="TRPG용 Discord 주사위 봇 Macchan Bot의 사용법. 주사위·비밀 굴림·BCDice·표·캐릭터 등록·음성 채널 조작·서버 설정까지.">
+<meta property="og:title" content="Macchan Bot 사용 가이드">
+<meta property="og:description" content="하고 싶은 일별로 Macchan Bot 사용법을 정리했습니다.">
+<link rel="canonical" href="https://matumogura.github.io/mogutools/macchan/guide/ko/">
+<link rel="alternate" hreflang="ja" href="https://matumogura.github.io/mogutools/macchan/guide/">
+<link rel="alternate" hreflang="en" href="https://matumogura.github.io/mogutools/macchan/guide/en/">
+<link rel="alternate" hreflang="ko" href="https://matumogura.github.io/mogutools/macchan/guide/ko/">
+<link rel="alternate" hreflang="zh-CN" href="https://matumogura.github.io/mogutools/macchan/guide/zh-CN/">
+<link rel="alternate" hreflang="zh-TW" href="https://matumogura.github.io/mogutools/macchan/guide/zh-TW/">
+<link rel="alternate" hreflang="x-default" href="https://matumogura.github.io/mogutools/macchan/guide/en/">
+<link rel="icon" href="../../../img/macchan.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../kipaview/guide/guide.css">
+<link rel="stylesheet" href="../guide-extra.css">
+<style>:root{--f:"Noto Sans KR","Noto Sans JP","Apple SD Gothic Neo","Malgun Gothic",sans-serif}</style>
+</head>
+<body>
+<header class="top"><div class="topin">
+  <a class="brand" href="./"><img src="../../../img/macchan.png" alt=""><span>Macchan Bot</span><small>사용 가이드</small></a>
+  <span class="sp"></span>
+  <details class="lang"><summary class="toplink" aria-label="Language">🌐 한국어</summary><ul><li><a href=".././" hreflang="ja" lang="ja">日本語</a></li><li><a href="../en/" hreflang="en" lang="en">English</a></li><li><a href="../ko/" hreflang="ko" lang="ko" aria-current="page">한국어</a></li><li><a href="../zh-CN/" hreflang="zh-CN" lang="zh-CN">简体中文</a></li><li><a href="../zh-TW/" hreflang="zh-TW" lang="zh-TW">繁體中文</a></li></ul></details>
+  <a class="toplink" href="../hiyori.html" hreflang="ja">타쿠비요리 가이드(일본어)</a>
+  <a class="toplink" href="../../../">도구 소개</a>
+</div></header>
+
+<div class="hero">
+  <span class="kicker">하고 싶은 일별로</span>
+  <h1>Macchan Bot 사용법</h1>
+  <p>Macchan Bot은 크툴루의 부름 TRPG(CoC)를 중심으로, 세션 진행에 필요한 기능을 두루 담은 Discord 주사위 봇입니다. 주사위, 각종 표, 탐사자 생성, 음성 채널 조작부터 일정 조율까지 다룹니다. BCDice에도 대응하므로 크툴루의 부름 7판, 소드 월드, 시노비가미 등 다른 시스템의 주사위도 굴릴 수 있습니다. 하고 싶은 일을 골라 주세요.</p>
+  <ul class="quick">
+    <li><a href="#start"><span class="n">1</span>시작하기</a></li>
+    <li><a href="#dice"><span class="n">2</span>주사위 굴리기</a></li>
+    <li><a href="#secret"><span class="n">3</span>비밀 굴림</a></li>
+    <li><a href="#bcdice"><span class="n">4</span>다른 시스템으로 굴리기</a></li>
+    <li><a href="#tables"><span class="n">5</span>표 굴리기·랜덤 선택</a></li>
+    <li><a href="#mytable"><span class="n">6</span>나만의 표 만들기</a></li>
+    <li><a href="#char"><span class="n">7</span>탐사자 생성·등록</a></li>
+    <li><a href="#vc"><span class="n">8</span>음성·채널 조작</a></li>
+    <li><a href="#remind"><span class="n">9</span>리마인드·휴식</a></li>
+    <li><a href="#sched"><span class="n">10</span>세션 일정 정하기</a></li>
+    <li><a href="#server"><span class="n">11</span>서버 설정</a></li>
+    <li><a href="#plan"><span class="n">12</span>유료 플랜</a></li>
+    <li><a href="#list"><span class="n">13</span>명령어 한눈에 보기</a></li>
+    <li><a href="#faq"><span class="n">?</span>문제가 생겼을 때</a></li>
+  </ul>
+</div>
+
+<div class="wrap">
+<nav class="toc" aria-label="목차"><b>목차</b><ol>
+  <li><a href="#start">시작하기</a></li>
+  <li><a href="#dice">주사위 굴리기</a></li>
+  <li><a href="#secret">비밀 굴림</a></li>
+  <li><a href="#bcdice">다른 시스템으로 굴리기(BCDice)</a></li>
+  <li><a href="#tables">표 굴리기·랜덤 선택</a></li>
+  <li><a href="#mytable">나만의 표 만들기(커스텀표)</a></li>
+  <li><a href="#char">탐사자 생성·등록</a></li>
+  <li><a href="#vc">음성 채널·채널 조작</a></li>
+  <li><a href="#remind">리마인드·휴식</a></li>
+  <li><a href="#sched">세션 일정 정하기(타쿠비요리)</a></li>
+  <li><a href="#server">서버 설정</a></li>
+  <li><a href="#plan">유료 플랜</a></li>
+  <li><a href="#list">명령어 한눈에 보기</a></li>
+  <li><a href="#faq">문제가 생겼을 때</a></li>
+</ol></nav>
+
+<main>
+<div class="note"><b>안내</b><span>Macchan Bot은 일본에서 만든 봇입니다. 봇의 답장과 명령어 이름은 Discord 언어 설정을 따르지만, 웹 페이지(Macchan Bot 콘솔, 캐릭터 페이지, 타쿠비요리)는 일본어로만 제공됩니다. 아래에서 일본어로 된 부분은 뜻을 함께 적었습니다.</span></div>
+
+<section id="start">
+  <h2><span class="n">1</span>시작하기</h2>
+  <p class="lead">봇을 Discord에 추가한 뒤, <code>/</code>를 입력하거나 그냥 채팅에 쓰기만 하면 됩니다.</p>
+  <h3>봇 추가하기</h3>
+  <p><a href="https://macchan.onrender.com/invite" target="_blank" rel="noopener">Macchan Bot을 Discord에 추가하기</a>에서 추가 방법을 고릅니다.</p>
+  <table class="os">
+    <tr><th>서버에 추가</th><td>봇을 서버에 추가합니다. 서버의 모두가 사용할 수 있습니다.</td></tr>
+    <tr><th>내 앱에 추가</th><td>내 계정에 추가합니다. 봇이 없는 서버나 DM에서도 주요 명령어(<code>/주사위</code> <code>/랜덤선택</code> <code>/대신말하기</code> <code>/도움말</code> <code>/뽑기</code> <code>/탐사자생성</code> <code>/광기표</code> <code>/커스텀표</code> <code>/내캐릭터</code> <code>/개인설정</code>)를 쓸 수 있습니다. <code>/커스텀표</code> <code>/내캐릭터</code>는 내 표와 내 앱용 캐릭터가 대상입니다.</td></tr>
+  </table>
+  <p>사용자 ID: <code>546059094537011211</code></p>
+  <h3>사용 방법은 두 가지</h3>
+  <ul class="pts">
+    <li><b>슬래시 명령어</b>: <code>/</code>를 입력하면 목록이 나옵니다. 입력란마다 설명이 나오니 헷갈리면 <code>/</code>를 입력해 확인하세요.</li>
+    <li><b>메시지 입력</b>: <code>1d100</code>이나 <code>80 관찰력</code>처럼 그냥 써도 반응합니다.</li>
+  </ul>
+  <div class="note"><b>팁</b><span>명령어 이름은 Discord 언어 설정에 맞춰 日本語·English·简体中文·繁體中文·한국어로 바뀝니다. <b>영어 이름으로도 검색할 수 있어서</b> <code>/dice</code>를 입력하면 <code>/주사위</code>가 나옵니다.</span></div>
+</section>
+
+<section id="dice">
+  <h2><span class="n">2</span>주사위 굴리기</h2>
+  <p class="lead"><code>/주사위</code>를 쓰거나 그냥 채팅에 씁니다. 주사위·기능 판정·성공 판정·계산기를 쓰는 방식으로 자동 구분합니다.</p>
+  <table class="cmd">
+    <thead><tr><th>입력</th><th>할 수 있는 일</th></tr></thead>
+    <tbody>
+      <tr><td><code>1d100</code> <code>2d6+3</code></td><td>일반 주사위, 계산이 붙은 주사위</td></tr>
+      <tr><td><code>80 관찰력</code></td><td>두 자리 기능치와 기능 이름으로 판정(크리티컬·펌블·1/2·1/5도 표시)</td></tr>
+      <tr><td><code>1d100&lt;=60 #관찰력</code></td><td>목표치가 있는 성공 판정. 기능 이름은 <code>#관찰력</code> <code>【관찰력】</code> 형태로 붙입니다</td></tr>
+      <tr><td><code>1d100&gt;80 【성장】</code></td><td>부등호 판정(<code>&lt;=</code> <code>&lt;</code> <code>&gt;=</code> <code>&gt;</code>)</td></tr>
+      <tr><td><code>1d3*2+2*(4+5)</code> <code>1+1</code></td><td>사칙연산·괄호·주사위 계산. 계산기로도 쓸 수 있습니다</td></tr>
+      <tr><td><code>d66</code></td><td>D66(6면체 주사위 2개를 두 자리 수로)</td></tr>
+      <tr><td><code>res50-30</code></td><td>대항 굴림(능동 50·수동 30)</td></tr>
+      <tr><td><code>siz13</code></td><td>SIZ 값으로 대략적인 키를 알려 줍니다</td></tr>
+    </tbody>
+  </table>
+  <p><code>/주사위</code>에서 <code>수식:</code>을 생략하면 1d100을 굴립니다.</p>
+  <div class="note"><b>팁</b><span>알파벳과 공백은 반각·전각 어느 쪽으로 입력해도 됩니다. <code>80目星</code>처럼 띄어쓰기 없이 이어 쓸 수 있는 것은 일본어 등 전각 문자로 시작하는 기능 이름뿐입니다. 한국어·영어는 <code>80 관찰력</code>처럼 띄어 쓰세요.</span></div>
+  <h3>봇에게 말 걸기(수다 모드)</h3>
+  <ul class="pts">
+    <li><code>@Macchan ～?</code>: "그럴지도", "아닐지도"라고 답합니다</li>
+    <li>こんにちは(안녕하세요)·おやすみ(잘 자요)·またね(또 봐요) 같은 일본어 인사: 인사를 돌려줍니다</li>
+    <li>그 밖의 말: 주사위를 데굴데굴 굴립니다</li>
+  </ul>
+</section>
+
+<section id="secret">
+  <h2><span class="n">3</span>비밀 굴림</h2>
+  <p class="lead">주사위 앞에 <code>s</code>를 붙이거나 <code>/비밀</code>을 쓰면, 결과가 굴린 본인에게만 전달됩니다.</p>
+  <ol class="steps">
+    <li><code>s1d100</code> <code>s80 관찰력</code> <code>s1d100&lt;=60 #관찰력</code>처럼 씁니다(내용을 숨기기 위해 메시지는 지워집니다). <code>/비밀 내용:</code>으로도 굴릴 수 있습니다. 주사위가 아닌 글을 넣으면 비밀 메시지가 됩니다.</li>
+    <li>채널에 누군가 비밀 굴림을 했다는 알림이 나옵니다. 결과는 본인에게만 전달됩니다.</li>
+    <li>공개하고 싶을 때는 알림의 <span class="k">🔓 공개</span>를 누릅니다. 결과가 채널에 올라옵니다.</li>
+  </ol>
+  <div class="note"><b>포인트</b><span><b>버튼은 굴린 본인만 누를 수 있습니다.</b> 다른 사람이 누르면 본인만 쓸 수 있는 버튼이라는 안내가 그 사람에게만 나옵니다.</span></div>
+  <h3>결과 전달 방식은 서버마다 고를 수 있습니다</h3>
+  <p>Macchan Bot 콘솔의 秘匿ロール(비밀 굴림) → 結果の届け方と公開のしかた(결과 전달과 공개 방식)에서 고릅니다.</p>
+  <table class="os">
+    <tr><th>채널 버튼으로 공개<br><span class="tag free">기본값</span></th><td>결과는 DM으로 옵니다. 공개는 채널의 <span class="k">🔓 공개</span>로 합니다.</td></tr>
+    <tr><th>DM을 쓰지 않음</th><td>DM으로 보내지 않고, 채널의 <span class="k">👁 결과 보기</span>를 누르면 본인에게만 보입니다(몇 번이든 볼 수 있습니다). <code>/비밀</code>로 굴리면 바로 본인에게만 표시됩니다.</td></tr>
+    <tr><th>DM의 🔓로 공개</th><td>예전 방식입니다. 결과는 DM으로 오고, DM에 붙은 🔓를 누르면 공개됩니다.</td></tr>
+  </table>
+  <p>DM을 닫아 둔 분도 '채널 버튼으로 공개' 설정에서는 자동으로 'DM을 쓰지 않음' 방식이 되므로 그대로 굴릴 수 있습니다.</p>
+</section>
+
+<section id="bcdice">
+  <h2><span class="n">4</span>다른 시스템으로 굴리기(BCDice)</h2>
+  <p class="lead"><a href="https://github.com/bcdice/BCDice" target="_blank" rel="noopener">BCDice</a> 주사위에 대응합니다. 코코포리아 등에서 쓰는 것과 같은 명령어로 굴릴 수 있습니다. 모든 플랜에서 무료입니다.</p>
+  <h3>설정 없이도 굴릴 수 있는 명령어</h3>
+  <p>다른 시스템과 겹치지 않는 대표적인 명령어는 시스템을 자동으로 판별해 굴립니다. 결과 아래에 '더블크로스(자동)'처럼 굴린 시스템이 표시됩니다.</p>
+  <table class="cmd">
+    <thead><tr><th>입력</th><th>시스템</th></tr></thead>
+    <tbody>
+      <tr><td><code>3B6</code> <code>3R6</code> <code>3U6</code> <code>C(1+2)</code> <code>x3 2d6</code></td><td>모든 시스템 공통(범용 주사위)</td></tr>
+      <tr><td><code>CCB&lt;=60</code> <code>RESB(10-5)</code></td><td>크툴루의 부름(6판)</td></tr>
+      <tr><td><code>CC&lt;=60</code> <code>CC(1)&lt;=60</code> <code>CBR(50,60)</code></td><td>크툴루의 부름 7판</td></tr>
+      <tr><td><code>K20+5@10</code></td><td>소드 월드 2.5</td></tr>
+      <tr><td><code>10DX+3@8</code></td><td>더블크로스</td></tr>
+      <tr><td><code>1NC</code> <code>NM</code></td><td>네크로니카</td></tr>
+      <tr><td><code>SG&gt;=5</code> <code>MT</code></td><td>시노비가미</td></tr>
+      <tr><td><code>4SK</code> <code>HOT</code></td><td>은검의 스텔라나이츠</td></tr>
+      <tr><td><code>AT</code></td><td>마기카로기아</td></tr>
+    </tbody>
+  </table>
+  <p><code>ST</code>(장면표) <code>DT</code> <code>FT</code> <code>BT</code> <code>RTT</code> 등은 시스템마다 내용이 달라 자동으로 굴리지 않습니다. 아래 '시스템 고르기'에서 시스템을 정한 채널에서 굴리거나, <code>/주사위</code>의 <code>시스템</code>을 골라 굴리세요. <code>1d100&lt;=60</code>이나 <code>80 관찰력</code>처럼 Macchan이 원래 읽을 수 있는 입력은 지금처럼 Macchan의 판정으로 답합니다.</p>
+  <h3>굴리는 예</h3>
+  <ul class="pts">
+    <li><code>CC&lt;=60 관찰력</code>: 크툴루의 부름 7판 기능 굴림 → 【관찰력】 어려운 성공</li>
+    <li><code>K20+5@10 #나이프</code>: 소드 월드 2.5의 위력표</li>
+    <li><code>ST</code>: 시노비가미·인세인의 장면표(시스템을 정한 채널에서)</li>
+    <li><code>sCC&lt;=40</code>: 앞에 <code>s</code>를 붙이면 비밀 굴림이 됩니다</li>
+  </ul>
+  <p>기능 이름은 공백 뒤나 <code>#관찰력</code> <code>【관찰력】</code> 형태로 붙일 수 있습니다.</p>
+  <h3>시스템 고르기 <span class="who">서버 관리자</span></h3>
+  <p>Macchan Bot 콘솔의 ダイスシステム（BCDice）(주사위 시스템)에서 고릅니다.</p>
+  <table class="os">
+    <tr><th>이 서버에서 쓸 시스템</th><td>서버 전체에서 쓸 시스템을 하나 고릅니다. 기본값은 '고르지 않음'입니다. 이름의 일부나 영어 이름으로 찾을 수 있습니다.</td></tr>
+    <tr><th>시스템을 고르지 않았을 때</th><td>'대표 명령어를 자동 판별'(기본값) 또는 'Macchan 주사위만'. 다른 주사위 봇과 반응이 겹치면 'Macchan 주사위만'으로 하세요.</td></tr>
+    <tr><th>채널마다 바꾸기</th><td>CoC 세션과 소드 월드 세션이 같은 서버에 있으면 채널마다 다른 시스템을 고를 수 있습니다. 스레드에서는 부모 채널의 시스템을 씁니다.</td></tr>
+    <tr><th>Macchan 주사위와 겹칠 때</th><td><b>Macchan 주사위를 먼저 봄</b>(추천): 지금까지와 같은 표시로, <code>CC</code> <code>K20</code>처럼 Macchan이 모르는 명령어만 BCDice로 굴립니다.<br><b>BCDice를 먼저 봄</b>: <code>1d100&lt;=60</code>도 그 시스템의 판정(7판이면 어려운 성공 등)으로 답합니다.</td></tr>
+  </table>
+  <p>자주 쓰는 시스템은 목록 위쪽에 있습니다: 크툴루의 부름 / 크툴루의 부름 7판 / 소드 월드 RPG / 2.0 / 2.5 / 시노비가미 / 인세인 / 더블크로스 The 2nd·3rd Edition / 네크로니카 / 마기카로기아 / 은검의 스텔라나이츠 / 후타리소우사. 그 밖에도 BCDice의 300개 이상 시스템에서 고를 수 있습니다.</p>
+  <div class="note"><b>팁</b><span>명령어 쓰는 법은 시스템마다 다릅니다. <code>/주사위 수식:help</code>를 입력하면 그 채널 시스템의 사용법이 나에게만 표시됩니다. <code>/주사위</code>의 <code>시스템</code>을 고르면 시스템을 정하지 않은 채널이나 DM에서도 어떤 시스템이든 굴릴 수 있습니다.</span></div>
+</section>
+
+<section id="tables">
+  <h2><span class="n">5</span>표 굴리기·랜덤 선택</h2>
+  <p class="lead">광기표나 오미쿠지 같은 표와, 후보 중에서 랜덤으로 고르는 기능입니다.</p>
+  <h3>내장된 표</h3>
+  <table class="cmd">
+    <thead><tr><th>입력</th><th>할 수 있는 일</th></tr></thead>
+    <tbody>
+      <tr><td><code>/광기표 어느표:</code></td><td>CoC 광기표(일시적·장기적·겨울). 日本語·English·简体中文·繁體中文·한국어 본문이 있어 굴린 분의 언어로 나옵니다</td></tr>
+      <tr><td><code>一時的狂気</code>(<code>一時的</code> <code>狂気表</code>)</td><td>일시적 광기표(일본어로 입력)</td></tr>
+      <tr><td><code>不定の狂気</code>(<code>不定</code> <code>長期的な狂気</code>)</td><td>장기적 광기표</td></tr>
+      <tr><td><code>冬の狂気</code>(<code>冬狂気</code>)</td><td>겨울의 광기표</td></tr>
+      <tr><td><code>/뽑기 무엇을:</code></td><td>오미쿠지·운세·식사·색·날짜 중 하나를 랜덤으로</td></tr>
+      <tr><td><code>おみくじ</code> <code>誕生日</code></td><td>오미쿠지·랜덤 생일(일본어로 입력)</td></tr>
+    </tbody>
+  </table>
+  <h3>랜덤 선택·섞기·투표</h3>
+  <table class="cmd">
+    <thead><tr><th>입력</th><th>할 수 있는 일</th></tr></thead>
+    <tbody>
+      <tr><td><code>choice 사과 귤 포도</code></td><td>후보 중 하나를 고릅니다. 구분은 공백·쉼표</td></tr>
+      <tr><td><code>choice2 사과 귤 포도 배</code></td><td>고를 개수를 지정</td></tr>
+      <tr><td><code>choicex4 앞 뒤</code></td><td>중복을 허용해 4번 고릅니다</td></tr>
+      <tr><td><code>shuffle A B C D</code></td><td>랜덤으로 순서를 섞습니다</td></tr>
+      <tr><td><code>/랜덤선택 후보:</code></td><td>고를 개수·중복 허용은 입력란에서 지정할 수 있습니다</td></tr>
+      <tr><td><code>poll 아침 점심 저녁</code> <code>/투표 선택지:</code></td><td>투표를 만듭니다(선택지 2~10개)</td></tr>
+      <tr><td><code>echo 안녕하세요</code> <code>/대신말하기 내용:</code></td><td>봇이 대신 말합니다. 누가 한 말인지 알 수 없게 되므로 <b>기본적으로 권한이 있는 분만</b> 쓸 수 있습니다</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="mytable">
+  <h2><span class="n">6</span>나만의 표 만들기(커스텀표)</h2>
+  <p class="lead">나만의 표를 등록해 두면 <code>/커스텀표</code>나 표 이름을 입력하기만 해도 굴릴 수 있습니다.</p>
+  <ol class="steps">
+    <li><a href="https://macchan.onrender.com/console" target="_blank" rel="noopener">Macchan Bot 콘솔</a>의 マイ表(커스텀표)에서 표를 만듭니다.</li>
+    <li>표 이름을 그대로 쓰거나 <code>/커스텀표 표: 횟수:</code>(1~10회)로 굴립니다.</li>
+    <li>관리 권한이 있는 서버에 '설정'하면 그 서버에서는 <b>다른 사람도</b> 굴릴 수 있습니다.</li>
+  </ol>
+  <ul class="pts">
+    <li>표는 만든 사람의 것입니다. 내 앱에 추가하면 봇이 없는 서버나 DM에서도 굴릴 수 있습니다.</li>
+    <li><code>一時的狂気</code> <code>不定の狂気</code> <code>冬の狂気</code> <code>おみくじ</code> <code>誕生日</code>와 같은 이름으로 만들면 내장 표 대신 커스텀표가 굴려집니다(하우스 룰 광기표 등에).</li>
+    <li>항목 앞에 <code>【秘】</code>를 붙이면 그 항목이 나왔을 때 결과가 굴린 사람에게만 전달됩니다. <code>||이 부분||</code>으로 감싸면 그 부분만 가릴 수 있습니다. 전달 방식은 <a href="#secret">비밀 굴림</a> 설정과 같습니다.</li>
+    <li>결과에 <code>@サーバー主</code>라고 쓰면 표를 만든 사람에게 알림이 갑니다.</li>
+    <li>같은 서버에 같은 이름의 표를 두 개 설정할 수는 없습니다.</li>
+  </ul>
+  <table class="os">
+    <tr><th>무료</th><td>표 1개, 표당 항목 10개, 항목당 100자까지</td></tr>
+    <tr><th>유료 <span class="tag">PRO</span></th><td>표 10개, 항목 500개, 2,000자까지(1인당 등록 수)</td></tr>
+  </table>
+  <p>후원이 끝나도 표는 지워지지 않습니다. 가장 먼저 만든 표 1개만 쓸 수 있게 되고, 나머지는 멈춰 있을 뿐 다시 후원하면 모두 쓸 수 있습니다.</p>
+</section>
+
+<section id="char">
+  <h2><span class="n">7</span>탐사자 생성·등록</h2>
+  <p class="lead">능력치를 굴려 탐사자를 만들 수 있습니다. 등록해 두면 기능 이름만 입력해도 내 기능치로 판정합니다.</p>
+  <h3>능력치 굴리기</h3>
+  <p><code>/탐사자생성</code>을 쓰거나 <code>キャラ作成</code>(<code>PC作成</code> <code>キャラ生成</code>)이라고 씁니다. CoC 6판 능력치를 굴리고, 코코포리아 말로 출력할 수도 있습니다.</p>
+  <h3>캐릭터 등록하기</h3>
+  <ol class="steps">
+    <li><a href="https://macchan.onrender.com/character" target="_blank" rel="noopener">캐릭터 등록 페이지</a>(일본어)를 열고 Discord로 로그인합니다. <b>관리 권한은 필요 없습니다.</b> 세션 참가자에게 이 URL을 나눠 주세요.</li>
+    <li>이아캬라나 캐릭터 보관소의 <b>'코코포리아용 출력'(ココフォリア用に出力)</b> 결과를 붙여 넣습니다(코코포리아에서 복사한 말에는 이름만 들어 있습니다).</li>
+    <li>읽어 들인 기능과 능력치가 나오면 확인하고 등록합니다.</li>
+    <li>이름 목록 오른쪽에서 사용할 서버를 지정합니다.</li>
+  </ol>
+  <ul class="pts">
+    <li>등록한 캐릭터는 '스톡'에 들어갑니다. 서버에 지정하지 않은 캐릭터가 있어도 괜찮습니다.</li>
+    <li>한 서버에서 쓸 수 있는 캐릭터는 1인 1체입니다. 같은 캐릭터를 여러 서버에 지정할 수도 있습니다.</li>
+    <li>같은 이름의 캐릭터를 붙여 넣으면 교체됩니다. 스톡은 무료 1체, PRO는 5체까지입니다. PRO가 끝나고 30일이 지나면 1체를 넘는 캐릭터는 지워집니다(가장 먼저 만든 1체는 남습니다).</li>
+    <li>지정할 수 있는 것은 관리 권한이 있는 서버입니다. '내 앱'에 지정하면 봇이 없는 서버나 DM에서도 <code>/내캐릭터</code>로 쓸 수 있습니다 <span class="tag">PRO</span>.</li>
+  </ul>
+  <h3>굴리기·스테이터스 바꾸기</h3>
+  <table class="cmd">
+    <thead><tr><th>입력</th><th>할 수 있는 일</th></tr></thead>
+    <tbody>
+      <tr><td><code>目星</code>(기능 이름)</td><td>기능 이름만으로 등록한 기능치로 판정. <code>芸術</code>(예술)처럼 후보가 2개 이상이면 되묻습니다</td></tr>
+      <tr><td><code>目星-20</code> <code>目星+10</code> <code>目星/2</code></td><td>그때만 쓰는 보정(저장하지 않음)</td></tr>
+      <tr><td><code>:HP-3</code> <code>:SAN-1d3</code> <code>:MP+2</code></td><td>HP·MP·SAN 증감. 최대치를 넘지 않고 0 아래로도 내려가지 않습니다. SAN을 줄이면 SAN을 보는 판정도 낮아집니다</td></tr>
+      <tr><td><code>/내캐릭터 입력:</code></td><td>명령어로도 같은 일을 할 수 있습니다(<code>/내캐릭터 HP-3</code>처럼 콜론은 필요 없음). 입력을 생략하면 지금의 스테이터스·능력치·기능을 나에게만 보여 줍니다</td></tr>
+    </tbody>
+  </table>
+  <p>HP·MP·SAN 증감은 캐릭터 자체에 반영됩니다(지정한 어느 서버에서나 같은 값). 캐릭터를 해제할 때는 <code>/개인설정</code>에서 나오는 링크로 등록 페이지를 엽니다.</p>
+  <div class="note warn"><b>주의</b><span>기능 이름은 오미쿠지 등의 표보다 <b>먼저</b> 확인합니다. 표와 같은 이름의 기능을 가진 분은 기능 쪽이 굴려집니다. 다른 주사위 봇과 겹칠 때는 <a href="#server">서버 설정</a>에서 메시지 입력만 끌 수도 있습니다(<code>/내캐릭터</code>는 쓸 수 있습니다).</span></div>
+</section>
+
+<section id="vc">
+  <h2><span class="n">8</span>음성 채널·채널 조작</h2>
+  <p class="lead">세션 방 출입이나 음성 채널의 연결 끊기·음소거를 한 번에 다룰 수 있습니다.</p>
+  <table class="cmd">
+    <thead><tr><th>명령어</th><th>할 수 있는 일</th></tr></thead>
+    <tbody>
+      <tr><td><code>/입실 대상:</code> <code>/퇴실 대상:</code></td><td>지정한 사람을 이 방에 넣거나 뺍니다(상대가 조작할 필요 없음)</td></tr>
+      <tr><td><code>/음성 해산</code></td><td>내가 있는 음성 채널의 모두를 연결 해제합니다</td></tr>
+      <tr><td><code>/연결끊기 대상:</code></td><td>지정한 멤버를 음성 채널에서 연결 해제합니다</td></tr>
+      <tr><td><code>/음성 비밀음성 동작: 대상: 음성채널:</code></td><td>비밀 음성(음소거). 대상을 지정하면 그 사람만, 생략하면 음성 채널의 모두에게 적용됩니다. <code>음성채널:</code>을 생략하면 내가 있는 음성 채널이 대상입니다</td></tr>
+      <tr><td><code>/패널 초대</code></td><td>누른 사람이 지정 채널에 들어갈 수 있는 '초대'를 둡니다</td></tr>
+      <tr><td><code>/패널 역할</code></td><td>누르면 역할이 붙는 '역할 패널'을 만듭니다</td></tr>
+    </tbody>
+  </table>
+  <p>음성 조작에는 봇에 '멤버 이동' 권한이 필요합니다. 채널 열람 권한이나 역할을 다루는 기능에는 각각 '채널 관리', '역할 관리' 권한이 필요합니다.</p>
+  <h3>자동으로 움직이는 기능</h3>
+  <p>모두 <a href="https://macchan.onrender.com/console" target="_blank" rel="noopener">Macchan Bot 콘솔</a>에서 대상 음성 채널과 알림 위치를 정할 수 있습니다.</p>
+  <table class="os">
+    <tr><th>🔔 음성 알림</th><td>음성 채널에서 통화가 시작되면 초대 알림을 올립니다(끝날 때도). 알림 위치는 '한 채널에 모으기', '음성 채널마다 정하기 <span class="tag">PRO</span>', '음성 채널과 같은 이름의 채널' 중에서 고릅니다. 대상 음성 채널은 '기호로 고르기(기본 🔔)', '고른 채널만', '모든 채널'. 시작 시 멘션(<code>@everyone</code> / <code>@here</code> / 역할 / 없음)과 종료 알림도 고를 수 있습니다.</td></tr>
+    <tr><th>🕛 잘 자요 알림</th><td>자정에 대상 음성 채널에 있는 분께 잘 자라는 알림을 올립니다(기본은 🕛 기호로 고름).</td></tr>
+    <tr><th>💤 자동 해산</th><td>정한 시각(기본 2:00·일본 시간)에 대상 음성 채널의 모두를 연결 해제합니다. 5분 전에 예고하고, ⏰를 누르면 30분 연장됩니다(하룻밤 2회까지). <b>기본은 꺼져 있습니다.</b></td></tr>
+  </table>
+  <p>아무것도 설정하지 않은 서버에서는 이름에 🔔가 붙은 음성 채널의 통화가 <code>🔔ボイチャお知らせ</code>라는 이름의 채널에 <code>@everyone</code>과 함께 알려집니다. PRO가 끝나도 '음성 채널마다 정하기'의 대응표는 지워지지 않습니다(일단 '모으기' 동작으로 돌아갈 뿐입니다).</p>
+</section>
+
+<section id="remind">
+  <h2><span class="n">9</span>리마인드·휴식 <span class="tag">PRO</span></h2>
+  <p class="lead">정한 일시에 이 채널에서 알려 줍니다. PRO 서버이거나, 본인이 PRO라면 어디서든 쓸 수 있습니다.</p>
+  <table class="cmd">
+    <thead><tr><th>명령어</th><th>할 수 있는 일</th></tr></thead>
+    <tbody>
+      <tr><td><code>/리마인드 예약 일시: 내용:</code></td><td>일시는 <code>明日 21:00</code>(내일 21:00) <code>10/15 21:00</code> <code>30分後</code>(30분 후) <code>来週</code>(다음 주) 등으로 씁니다. 봇이 없는 곳에서는 DM으로 옵니다</td></tr>
+      <tr><td><code>/리마인드 휴식 시간:</code></td><td>정한 시각까지 휴식이라는 알림을 올리고, 시간이 되면 시작 시각이라고 알려 줍니다. 30분 이상이면 5분 전에도 알려 줍니다</td></tr>
+      <tr><td><code>/리마인드 목록</code></td><td>내 예약을 보고 취소합니다</td></tr>
+    </tbody>
+  </table>
+  <p>보내는 문구는 콘솔에서 바꿀 수 있습니다.</p>
+</section>
+
+<section id="sched">
+  <h2><span class="n">10</span>세션 일정 정하기(타쿠비요리)</h2>
+  <p class="lead">타쿠비요리(卓日和)는 세션 일정 조율과 멤버 모집 기능입니다. Discord 안에서 시작할 수 있고, 답하는 사람은 브라우저에서 동그라미만 치면 됩니다(로그인 불필요).</p>
+  <pre class="type">/일정만들기 이름:11월 세션 멤버:@macha ken sakura 시작일:11/9</pre>
+  <ul class="pts">
+    <li>공개용 URL이 채널에 올라옵니다. 주최자용 URL은 실행한 분에게만 전달됩니다.</li>
+    <li><code>/개인설정</code>으로 캐릭터와 일정 조율의 '내 설정' 페이지를 열 수 있습니다.</li>
+    <li>타쿠비요리 사이트는 일본어로만 제공됩니다.</li>
+  </ul>
+  <a class="jump" href="../hiyori.html"><span><b>타쿠비요리 사용법 가이드(일본어)</b><small>대략적인 시기 묻기·멤버 모집·시나리오 후보·공개 캘린더·팔로우 등 자세한 사용법</small></span><span class="go">보기 →</span></a>
+</section>
+
+<section id="server">
+  <h2><span class="n">11</span>서버 설정</h2>
+  <span class="who">서버 관리자</span>
+  <p class="lead">기능마다 켜기/끄기와 '누가 쓸 수 있는지'를 정할 수 있습니다.</p>
+  <ol class="steps">
+    <li><a href="https://macchan.onrender.com/console" target="_blank" rel="noopener">Macchan Bot 콘솔</a>(일본어)을 열고 Discord로 로그인합니다('서버 관리' 권한이 필요합니다).</li>
+    <li>서버를 고르면 기능 목록이 나옵니다. 스위치로 켜고 끄고, <span class="k">詳細</span>(상세)에서 반응 대상·사용할 수 있는 사람·기능별 설정을 바꾼 뒤 <span class="k">保存する</span>(저장)를 누릅니다.</li>
+  </ol>
+  <ul class="pts">
+    <li><b>다른 주사위 봇과 반응이 겹치면 겹치는 기능만 끌 수 있습니다.</b> 메시지 입력 주사위만 멈추고 <code>/주사위</code>는 남기는 식으로 쓸 수 있습니다.</li>
+    <li>주사위 시스템(BCDice) 선택과 비밀 굴림 전달 방식도 여기서 정합니다.</li>
+    <li>지금 설정은 Discord에서 <code>/서버설정</code>을 입력하면 확인할 수 있습니다.</li>
+  </ul>
+</section>
+
+<section id="plan">
+  <h2><span class="n">12</span>유료 플랜</h2>
+  <p class="lead">서버 비용(월 $7)을 충당하기 위한 유료 플랜입니다. <b>주사위·각종 표·탐사자 생성 같은 기본 기능은 앞으로도 계속 무료입니다.</b></p>
+  <p>유료 플랜은 두 종류가 있고, <b>적용되는 대상이 다릅니다.</b></p>
+  <table class="cmd">
+    <thead><tr><th></th><th>Macchan Bot PRO</th></tr></thead>
+    <tbody>
+      <tr><td>적용 대상</td><td><b>서버</b>(커스텀표·캐릭터 등은 코드를 등록한 본인에게도 적용)</td></tr>
+      <tr><td>코드</td><td><code>MACC-XXXX-XXXX-XXXX</code>(서버 2개용은 <code>PATR-</code>)</td></tr>
+      <tr><td>서버에 붙는 것</td><td>음성 알림 위치를 음성 채널마다 정하기. 리마인드·휴식 타이머</td></tr>
+      <tr><td>본인에게 붙는 것</td><td>커스텀표 1개 → 10개(항목 10 → 500·글자 수 100 → 2,000자). 캐릭터 스톡 1체 → 5체와 내 앱용 캐릭터. 어디서나 리마인드. 타쿠비요리 유료 플랜</td></tr>
+      <tr><td>입력하는 곳</td><td><a href="https://macchan.onrender.com/console" target="_blank" rel="noopener">Macchan Bot 콘솔</a>의 プラン(플랜)</td></tr>
+    </tbody>
+  </table>
+  <p>타쿠비요리 유료 플랜(<code>HIYO-</code> 코드·사람에게 적용)은 <a href="../hiyori.html#plan">타쿠비요리 가이드(일본어)</a>를 보세요. 코드는 앞 네 글자로 구분되며, 잘못된 곳에 넣어도 거부될 뿐이므로 착오로 코드가 사라지는 일은 없습니다.</p>
+</section>
+
+<section id="list">
+  <h2><span class="n">13</span>명령어 한눈에 보기</h2>
+  <p class="lead">슬래시 명령어 목록입니다. 자세한 내용은 각 장을 보세요.</p>
+  <table class="cmd">
+    <thead><tr><th>명령어</th><th>할 수 있는 일</th></tr></thead>
+    <tbody>
+      <tr><td><code>/주사위 수식: 시스템:</code></td><td>주사위·계산(<a href="#dice">2</a>). <code>시스템</code>에서 BCDice 시스템을 고를 수 있습니다(<a href="#bcdice">4</a>)</td></tr>
+      <tr><td><code>/비밀 내용:</code></td><td>비밀 굴림·비밀 메시지(<a href="#secret">3</a>)</td></tr>
+      <tr><td><code>/광기표 어느표:</code></td><td>CoC 광기표(<a href="#tables">5</a>)</td></tr>
+      <tr><td><code>/뽑기 무엇을:</code></td><td>오미쿠지·운세·식사·색·날짜(<a href="#tables">5</a>)</td></tr>
+      <tr><td><code>/랜덤선택 후보:</code> <code>/투표 선택지:</code> <code>/대신말하기 내용:</code></td><td>고르기·투표·대신 말하기(<a href="#tables">5</a>)</td></tr>
+      <tr><td><code>/커스텀표 표: 횟수:</code></td><td>커스텀표 굴리기(<a href="#mytable">6</a>)</td></tr>
+      <tr><td><code>/탐사자생성</code> <code>/내캐릭터 입력:</code></td><td>탐사자 만들기·등록한 캐릭터로 굴리기(<a href="#char">7</a>)</td></tr>
+      <tr><td><code>/입실</code> <code>/퇴실</code> <code>/연결끊기</code> <code>/음성 해산</code> <code>/음성 비밀음성</code> <code>/패널</code></td><td>음성 채널·채널 조작(<a href="#vc">8</a>)</td></tr>
+      <tr><td><code>/리마인드 예약</code> <code>/리마인드 휴식</code> <code>/리마인드 목록</code></td><td>리마인드·휴식(<a href="#remind">9</a>)</td></tr>
+      <tr><td><code>/일정만들기</code> <code>/개인설정</code></td><td>일정 조율·내 설정(<a href="#sched">10</a>)</td></tr>
+      <tr><td><code>/서버설정</code></td><td>이 서버의 기능 설정 확인(<a href="#server">11</a>)</td></tr>
+      <tr><td><code>/도움말</code></td><td>사용법과 명령어 목록</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="faq">
+  <h2><span class="n">?</span>문제가 생겼을 때</h2>
+  <dl class="faq">
+    <dt>채팅에 써도 주사위에 반응하지 않아요</dt>
+    <dd>서버 설정에서 '주사위'가 꺼져 있거나 '/주사위만'으로 되어 있을 수 있습니다. <code>/서버설정</code>으로 확인하세요. <code>/주사위</code>는 언제든 쓸 수 있습니다.</dd>
+    <dt>다른 주사위 봇과 이중으로 반응해요</dt>
+    <dd>콘솔에서 겹치는 기능의 메시지 입력만 꺼 주세요. BCDice 자동 판별은 '시스템을 고르지 않았을 때'를 'Macchan 주사위만'으로 하면 멈춥니다.</dd>
+    <dt>ST(장면표)가 굴려지지 않아요</dt>
+    <dd><code>ST</code>는 시스템마다 내용이 달라서 시스템을 정한 채널에서만 굴릴 수 있습니다. <code>/주사위 수식:ST 시스템:시노비가미</code>처럼 <code>시스템</code>을 골라도 굴릴 수 있습니다.</dd>
+    <dt>비밀 굴림 결과를 볼 수 없어요</dt>
+    <dd>DM을 닫아 두면 DM으로는 전달되지 않습니다. 채널 알림에 <span class="k">👁 결과 보기</span>가 있으면 거기서 볼 수 있습니다.</dd>
+    <dt>기능 이름을 입력했더니 표가 아니라 기능이 굴려졌어요</dt>
+    <dd>캐릭터를 등록하면 기능 이름을 표보다 먼저 확인합니다. <a href="#char">탐사자 생성·등록</a>을 보세요.</dd>
+  </dl>
+  <p style="margin-top:18px">사용법 질문, 요청, 버그 신고는 서포트 서버로 편하게 와 주세요.</p>
+  <div class="help">
+    <a class="btn" href="https://discord.gg/KTBmA3N7tW" target="_blank" rel="noopener">서포트 서버</a>
+    <a class="btn sub" href="https://macchan.onrender.com/terms" target="_blank" rel="noopener">이용 약관(일본어)</a>
+    <a class="btn sub" href="https://macchan.onrender.com/privacy" target="_blank" rel="noopener">개인정보 처리방침(일본어)</a>
+  </div>
+  <p class="updated">최종 업데이트: 2026-11-22</p>
+</section>
+</main>
+</div>
+
+<footer>© mogumogura / Macchan Bot은 개인이 만든 비공식 봇이며 Discord 공식과는 관계없습니다.</footer>
+
+<script>
+// 目次：いま見ている所に印
+const links=[...document.querySelectorAll('nav.toc a')];
+const io=new IntersectionObserver(es=>{ es.forEach(en=>{ if(en.isIntersecting){ links.forEach(a=>a.classList.toggle('on', a.getAttribute('href')==='#'+en.target.id)); } }); }, {rootMargin:'-30% 0px -60% 0px'});
+document.querySelectorAll('main section').forEach(s=>io.observe(s));
+// 言語メニュー：外を押したら閉じる
+document.addEventListener('click',e=>{ const d=document.querySelector('details.lang'); if(d&&d.open&&!d.contains(e.target)) d.open=false; });
+</script>
+</body>
+</html>

@@ -7,6 +7,13 @@
 <meta name="description" content="TRPG の Discord Bot「Macchan Bot」の使い方を、やりたいこと別にまとめたガイドです。ダイス・秘匿ロール・BCDice・表・キャラクター登録・VC の操作・サーバーの設定まで。">
 <meta property="og:title" content="Macchan Bot 使い方ガイド">
 <meta property="og:description" content="やりたいこと別に、Macchan Bot の使い方をまとめました。">
+<link rel="canonical" href="https://matumogura.github.io/mogutools/macchan/guide/">
+<link rel="alternate" hreflang="ja" href="https://matumogura.github.io/mogutools/macchan/guide/">
+<link rel="alternate" hreflang="en" href="https://matumogura.github.io/mogutools/macchan/guide/en/">
+<link rel="alternate" hreflang="ko" href="https://matumogura.github.io/mogutools/macchan/guide/ko/">
+<link rel="alternate" hreflang="zh-CN" href="https://matumogura.github.io/mogutools/macchan/guide/zh-CN/">
+<link rel="alternate" hreflang="zh-TW" href="https://matumogura.github.io/mogutools/macchan/guide/zh-TW/">
+<link rel="alternate" hreflang="x-default" href="https://matumogura.github.io/mogutools/macchan/guide/en/">
 <link rel="icon" href="../../img/macchan.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,6 +25,7 @@
 <header class="top"><div class="topin">
   <a class="brand" href="./"><img src="../../img/macchan.png" alt=""><span>Macchan Bot</span><small>使い方ガイド</small></a>
   <span class="sp"></span>
+  <details class="lang"><summary class="toplink" aria-label="Language">🌐 日本語</summary><ul><li><a href="./" hreflang="ja" lang="ja" aria-current="page">日本語</a></li><li><a href="en/" hreflang="en" lang="en">English</a></li><li><a href="ko/" hreflang="ko" lang="ko">한국어</a></li><li><a href="zh-CN/" hreflang="zh-CN" lang="zh-CN">简体中文</a></li><li><a href="zh-TW/" hreflang="zh-TW" lang="zh-TW">繁體中文</a></li></ul></details>
   <a class="toplink" href="hiyori.html">卓日和のガイド</a>
   <a class="toplink" href="../../">ツールの紹介へ</a>
 </div></header>
@@ -387,6 +395,12 @@
 const links=[...document.querySelectorAll('nav.toc a')];
 const io=new IntersectionObserver(es=>{ es.forEach(en=>{ if(en.isIntersecting){ links.forEach(a=>a.classList.toggle('on', a.getAttribute('href')==='#'+en.target.id)); } }); }, {rootMargin:'-30% 0px -60% 0px'});
 document.querySelectorAll('main section').forEach(s=>io.observe(s));
+// 言語メニュー：外を押したら閉じる
+document.addEventListener('click',e=>{ const d=document.querySelector('details.lang'); if(d&&d.open&&!d.contains(e.target)) d.open=false; });
+// 日本語以外の設定のブラウザには、ほかの言語版があることを知らせる（勝手には移動しない）
+(()=>{ const ls=(navigator.languages||[navigator.language||'']).map(x=>String(x).toLowerCase()); if(!ls.length||ls.some(x=>x.startsWith('ja'))) return;
+  const l=ls[0]; const to=l.startsWith('ko')?['ko/','한국어 가이드가 있습니다']:l.startsWith('zh')?((/tw|hk|hant/.test(l))?['zh-TW/','也有繁體中文版指南']:['zh-CN/','也有简体中文版指南']):['en/','This guide is also available in English'];
+  const b=document.createElement('a'); b.className='langhint'; b.href=to[0]; b.textContent=to[1]+' →'; document.querySelector('.hero').prepend(b); })();
 </script>
 </body>
 </html>

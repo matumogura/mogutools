@@ -52,8 +52,9 @@
   // bake: a scene with a foreground goes out with "background + foreground" as one foreground image, because
   // CCFOLIA's scene list draws foregroundUrl || backgroundUrl (a lone frame would be all it shows).
   // reedit: also pack scenemaker/project.json (and the frames before baking) so the zip can be opened here again.
-  const defaultExportOpts = () => ({ mode: "add", shrink: true, bake: true, reedit: true });
-  // items: CCFOLIA's screen panels (room-wide, read from a room data zip). Shown on the board only; never exported.
+  const defaultExportOpts = () => ({ mode: "add", shrink: true, bake: true, reedit: true, items: true });
+  // items: CCFOLIA's screen panels (room-wide). Like a marker, plus ccfId (the room's id for it), coverId / closed (its back),
+  // and raw (the rest of CCFOLIA's fields, kept as they came so writing it back changes only what was edited).
   const defaultState = () => ({ images: [], scenes: [], commonFg: null, commonMarkers: [], items: [], defaults: defaultDefaults(), exportOpts: defaultExportOpts(), orderBase: 0 });
 
   // Field size in cells for an image of w x h px: keep its shape, long side = longSide cells.
@@ -115,8 +116,10 @@
     })) : [];
     const eo = Object.assign(defaultExportOpts(), s.exportOpts && typeof s.exportOpts === "object" ? s.exportOpts : {});
     return {
-      images, scenes, commonFg: has(s.commonFg) ? String(s.commonFg) : null, commonMarkers: cleanMarkers(s.commonMarkers, has), items: cleanMarkers(s.items, has), defaults,
-      exportOpts: { mode: eo.mode === "overwrite" ? "overwrite" : "add", shrink: !!eo.shrink, bake: eo.bake !== false, reedit: eo.reedit !== false },
+      images, scenes, commonFg: has(s.commonFg) ? String(s.commonFg) : null, commonMarkers: cleanMarkers(s.commonMarkers, has), items: Array.isArray(s.items) ? s.items.filter(x => x && typeof x === "object").map(x => Object.assign(cleanMarker(x, has), {
+        ccfId: /^[A-Za-z0-9_-]{1,64}$/.test(x.ccfId || "") ? String(x.ccfId) : "", coverId: has(x.coverId) ? String(x.coverId) : null,
+        closed: !!x.closed, z: Number(x.z) || 0, raw: x.raw && typeof x.raw === "object" && !Array.isArray(x.raw) ? x.raw : null })) : [], defaults,
+      exportOpts: { mode: eo.mode === "overwrite" ? "overwrite" : "add", shrink: !!eo.shrink, bake: eo.bake !== false, reedit: eo.reedit !== false, items: eo.items !== false },
       orderBase: Number(s.orderBase) || 0,
     };
   }
@@ -145,6 +148,19 @@
       soundName: "", soundUrl: null, soundRef: null, soundRepeat: false, soundVolume: 0.5,
       locked: false, order,
     };
+  }
+
+  // One screen panel as CCFOLIA stores it. image / cover: a URL, a file to pack, or null.
+  // A panel read from a room keeps its other fields (owner, deck, order...) as they were.
+  function itemEntity(it, image, cover, z) {
+    const now = Date.now();
+    const base = it.raw ? Object.assign({}, it.raw) : {
+      visible: true, withoutOwner: false, owner: null, ownerName: null, ownerColor: null,
+      deckId: null, clickAction: null, order: 0, createdAt: now, updatedAt: now,
+    };
+    return Object.assign(base, { x: it.x, y: it.y, z, width: it.width, height: it.height, angle: it.angle,
+      locked: it.locked, freezed: it.freezed, active: true, closed: !!(it.closed && cover), memo: it.text,
+      imageUrl: image || null, coverImageUrl: cover || null, updatedAt: now });
   }
 
   // ---- templates
@@ -204,5 +220,5 @@
   }
 
   root.SceneModel = { CELL, MAX_CELLS, MAX_POS, FITS, CLICKS, MAX_IMAGE, MAX_SCENES, uid, clampInt, defaultState, normalize, suggestSize, newScene,
-    newMarker, cleanMarker, markersOf, markerEntity, fgIdOf, toEntity, sceneToTemplate, normalizeTemplates, sceneFromTemplate };
+    newMarker, cleanMarker, markersOf, markerEntity, itemEntity, fgIdOf, toEntity, sceneToTemplate, normalizeTemplates, sceneFromTemplate };
 })(typeof window !== "undefined" ? window : globalThis);

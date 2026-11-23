@@ -472,8 +472,9 @@
           <div class="inline"><label class="check"><input type="checkbox" id="edGrid"> グリッド</label> <span class="grp">間隔 <input type="number" id="edGridSize" min="1" max="1000" step="1" aria-label="グリッドの間隔（マス）"></span></div>
           <div class="markers" id="markers">
             <div class="mk-head"><span class="mk-title">マーカー</span>
-              <span class="seg" id="mkMode" role="group" aria-label="置くマーカー"><button type="button" data-mk-mode="scene" aria-pressed="true">このシーン</button><button type="button" data-mk-mode="common" aria-pressed="false">全シーン共通</button></span></div>
-            <label class="check"><input type="checkbox" id="edUseCommon"> 共通のマーカーも付ける</label>
+              <span class="seg" id="mkMode" role="group" aria-label="置くマーカー"><button type="button" data-mk-mode="scene" aria-pressed="true">このシーン</button><button type="button" data-mk-mode="common" aria-pressed="false">全シーン共通</button><button type="button" data-mk-mode="panel" aria-pressed="false">パネル</button></span></div>
+            <label class="check" id="edUseCommonRow"><input type="checkbox" id="edUseCommon"> 共通のマーカーも付ける</label>
+            <p class="desc" id="mkPanelNote" hidden>ココフォリアのスクリーンパネル（全シーン共通・マーカーより上）。削除しても、ココフォリアのパネルは消えません。</p>
             <div class="mk-list" id="mkList" role="listbox" aria-label="マーカーの一覧"></div>
             <div class="btns"><button type="button" class="small" id="mkAdd">＋ マーカー</button><button type="button" class="small" id="mkAddFile">＋ 画像から</button></div>
             <div class="mk-detail" id="mkDetail" hidden>
@@ -488,8 +489,12 @@
               </div>
               <div class="inline"><label class="check"><input type="checkbox" id="mkLocked"> 配置固定</label> <label class="check"><input type="checkbox" id="mkFreezed"> サイズ固定</label></div>
               <div class="two">
-                <label class="f">クリック<select id="mkClick"><option value="none">なし</option><option value="message">チャットに送信</option></select></label>
+                <label class="f" id="mkClickBox">クリック<select id="mkClick"><option value="none">なし</option><option value="message">チャットに送信</option></select></label>
                 <label class="f" id="mkClickRow">送信する文<input type="text" id="mkClickValue"></label>
+              </div>
+              <div class="two" id="pnBox" hidden>
+                <label class="f">裏の画像<span class="inline"><select id="pnCover"></select></span></label>
+                <label class="check" style="align-self: end;"><input type="checkbox" id="pnClosed"> 裏返す</label>
               </div>
               <div class="btns">
                 <button type="button" class="small" id="mkBack">後ろへ</button>
@@ -570,6 +575,7 @@
       </div>
       <label class="check"><input type="checkbox" id="optShrink"> 5MB 超えの画像を縮小</label>
       <label class="check"><input type="checkbox" id="optBake"> 背景と前景を重ねて一覧の絵にする</label>
+      <label class="check" id="optItemsRow" hidden><input type="checkbox" id="optItems"> スクリーンパネルも書き出す（ルームのパネルを上書き）</label>
       <label class="check"><input type="checkbox" id="optReedit"> あとで直せる情報を入れる</label>
       <p class="summary" id="exportSummary"></p>
       <div class="btns">
@@ -613,7 +619,7 @@
   </main>
   <footer>
   元にしたツール：<a href="https://github.com/shiki365/scene-maker">shiki365/scene-maker</a>（MIT License, Copyright (c) 2026 shiki365・<a href="LICENSE.txt">ライセンス</a>）。ココフォリアとは関係のない非公式ツールです。<br>
-  <span>v1.4-mogu</span> ・ 最終更新 2026-11-23
+  <span>v1.5-mogu</span> ・ 最終更新 2026-11-23
 </footer>
 </div>
 
@@ -626,8 +632,8 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" integrity="sha512-XMVd28F1oH/O71fzwBnV7HucLxVwtxf26XV8P4wPk26EDxuGZ91N8bsOttmnomcCD3CS5ZMRL50H0GgOHvegtg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="roomdata.v1.js?v=2"></script>
-<script src="model.v1.js?v=5"></script>
-<script src="app.v1.js?v=11"></script>
+<script src="model.v1.js?v=6"></script>
+<script src="app.v1.js?v=12"></script>
 <script src="layout.v1.js?v=1"></script>
 </body>
 </html>

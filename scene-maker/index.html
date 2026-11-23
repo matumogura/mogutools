@@ -374,6 +374,8 @@
   .drawer { grid-column: 2; grid-row: 1; }
   .side { grid-column: 3; grid-row: 1; }
   .stage:has(#stageEmpty:not([hidden])) .view-ctl { display: none; }
+  .board .mk.it { pointer-events: none; }
+  .view-ctl button[hidden] { display: none; }
   .stage-area .stage { position: absolute; inset: 0; height: auto; border: 0; border-radius: 0; background: #202020; overflow: hidden; }
   .stage-blur { position: absolute; inset: -60px; z-index: 0; background: center / cover no-repeat; filter: blur(14px); pointer-events: none; }
   .stage .board { z-index: 0; box-shadow: 0 0 0 4px rgba(0,0,0,.25), 0 10px 40px rgba(0,0,0,.45); outline: 0; }
@@ -448,7 +450,7 @@
   <main class="work">
     <section class="stage-area">
       <div class="stage" id="stage" aria-label="盤面の見本"><div class="stage-blur" id="stageBlur"></div><div class="board" id="board"></div><div class="aid-grid" id="aidGrid" hidden></div>
-            <div class="view-ctl" role="group" aria-label="盤面の見本の表示"><button type="button" class="small" id="viewOut" aria-label="縮小" title="縮小（Ctrl＋ホイール）">−</button><output id="viewZoom">100%</output><button type="button" class="small" id="viewIn" aria-label="拡大" title="拡大（Ctrl＋ホイール）">＋</button><button type="button" class="small" id="viewFit" title="フィールドに合わせる">枠</button><button type="button" class="small" id="viewAll" title="マーカーまで全部入れる">全体</button><button type="button" class="small" id="viewGrid" aria-pressed="false" title="1 マスごとの線（表示だけ）">マス目</button></div><p class="stage-note" id="stageNote"></p><div class="stage-empty" id="stageEmpty"><b>背景の画像をここにドロップ</b><span>1 枚が 1 シーンになります</span></div></div>
+            <div class="view-ctl" role="group" aria-label="盤面の見本の表示"><button type="button" class="small" id="viewOut" aria-label="縮小" title="縮小（Ctrl＋ホイール）">−</button><output id="viewZoom">100%</output><button type="button" class="small" id="viewIn" aria-label="拡大" title="拡大（Ctrl＋ホイール）">＋</button><button type="button" class="small" id="viewFit" title="フィールドに合わせる">枠</button><button type="button" class="small" id="viewAll" title="マーカーまで全部入れる">全体</button><button type="button" class="small" id="viewItems" aria-pressed="true" title="ココフォリアのスクリーンパネル（表示だけ・書き出しには入りません）" hidden>パネル</button><button type="button" class="small" id="viewGrid" aria-pressed="false" title="1 マスごとの線（表示だけ）">マス目</button></div><p class="stage-note" id="stageNote"></p><div class="stage-empty" id="stageEmpty"><b>背景の画像をここにドロップ</b><span>1 枚が 1 シーンになります</span></div></div>
     </section>
 
     <div class="drawer" id="dwEdit" hidden>
@@ -611,7 +613,7 @@
   </main>
   <footer>
   元にしたツール：<a href="https://github.com/shiki365/scene-maker">shiki365/scene-maker</a>（MIT License, Copyright (c) 2026 shiki365・<a href="LICENSE.txt">ライセンス</a>）。ココフォリアとは関係のない非公式ツールです。<br>
-  <span>v1.3-mogu</span> ・ 最終更新 2026-11-23
+  <span>v1.4-mogu</span> ・ 最終更新 2026-11-23
 </footer>
 </div>
 
@@ -624,8 +626,8 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" integrity="sha512-XMVd28F1oH/O71fzwBnV7HucLxVwtxf26XV8P4wPk26EDxuGZ91N8bsOttmnomcCD3CS5ZMRL50H0GgOHvegtg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="roomdata.v1.js?v=2"></script>
-<script src="model.v1.js?v=4"></script>
-<script src="app.v1.js?v=10"></script>
+<script src="model.v1.js?v=5"></script>
+<script src="app.v1.js?v=11"></script>
 <script src="layout.v1.js?v=1"></script>
 </body>
 </html>

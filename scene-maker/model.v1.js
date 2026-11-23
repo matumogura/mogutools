@@ -53,7 +53,8 @@
   // CCFOLIA's scene list draws foregroundUrl || backgroundUrl (a lone frame would be all it shows).
   // reedit: also pack scenemaker/project.json (and the frames before baking) so the zip can be opened here again.
   const defaultExportOpts = () => ({ mode: "add", shrink: true, bake: true, reedit: true });
-  const defaultState = () => ({ images: [], scenes: [], commonFg: null, commonMarkers: [], defaults: defaultDefaults(), exportOpts: defaultExportOpts(), orderBase: 0 });
+  // items: CCFOLIA's screen panels (room-wide, read from a room data zip). Shown on the board only; never exported.
+  const defaultState = () => ({ images: [], scenes: [], commonFg: null, commonMarkers: [], items: [], defaults: defaultDefaults(), exportOpts: defaultExportOpts(), orderBase: 0 });
 
   // Field size in cells for an image of w x h px: keep its shape, long side = longSide cells.
   function suggestSize(w, h, longSide) {
@@ -114,7 +115,7 @@
     })) : [];
     const eo = Object.assign(defaultExportOpts(), s.exportOpts && typeof s.exportOpts === "object" ? s.exportOpts : {});
     return {
-      images, scenes, commonFg: has(s.commonFg) ? String(s.commonFg) : null, commonMarkers: cleanMarkers(s.commonMarkers, has), defaults,
+      images, scenes, commonFg: has(s.commonFg) ? String(s.commonFg) : null, commonMarkers: cleanMarkers(s.commonMarkers, has), items: cleanMarkers(s.items, has), defaults,
       exportOpts: { mode: eo.mode === "overwrite" ? "overwrite" : "add", shrink: !!eo.shrink, bake: eo.bake !== false, reedit: eo.reedit !== false },
       orderBase: Number(s.orderBase) || 0,
     };

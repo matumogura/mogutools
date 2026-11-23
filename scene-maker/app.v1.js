@@ -603,13 +603,15 @@
 
   // How the board sample is looked at: zoom (1 = the field just fits) and a shift from the middle, in px.
   // Only a way of looking, so it is not part of the work (no undo, not saved).
-  const view = { zoom: 1, x: 0, y: 0, grid: false };
+  // zoom is CCFOLIA's: 1 = 24 px a cell. It stays as it is when another scene is chosen (as in CCFOLIA), so scenes
+  // can be compared; null until the first scene is drawn, which then fits everything in.
+  const view = { zoom: null, x: 0, y: 0, grid: false };
   const VIEW_GRID_KEY = "ccf-scene-maker.view-grid";
   try { view.grid = localStorage.getItem(VIEW_GRID_KEY) === "1"; } catch (err) { /* not kept */ }
   const VIEW_ITEMS_KEY = "mogu-scene-maker.view-items";
   view.items = true;
   try { view.items = localStorage.getItem(VIEW_ITEMS_KEY) !== "0"; } catch (err) { /* not kept */ }
-  const VIEW_MIN = 0.1, VIEW_MAX = 8;
+  const VIEW_MIN = 0.05, VIEW_MAX = 8;
   const fitScale = (sc, stage) => Math.min(Math.max(40, stage.clientWidth - 24) / (sc.width * M.CELL), Math.max(40, stage.clientHeight - 24) / (sc.height * M.CELL));
 
   // Images already on the board, by src: reused so animated images keep running across redraws.
@@ -622,7 +624,6 @@
   }
   // Images of more than one place on the board (two markers with one image) need their own node.
   const boardUsed = new Set();
-  let lastShown = null;
   function boardImgOnce(src) {
     if (boardUsed.has(src)) { const img = document.createElement("img"); img.src = src; img.alt = ""; img.draggable = false; return img; }
     boardUsed.add(src);
@@ -640,10 +641,13 @@
     if (blur) blur.style.backgroundImage = bgSrc ? `url("${bgSrc}")` : "";
     if ($("#stageEmpty")) $("#stageEmpty").hidden = !!sc;
     if (!sc) return;
-    // A newly chosen scene starts with everything in view (markers may sit outside the field, as in CCFOLIA).
-    if (sc.id !== lastShown) { lastShown = sc.id; if (shownMarkers(sc).length || (view.items && state.items.length)) { $("#viewAll").click(); return; } Object.assign(view, { zoom: 1, x: 0, y: 0 }); }
     const stage = $("#stage");
-    const scale = fitScale(sc, stage) * view.zoom;
+    // The first scene shown starts with everything in view; after that the view stays put across scenes.
+    if (view.zoom == null) {
+      if (shownMarkers(sc).length || (view.items && state.items.length)) { view.zoom = 1; $("#viewAll").click(); return; }
+      Object.assign(view, { zoom: fitScale(sc, stage), x: 0, y: 0 });
+    }
+    const scale = view.zoom;
     const w = sc.width * M.CELL * scale, h = sc.height * M.CELL * scale;
     board.style.width = w + "px";
     board.style.height = h + "px";
@@ -1463,7 +1467,7 @@
       renderBoard();
     });
     document.addEventListener("board-drawn", syncItems);
-    $("#viewFit").addEventListener("click", () => { Object.assign(view, { zoom: 1, x: 0, y: 0 }); renderBoard(); });
+    $("#viewFit").addEventListener("click", () => { const sc = sceneById(selected); if (!sc) return; Object.assign(view, { zoom: fitScale(sc, stage), x: 0, y: 0 }); renderBoard(); });
     // The field and every marker shown on it, with a cell to spare.
     $("#viewAll").addEventListener("click", () => {
       const sc = sceneById(selected);
@@ -1476,8 +1480,8 @@
       }
       x0 -= 1; y0 -= 1; x1 += 1; y1 += 1;
       const s = Math.min(Math.max(40, stage.clientWidth - 24) / ((x1 - x0) * M.CELL), Math.max(40, stage.clientHeight - 24) / ((y1 - y0) * M.CELL));
-      view.zoom = Math.min(VIEW_MAX, Math.max(VIEW_MIN, s / fitScale(sc, stage)));
-      const scale = fitScale(sc, stage) * view.zoom;
+      view.zoom = Math.min(VIEW_MAX, Math.max(VIEW_MIN, s));
+      const scale = view.zoom;
       view.x = -((x0 + x1) / 2 - sc.width / 2) * M.CELL * scale;
       view.y = -((y0 + y1) / 2 - sc.height / 2) * M.CELL * scale;
       renderBoard();

@@ -41,7 +41,7 @@
   let state = M.defaultState();
   let selected = null;     // scene id
   let pendingPick = null;  // called with the ids of the files chosen through #imageFile
-  let markerMode = "scene"; // which markers the board sample edits: "scene" | "common"
+  let markerMode = "scene"; // which markers the board sample edits: "scene" | "common" | "panel" (screen panels)
   let selectedMarker = null; // marker id
   const random = n => crypto.getRandomValues(new Uint8Array(n));
 
@@ -674,7 +674,7 @@
       board.append(g);
     }
     drawMarkers(sc, board, M.CELL * scale);
-    if (view.items) drawItems(sc, board, M.CELL * scale);
+    if (view.items && markerMode !== "panel") drawItems(sc, board, M.CELL * scale);
     const ratio = im => im && im.w && im.h ? Math.abs(im.w / im.h - sc.width / sc.height) / (sc.width / sc.height) : 0;
     const off = [];
     if (ratio(bg) > 0.05) off.push(t("背景"));
@@ -688,7 +688,9 @@
 
   // ---------------------------------------------------------------- marker panels
 
-  const markerList = sc => (markerMode === "common" ? state.commonMarkers : sc ? sc.markers : []);
+  const markerList = sc => (markerMode === "panel" ? state.items : markerMode === "common" ? state.commonMarkers : sc ? sc.markers : []);
+  // What a panel shows: its back when turned over.
+  const faceOf = m => (m.closed && m.coverId ? m.coverId : m.imageId);
   const markerById = (sc, id) => markerList(sc).find(m => m.id === id) || null;
   const markerLabel = (m, i) => m.text || (imageById(m.imageId) || {}).name || t("マーカー {n}", { n: i + 1 });
 
@@ -706,16 +708,16 @@
   function drawMarkers(sc, board, cs) {
     board.dataset.cs = cs;
     const edited = markerList(sc);
-    const shown = shownMarkers(sc);
+    const shown = shownMarkers(sc).concat(markerMode === "panel" ? state.items : []);
     shown.forEach((m, z) => {
       const editable = edited.includes(m);
       const el = document.createElement("div");
       el.className = "mk" + (editable ? " edit" : " other") + (m.id === selectedMarker && editable ? " sel" : "") + (m.imageId ? "" : " empty");
       el.dataset.id = m.id;
-      el.style.zIndex = 10 + z;
+      el.style.zIndex = (state.items.includes(m) ? 1000 : 10) + z;
       if (editable) { el.tabIndex = 0; el.setAttribute("aria-label", markerLabel(m, edited.indexOf(m))); }
       if (m.text) el.title = m.text;
-      const src = srcOf(m.imageId);
+      const src = srcOf(faceOf(m));
       if (src) el.append(boardImgOnce(src));
       if (editable && m.id === selectedMarker) { const h = document.createElement("div"); h.className = "mk-h"; el.append(h); }
       placeMarker(el, m, sc, cs);
@@ -730,7 +732,7 @@
       el.className = "mk it" + (it.imageId ? "" : " empty");
       el.style.zIndex = 1000 + z;
       if (it.text) el.title = it.text;
-      const src = srcOf(it.imageId);
+      const src = srcOf(faceOf(it));
       if (src) el.append(boardImgOnce(src));
       placeMarker(el, it, sc, cs);
       board.append(el);
@@ -742,6 +744,8 @@
     if (!sc) return;
     for (const b of document.querySelectorAll("[data-mk-mode]")) b.setAttribute("aria-pressed", String(b.dataset.mkMode === markerMode));
     $("#edUseCommon").checked = sc.useCommonMarkers;
+    $("#edUseCommonRow").hidden = markerMode === "panel";
+    $("#mkPanelNote").hidden = markerMode !== "panel";
     const list = markerList(sc);
     if (selectedMarker && !list.some(m => m.id === selectedMarker)) selectedMarker = null;
     const box = $("#mkList");
@@ -749,7 +753,7 @@
     if (!list.length) {
       const p = document.createElement("p");
       p.className = "desc";
-      p.textContent = markerMode === "common" ? t("全シーン共通のマーカーは、まだありません。") : t("このシーンのマーカーは、まだありません。");
+      p.textContent = markerMode === "panel" ? t("スクリーンパネルは、まだありません。") : markerMode === "common" ? t("全シーン共通のマーカーは、まだありません。") : t("このシーンのマーカーは、まだありません。");
       box.append(p);
     }
     list.forEach((m, i) => {
@@ -760,7 +764,7 @@
       row.tabIndex = 0;
       const pic = document.createElement("span");
       pic.className = "mk-pic";
-      const src = srcOf(m.imageId);
+      const src = srcOf(faceOf(m));
       if (src) pic.style.backgroundImage = `url("${src}")`;
       const label = document.createElement("span");
       label.className = "mk-label";
@@ -786,7 +790,14 @@
     $("#mkLocked").checked = m.locked;
     $("#mkFreezed").checked = m.freezed;
     $("#mkClick").value = m.click === "message" ? "message" : "none";
-    $("#mkClickRow").hidden = m.click !== "message";
+    const panel = markerMode === "panel";
+    $("#mkClickRow").hidden = panel || m.click !== "message";
+    $("#mkClickBox").hidden = panel;
+    $("#pnBox").hidden = !panel;
+    if (panel) {
+      fillImageSelect($("#pnCover"), [["", t("なし")]], m.coverId || "");
+      $("#pnClosed").checked = !!m.closed;
+    }
     const i = list.indexOf(m);
     $("#mkBack").disabled = i <= 0;
     $("#mkFront").disabled = i >= list.length - 1;
@@ -829,6 +840,8 @@
     $("#optShrink").checked = state.exportOpts.shrink;
     $("#optBake").checked = state.exportOpts.bake;
     $("#optReedit").checked = state.exportOpts.reedit;
+    $("#optItems").checked = state.exportOpts.items;
+    $("#optItemsRow").hidden = !state.items.length;
     const used = state.images.filter(im => isUsed(im.id));
     const big = used.filter(im => tooBig(im) && !im.moving), bigMoving = used.filter(im => tooBig(im) && im.moving);
     const el = $("#exportSummary");
@@ -914,7 +927,16 @@
         }
         scenes[sc.ccfId] = M.toEntity(sc, await file(bg), fgFile || await file(fg), state.orderBase + i, markers);
       }
-      const { zip, files } = await R.build({ scenes }, { JSZip: window.JSZip, subtle: crypto.subtle });
+      // Screen panels go out with the room's own ids, so importing replaces the same panels (new ones get an id once).
+      const items = {};
+      if (state.exportOpts.items) {
+        for (let k = 0; k < state.items.length; k++) {
+          const it = state.items[k];
+          if (!/^[A-Za-z0-9_-]{1,64}$/.test(it.ccfId)) it.ccfId = R.newId(random);
+          items[it.ccfId] = M.itemEntity(it, await file(imageById(it.imageId)), await file(imageById(it.coverId)), k + 1); // list order is stacking order
+        }
+      }
+      const { zip, files } = await R.build({ scenes, items }, { JSZip: window.JSZip, subtle: crypto.subtle });
       if (state.exportOpts.reedit) await packReedit(zip, cache);
       // Images are already compressed; storing them keeps the export quick.
       const blob = await zip.generateAsync({ type: "blob", compression: "STORE" });
@@ -944,7 +966,7 @@
   // its resources, so this folder rides along unread. Images reuse the zip's own files where the bytes match.
   async function packReedit(zip, cache) {
     const images = [];
-    const used = state.images.filter(im => blobs.has(im.id) && (isUsed(im.id) || im.id === state.commonFg || state.commonMarkers.concat(state.items).some(m => m.imageId === im.id)));
+    const used = state.images.filter(im => blobs.has(im.id) && (isUsed(im.id) || im.id === state.commonFg || state.commonMarkers.concat(state.items).some(m => m.imageId === im.id || m.coverId === im.id)));
     for (const im of used) {
       const p = await prepared(im, cache);
       const name = R.hex(await crypto.subtle.digest("SHA-256", p.bytes)) + "." + R.EXT[p.type];
@@ -1078,9 +1100,12 @@
       .filter(([, it]) => it && typeof it === "object" && it.active !== false)
       .sort((a, b) => (Number(a[1].z) || 0) - (Number(b[1].z) || 0));
     for (const [key, it] of items) {
-      const src = it.closed && it.coverImageUrl ? it.coverImageUrl : it.imageUrl;
-      next.items.push({ id: "p" + key, imageId: await take(src, (it.memo || t("スクリーンパネル")).slice(0, 30)), text: it.memo || "",
-        x: it.x, y: it.y, width: it.width, height: it.height, angle: it.angle, locked: true, freezed: true, click: "none", clickValue: "" });
+      const label = (it.memo || t("スクリーンパネル")).slice(0, 30);
+      const raw = Object.assign({}, it);
+      delete raw.imageUrl; delete raw.coverImageUrl;
+      next.items.push({ id: "p" + key, ccfId: key, imageId: await take(it.imageUrl, label), coverId: await take(it.coverImageUrl, label + t("（裏）")),
+        closed: !!it.closed, z: Number(it.z) || 0, raw, text: it.memo || "",
+        x: it.x, y: it.y, width: it.width, height: it.height, angle: it.angle, locked: !!it.locked, freezed: !!it.freezed, click: "none", clickValue: "" });
     }
     const out = M.normalize(next);
     // Keep each scene's place in CCFOLIA's list when writing back over it.
@@ -1305,6 +1330,7 @@
       const s = cur();
       if (!s) return;
       const m = M.newMarker(imageById(imageId));
+      if (markerMode === "panel") Object.assign(m, { ccfId: "", coverId: null, closed: false, z: 0, raw: null });
       markerList(s).push(m);
       selectedMarker = m.id;
       touch({ keepGallery: true });
@@ -1326,6 +1352,8 @@
     $("#mkLocked").addEventListener("change", ev => edit(m => { m.locked = ev.target.checked; }));
     $("#mkFreezed").addEventListener("change", ev => edit(m => { m.freezed = ev.target.checked; }));
     $("#mkClick").addEventListener("change", ev => edit(m => { m.click = ev.target.value; }));
+    $("#pnCover").addEventListener("change", ev => edit(m => { m.coverId = ev.target.value || null; }));
+    $("#pnClosed").addEventListener("change", ev => edit(m => { m.closed = ev.target.checked; }));
     const shift = d => { const s = cur(), list = markerList(s), i = list.findIndex(m => m.id === selectedMarker), j = i + d;
       if (i < 0 || j < 0 || j >= list.length) return; [list[i], list[j]] = [list[j], list[i]]; touch({ keepGallery: true }); commit(); };
     $("#mkBack").addEventListener("click", () => shift(-1));
@@ -1334,6 +1362,7 @@
       const s = cur(), m = curMarker();
       if (!m) return;
       const copy = Object.assign({}, m, { id: M.uid("k"), x: m.x + 1, y: m.y + 1 });
+      if ("ccfId" in copy) copy.ccfId = ""; // a new panel in the room, not the same one twice
       markerList(s).push(copy);
       selectedMarker = copy.id;
       touch({ keepGallery: true });
@@ -1672,6 +1701,7 @@
     }
     $("#optShrink").addEventListener("change", ev => { state.exportOpts.shrink = ev.target.checked; touch({ keepGallery: true }); commit(); });
     $("#optBake").addEventListener("change", ev => { state.exportOpts.bake = ev.target.checked; touch({ keepGallery: true }); commit(); });
+    $("#optItems").addEventListener("change", ev => { state.exportOpts.items = ev.target.checked; touch({ keepGallery: true }); commit(); });
     $("#optReedit").addEventListener("change", ev => { state.exportOpts.reedit = ev.target.checked; touch({ keepGallery: true }); commit(); });
     $("#exportZip").addEventListener("click", exportZip);
     $("#exportAssets").addEventListener("click", exportAssets);

@@ -51,7 +51,8 @@
   const defaultDefaults = () => ({ longSide: 48, displayGrid: false, gridSize: 1, fit: "fill" });
   // bake: a scene with a foreground goes out with "background + foreground" as one foreground image, because
   // CCFOLIA's scene list draws foregroundUrl || backgroundUrl (a lone frame would be all it shows).
-  const defaultExportOpts = () => ({ mode: "add", shrink: true, bake: true });
+  // reedit: also pack scenemaker/project.json (and the frames before baking) so the zip can be opened here again.
+  const defaultExportOpts = () => ({ mode: "add", shrink: true, bake: true, reedit: true });
   const defaultState = () => ({ images: [], scenes: [], commonFg: null, commonMarkers: [], defaults: defaultDefaults(), exportOpts: defaultExportOpts(), orderBase: 0 });
 
   // Field size in cells for an image of w x h px: keep its shape, long side = longSide cells.
@@ -114,7 +115,7 @@
     const eo = Object.assign(defaultExportOpts(), s.exportOpts && typeof s.exportOpts === "object" ? s.exportOpts : {});
     return {
       images, scenes, commonFg: has(s.commonFg) ? String(s.commonFg) : null, commonMarkers: cleanMarkers(s.commonMarkers, has), defaults,
-      exportOpts: { mode: eo.mode === "overwrite" ? "overwrite" : "add", shrink: !!eo.shrink, bake: eo.bake !== false },
+      exportOpts: { mode: eo.mode === "overwrite" ? "overwrite" : "add", shrink: !!eo.shrink, bake: eo.bake !== false, reedit: eo.reedit !== false },
       orderBase: Number(s.orderBase) || 0,
     };
   }

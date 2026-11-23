@@ -32,23 +32,23 @@
   * { box-sizing: border-box; }
   [hidden] { display: none !important; }
   body { margin: 0; background: var(--bg); color: var(--fg);
-         font-family: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", "Hiragino Sans", "Yu Gothic", sans-serif; font-weight: 500; font-size: 13px; line-height: 1.6; letter-spacing: .02em; }
+         font-family: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", "Hiragino Sans", "Yu Gothic", sans-serif; font-weight: 500; font-size: 15px; line-height: 1.6; letter-spacing: .02em; }
 
   /* ---- Page */
   header { padding: 10px 20px 14px; border-bottom: 1px solid var(--line); }
   .topline { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 16px; margin-bottom: 8px; }
   .prefs { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 18px; }
-  h1 { margin: 0 0 4px; font-size: 18px; line-height: 1.4; letter-spacing: .02em; }
+  h1 { margin: 0 0 4px; font-size: 20px; line-height: 1.4; letter-spacing: .02em; }
   /* The mark: a small die seen from a corner. */
   h1::before { content: ""; display: inline-block; width: 9px; height: 9px; margin: 0 11px 0 3px;
                background: var(--accent); transform: rotate(45deg); vertical-align: 2px; }
-  header p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.7; max-width: 84em; }
-  .home-link { display: inline-block; color: var(--muted); font-size: 12px; text-decoration: none; }
+  header p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.7; max-width: 84em; }
+  .home-link { display: inline-block; color: var(--muted); font-size: 14px; text-decoration: none; }
   .home-link:hover { color: var(--fg); text-decoration: underline; }
   .home-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
   main { display: grid; gap: 20px; padding: 16px 20px 40px;
-         grid-template-columns: minmax(320px, 400px) minmax(0, 1fr); align-items: start; }
+         grid-template-columns: minmax(340px, 460px) minmax(0, 1fr); align-items: start; }
   @media (max-width: 860px) { main { grid-template-columns: minmax(0, 1fr); padding-inline: 12px; } header, footer { padding-inline: 12px; } }
 
   /* ---- Panel and tabs */
@@ -58,32 +58,32 @@
             /* Labels too long for a narrow screen (another language) scroll here instead of widening the panel. */
             overflow-x: auto; scrollbar-width: none; }
   .tabbar button { flex: 1 0 auto; border: 0; border-radius: 0; white-space: nowrap; background: transparent;
-                   color: var(--muted); padding: 9px 6px 10px; font-size: 12.5px; }
+                   color: var(--muted); padding: 9px 6px 10px; font-size: 14.5px; }
   .tabbar button:hover { background: transparent; color: var(--fg); }
   .tabbar button[aria-selected=true] { color: var(--fg); font-weight: 700; background: var(--panel);
                                         box-shadow: inset 0 -2px 0 var(--accent); }
   .tabbar button:focus-visible { outline-offset: -2px; }
   /* On a phone, five short tabs fit without scrolling. */
-  @media (max-width: 480px) { .tabbar button { padding-inline: 3px; font-size: 12px; } }
+  @media (max-width: 480px) { .tabbar button { padding-inline: 3px; font-size: 14px; } }
 
   /* A section of the sheet: its name sits on the rule. */
   fieldset { border: 0; border-top: 1px solid var(--line); margin: 18px 0 0; padding: 2px 0 0; min-width: 0; }
   section > fieldset:first-child, form > fieldset:first-child { border-top-color: transparent; margin-top: 8px; }
-  legend { padding: 0 10px 0 0; color: var(--fg); font-size: 12px; font-weight: 700; letter-spacing: .08em; }
+  legend { padding: 0 10px 0 0; color: var(--fg); font-size: 14px; font-weight: 700; letter-spacing: .08em; }
   legend::before { content: ""; display: inline-block; width: 6px; height: 6px; margin: 0 9px 0 2px;
                    background: var(--accent); transform: rotate(45deg); vertical-align: 1px; }
 
   /* ---- Rows and controls */
-  .row { display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 10px; align-items: center; margin-top: 8px; }
-  .row > label { color: var(--muted); font-size: 12.5px; }
+  .row { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 10px; align-items: center; margin-top: 8px; }
+  .row > label { color: var(--muted); font-size: 14.5px; }
   .row.wide { grid-template-columns: minmax(0, 1fr); }
   .row.sub > label { padding-left: 10px; border-left: 2px solid var(--line); }
   .with-value { display: grid; grid-template-columns: minmax(0, 1fr) 52px; gap: 8px; align-items: center; }
-  .with-value output, .color-alpha output { color: var(--fg); text-align: right; font-family: var(--mono); font-size: 12px;
+  .with-value output, .color-alpha output { color: var(--fg); text-align: right; font-family: var(--mono); font-size: 14px;
                                             font-variant-numeric: tabular-nums; }
   .pair { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; align-items: center; }
   .trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; align-items: center; }
-  .trio span { display: grid; gap: 2px; color: var(--muted); font-size: 11px; }
+  .trio span { display: grid; gap: 2px; color: var(--muted); font-size: 13px; }
   .color-alpha { display: grid; grid-template-columns: 56px minmax(0, 1fr) 44px; gap: 8px; align-items: center; }
   .checks { display: grid; gap: 5px; }
 
@@ -105,19 +105,19 @@
   input[type=checkbox], input[type=radio] { accent-color: var(--accent); width: 15px; height: 15px; vertical-align: -3px; margin: 0 5px 0 0; }
   select:focus-visible, input:focus-visible, textarea:focus-visible, button:focus-visible, summary:focus-visible {
     outline: 2px solid var(--accent); outline-offset: 1px; }
-  .desc { margin: 8px 0 0; color: var(--muted); font-size: 12px; line-height: 1.75; }
+  .desc { margin: 8px 0 0; color: var(--muted); font-size: 14px; line-height: 1.75; }
   .desc b { color: var(--fg); }
   .desc code { font-family: var(--mono); color: var(--fg); }
   .check { color: var(--fg); cursor: pointer; }
   .tag31 { display: inline-block; margin-left: 6px; padding: 0 5px; border: 1px solid var(--line); border-radius: 3px;
-           color: var(--muted); font-family: var(--mono); font-size: 10px; line-height: 1.5; vertical-align: 1px; }
+           color: var(--muted); font-family: var(--mono); font-size: 12px; line-height: 1.5; vertical-align: 1px; }
 
   button { background: var(--control); color: var(--fg); border: 1px solid var(--frame);
            border-radius: 4px; padding: 5px 13px; font: inherit; cursor: pointer; }
   button:hover { background: var(--control-hover); border-color: var(--fg); }
   button.primary { background: var(--button); border-color: var(--button); color: var(--button-fg); font-weight: 700; }
   button.primary:hover { background: var(--button-hover); border-color: var(--button-hover); }
-  button.small { padding: 3px 9px; font-size: 12px; }
+  button.small { padding: 3px 9px; font-size: 14px; }
   button.danger:hover { background: var(--danger-bg); border-color: var(--danger-line); }
   button:disabled { opacity: .45; cursor: default; }
   .btns { display: flex; flex-wrap: wrap; gap: 5px; }
@@ -137,7 +137,7 @@
   .frame-box { position: relative; outline: 1px dashed rgba(255, 64, 160, .85); outline-offset: 0; }
   /* color-scheme must match the page inside, or Chromium paints the iframe opaque white (this page may be dark). */
   .frame-box iframe { position: absolute; left: 0; top: 0; border: 0; background: transparent; transform-origin: 0 0; color-scheme: normal; }
-  .stage-info { position: absolute; left: 8px; bottom: 8px; padding: 1px 8px; border-radius: 3px; font-size: 11px;
+  .stage-info { position: absolute; left: 8px; bottom: 8px; padding: 1px 8px; border-radius: 3px; font-size: 13px;
                 color: #fff; background: rgba(0, 0, 0, .66); }
 
   .bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
@@ -149,15 +149,15 @@
   .seg button:last-child { border-right: 0; }
   .seg button:hover { background: var(--control); }
   .seg button[aria-pressed=true] { background: var(--fg); color: var(--bg); font-weight: 700; }
-  .status { color: var(--muted); font-size: 12px; min-height: 1.5em; margin: 0; }
+  .status { color: var(--muted); font-size: 14px; min-height: 1.5em; margin: 0; }
   .status.error { color: var(--error); }
-  .size-note { color: var(--fg); font-size: 12.5px; }
-  .size-note b { font-family: var(--mono); font-size: 14px; color: var(--accent); }
+  .size-note { color: var(--fg); font-size: 14.5px; }
+  .size-note b { font-family: var(--mono); font-size: 16px; color: var(--accent); }
 
   .tester, .source-url { background: var(--panel); border: 1px solid var(--frame); border-radius: 6px; padding: 10px 12px; display: grid; gap: 8px; }
-  .tester h2, .source-url h2 { margin: 0; font-size: 12px; color: var(--muted); font-weight: 400; }
+  .tester h2, .source-url h2 { margin: 0; font-size: 14px; color: var(--muted); font-weight: 400; }
   .source-url .missing { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; }
-  .source-url .warn { color: var(--warn); font-size: 12px; line-height: 1.7; }
+  .source-url .warn { color: var(--warn); font-size: 14px; line-height: 1.7; }
   .desc.warn-text { color: var(--warn); }
   .custom { display: grid; grid-template-columns: 130px 110px minmax(0, 1fr); gap: 5px; align-items: center; }
   .custom input[type=text] { width: 100%; }
@@ -167,19 +167,19 @@
                                        box-shadow: inset 3px 0 0 var(--accent); }
 
   details.css-out summary { cursor: pointer; color: var(--muted); }
-  details.css-out textarea { margin-top: 8px; height: 280px; font-family: var(--mono); font-size: 12px; white-space: pre; }
+  details.css-out textarea { margin-top: 8px; height: 280px; font-family: var(--mono); font-size: 14px; white-space: pre; }
 
   /* ---- Notes and footer */
-  .note { color: var(--muted); font-size: 12px; line-height: 1.85; margin: 0; }
+  .note { color: var(--muted); font-size: 14px; line-height: 1.85; margin: 0; }
   .note code { font-family: var(--mono); background: var(--field); border: 1px solid var(--line); border-radius: 3px; padding: 0 4px; color: var(--fg); }
-  .note h2 { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--fg); margin: 20px 0 6px; letter-spacing: .04em; }
+  .note h2 { display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--fg); margin: 20px 0 6px; letter-spacing: .04em; }
   .note h2::before { content: ""; flex: none; width: 6px; height: 6px; margin-left: 2px; background: var(--accent); transform: rotate(45deg); }
   .note h2::after { content: ""; flex: 1; height: 1px; background: var(--line); }
   .note ol, .note ul { margin: 6px 0; padding-left: 1.5em; }
   .note li::marker { color: var(--accent); }
   .note b { color: var(--fg); }
   .note a { color: var(--link); }
-  footer { border-top: 1px solid var(--line); padding: 14px 20px 40px; color: var(--muted); font-size: 12px; line-height: 1.9; }
+  footer { border-top: 1px solid var(--line); padding: 14px 20px 40px; color: var(--muted); font-size: 14px; line-height: 1.9; }
   footer a { color: var(--link); }
 
   /* The font picker dialog (pcfonts.v2.js) reads the page variables; its fixed hover colors are set here. */
@@ -202,21 +202,21 @@
           grid-template-columns: minmax(0, 1fr); gap: 10px; min-width: 0; }
   .card-head { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; }
   /* Card titles look like the section names on the left: the mark, then the name. */
-  .card-head h2, .card > h2 { margin: 0; color: var(--fg); font-size: 12px; font-weight: 700; letter-spacing: .08em; }
+  .card-head h2, .card > h2 { margin: 0; color: var(--fg); font-size: 14px; font-weight: 700; letter-spacing: .08em; }
   .card-head h2::before, .card > h2::before { content: ""; display: inline-block; width: 6px; height: 6px; margin: 0 9px 0 2px;
     background: var(--accent); transform: rotate(45deg); vertical-align: 1px; }
   .card .note { padding-bottom: 0; }
   .note .warn { color: var(--warn); }
-  .summary { color: var(--muted); font-size: 12px; margin: 0; line-height: 1.7; }
+  .summary { color: var(--muted); font-size: 14px; margin: 0; line-height: 1.7; }
   .summary .warn { color: var(--warn); }
   .cols { display: grid; grid-template-columns: minmax(220px, 300px) minmax(0, 1fr); gap: 14px; align-items: start; }
   @media (max-width: 1100px) { .cols { grid-template-columns: minmax(0, 1fr); } }
 
   /* The image shelf and the drop areas. */
   .drop { margin-top: 10px; border: 1px dashed var(--frame); border-radius: 4px; padding: 18px 12px; text-align: center;
-          color: var(--muted); font-size: 12px; line-height: 1.7; cursor: pointer; }
+          color: var(--muted); font-size: 14px; line-height: 1.7; cursor: pointer; }
   .drop b { color: var(--fg); }
-  .drop span { font-size: 11px; }
+  .drop span { font-size: 13px; }
   .drop.sub { padding: 10px 12px; }
   .drop:hover, .drop.over { border-color: var(--accent); border-style: solid; color: var(--fg); background: var(--raised); }
   .drop:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
@@ -226,9 +226,9 @@
              min-width: 0; align-content: start; }
   .imgcell img, .imgcell .noimg { width: 100%; height: 64px; object-fit: contain; border-radius: 2px;
           background: repeating-conic-gradient(#1f2029 0% 25%, #16171d 0% 50%) 50% / 12px 12px; }
-  .imgcell .noimg { display: grid; place-items: center; color: #ffb86b; font-size: 11px; } /* on the dark checker in both themes */
-  .imgcell input[type=text] { padding: 2px 5px; font-size: 11px; min-height: 0; }
-  .imgcell .info { color: var(--muted); font-size: 10px; line-height: 1.5; }
+  .imgcell .noimg { display: grid; place-items: center; color: #ffb86b; font-size: 13px; } /* on the dark checker in both themes */
+  .imgcell input[type=text] { padding: 2px 5px; font-size: 13px; min-height: 0; }
+  .imgcell .info { color: var(--muted); font-size: 12px; line-height: 1.5; }
   .imgcell .info.warn { color: var(--warn); }
 
   /* The scene list, drawn like CCFOLIA's (1.37.6): a 60 x 52 thumbnail, the underlined 13 px title, a 12 px caption. */
@@ -240,12 +240,12 @@
   .scene.over { box-shadow: 0 -2px 0 var(--accent); }
   .scene .pic { width: 60px; height: 52px; flex: none; background: #000 50% / cover no-repeat; }
   .scene .txt { flex: 1 1 auto; width: 1px; padding: 6px 4px 6px 12px; display: flex; flex-direction: column; }
-  .scene .ttl { font-size: 13px; line-height: 1.6; text-decoration: underline; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .scene .cap { font-size: 12px; line-height: 1.4; color: rgba(255,255,255,.7); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .scene .ttl { font-size: 15px; line-height: 1.6; text-decoration: underline; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .scene .cap { font-size: 14px; line-height: 1.4; color: rgba(255,255,255,.7); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .scene .mv { display: flex; flex: none; padding-right: 4px; }
-  .scene .mv button { background: none; border: 0; border-radius: 0; color: rgba(255,255,255,.7); padding: 4px 5px; font-size: 12px; min-height: 0; }
+  .scene .mv button { background: none; border: 0; border-radius: 0; color: rgba(255,255,255,.7); padding: 4px 5px; font-size: 14px; min-height: 0; }
   .scene .mv button:hover:not(:disabled) { color: #fff; background: rgba(255,255,255,.08); }
-  .empty-list { color: #9a9aa5; padding: 16px; text-align: center; font-size: 12px; }
+  .empty-list { color: #9a9aa5; padding: 16px; text-align: center; font-size: 14px; }
 
   /* The board sample: the field at CCFOLIA's proportions (app.v1.js sizes .board to fit the stage). */
   .stage { display: block; height: 300px; min-height: 0; padding: 0; background: #2a2a2a; cursor: grab; touch-action: none; }
@@ -257,22 +257,22 @@
   .aid-grid.fine { background-image: linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px); }
   .view-ctl { position: absolute; top: 6px; right: 6px; z-index: 2; display: flex; gap: 3px; align-items: center; padding: 3px;
     border-radius: 4px; background: rgba(16,16,20,.78); cursor: default; }
-  .view-ctl button { min-height: 24px; padding: 0 8px; font-size: 12px; }
+  .view-ctl button { min-height: 24px; padding: 0 8px; font-size: 14px; }
   .view-ctl button[aria-pressed=true] { background: var(--button); border-color: var(--button); color: var(--button-fg); }
-  .view-ctl output { min-width: 3.6em; text-align: center; color: #e9e9ee; font-family: var(--mono); font-size: 11px; }
+  .view-ctl output { min-width: 3.6em; text-align: center; color: #e9e9ee; font-family: var(--mono); font-size: 13px; }
   .board img { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; }
   .board .grid { position: absolute; inset: 0; pointer-events: none; }
-  .board .blank { position: absolute; inset: 0; display: grid; place-items: center; color: rgba(255,255,255,.62); font-size: 12px; }
-  .stage-note { color: var(--muted); font-size: 11px; margin: 0; line-height: 1.6; }
+  .board .blank { position: absolute; inset: 0; display: grid; place-items: center; color: rgba(255,255,255,.62); font-size: 14px; }
+  .stage-note { color: var(--muted); font-size: 13px; margin: 0; line-height: 1.6; }
   .stage-note b { color: var(--fg); }
 
   /* The editor for the selected scene. */
   .editor { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; min-width: 0; }
-  .editor .f { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2px; color: var(--muted); font-size: 11px; min-width: 0; }
-  .editor .f .inline { color: var(--fg); font-size: 13px; }
+  .editor .f { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2px; color: var(--muted); font-size: 13px; min-width: 0; }
+  .editor .f .inline { color: var(--fg); font-size: 15px; }
   .editor .two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
   .editor textarea { min-height: 54px; resize: vertical; line-height: 1.6; }
-  .editor .warnline { color: var(--warn); font-size: 11px; line-height: 1.6; }
+  .editor .warnline { color: var(--warn); font-size: 13px; line-height: 1.6; }
   @media (max-width: 560px) { .editor .two { grid-template-columns: minmax(0, 1fr); } }
 
   /* Export choices: the chosen one gets the signal edge. */
@@ -282,7 +282,7 @@
   .mode label:has(input:checked) { border-color: var(--frame); background: var(--raised); box-shadow: inset 2px 0 0 var(--accent); }
   .mode input { margin: 2px 0 0; }
   .mode b { display: block; color: var(--fg); }
-  .mode span { color: var(--muted); font-size: 12px; line-height: 1.6; }
+  .mode span { color: var(--muted); font-size: 14px; line-height: 1.6; }
   .mode .warn { color: var(--warn); }
 
   /* Marker panels on the board sample. The other list (shared or this scene's) is drawn faded and cannot be grabbed. */
@@ -299,7 +299,7 @@
   /* The marker list and the editor of one marker. */
   .markers { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; padding: 10px; border: 1px solid var(--line); border-radius: 4px; background: var(--raised); }
   .mk-head { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; justify-content: space-between; }
-  .mk-title { color: var(--fg); font-size: 12px; font-weight: 700; letter-spacing: .08em; }
+  .mk-title { color: var(--fg); font-size: 14px; font-weight: 700; letter-spacing: .08em; }
   .mk-list { display: grid; gap: 4px; max-height: 200px; overflow: auto; }
   .mk-list .desc { margin: 0; }
   .mk-row { display: grid; grid-template-columns: 32px minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 4px 6px;
@@ -310,7 +310,7 @@
   .mk-pic { width: 32px; height: 24px; border-radius: 2px; background: repeating-conic-gradient(#1f2029 0% 25%, #16171d 0% 50%) 50% / 8px 8px;
             background-size: contain, 8px 8px; background-repeat: no-repeat, repeat; background-position: center; }
   .mk-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .mk-where { color: var(--muted); font-family: var(--mono); font-size: 11px; }
+  .mk-where { color: var(--muted); font-family: var(--mono); font-size: 13px; }
   .mk-detail { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; padding-top: 8px; border-top: 1px dashed var(--line); }
 
   /* Templates. */
@@ -321,15 +321,15 @@
 
   /* ---- mogutools らしさ：丸み、見出しの太字、紺のボタン */
   header { background: linear-gradient(180deg, var(--sky) 0%, #eef8fb 60%, var(--bg) 100%); border-bottom: 0; padding-top: 14px; padding-bottom: 18px; }
-  h1 { font-size: 26px; font-weight: 900; letter-spacing: .02em; }
+  h1 { font-size: 28px; font-weight: 900; letter-spacing: .02em; }
   h1::before { width: 12px; height: 12px; background: var(--coral); border-radius: 3px; margin-right: 12px; vertical-align: 3px; }
-  header p { font-size: 13px; font-weight: 700; }
+  header p { font-size: 15px; font-weight: 700; }
   .home-link { font-weight: 700; }
   .panel, .card { border: 0; border-radius: 22px; box-shadow: 0 4px 0 rgba(46,58,94,.08), 0 10px 26px rgba(46,58,94,.08); }
   .panel { padding: 4px 18px 18px; }
   .card { padding: 16px 18px; }
   legend::before, .card-head h2::before, .card > h2::before, .note h2::before { background: var(--coral); border-radius: 2px; }
-  legend, .card-head h2, .card > h2 { font-size: 13.5px; font-weight: 900; }
+  legend, .card-head h2, .card > h2 { font-size: 15.5px; font-weight: 900; }
   button { border-radius: 999px; padding: 5px 14px; font-weight: 700; }
   button.small { padding: 3px 11px; }
   button.primary { box-shadow: 0 4px 0 #1d2645; }
@@ -350,61 +350,58 @@
   .view-ctl button { background: #fff; }
   footer { background: #f3e1c5; color: #5c4636; border-top: 0; font-weight: 700; }
   footer a { color: #4a3426; }
+  details.note summary { cursor: pointer; font-weight: 900; font-size: 16px; color: var(--fg); }
+  details.note[open] summary { margin-bottom: 4px; }
 </style>
 </head>
 <body>
 
 <header>
   <div class="topline">
-    <a class="home-link" href="../">‹ mogutools（モグラのTRPG道具箱）</a>
+    <a class="home-link" href="../">‹ mogutools</a>
   </div>
   <h1>シーンメーカー</h1>
-  <p>背景の画像をまとめて入れると、ココフォリアの「シーン」を一括で作ります。全シーンに同じ前景（枠）を付ける、フィールドの大きさを画像の形に合わせる、5MB を超える画像を縮小する、までを済ませて、ルームデータ（ZIP）で書き出します。ココフォリアで読み込むだけで、シーン一覧に並びます。すべてブラウザの中だけで処理され、入れた画像がどこかに送られることはありません。</p>
+  <p>背景の画像を入れると、ココフォリアのシーンをまとめて作れます。画像はブラウザの外に送られません。</p>
 </header>
 
 <main>
   <div class="panel">
     <fieldset>
-      <legend>1. 背景の画像を入れる</legend>
-      <div class="drop" id="dropScenes" role="button" tabindex="0"><b>ここに背景の画像をドラッグ＆ドロップ</b>／クリックして選ぶ（何枚でも）<br><span>1 枚が 1 シーンになります　PNG・JPEG・GIF・WebP（動く WebP・APNG も可）</span></div>
-      <div class="drop sub" id="dropShelf" role="button" tabindex="0">前景（枠など）は、こちらに入れる<br><span>置き場に入るだけで、シーンは増えません</span></div>
+      <legend>1. 画像を入れる</legend>
+      <div class="drop" id="dropScenes" role="button" tabindex="0"><b>背景の画像をドロップ</b>／クリックで選ぶ<br><span>1 枚 = 1 シーン</span></div>
+      <div class="drop sub" id="dropShelf" role="button" tabindex="0">前景（枠）はこちら<br><span>シーンは増えません</span></div>
+      <div class="btns" style="margin-top: 10px;"><button type="button" id="loadZip">書き出した ZIP を開いて直す</button></div>
     </fieldset>
 
     <fieldset>
       <legend>画像の置き場（<span id="imageCount">0</span> 枚）</legend>
       <div class="gallery" id="gallery"></div>
-      <div class="inline" style="margin-top: 8px;"><input type="color" id="solidColor" value="#000000" aria-label="単色の画像の色"><button type="button" class="small" id="solidAdd">単色の画像を置き場に入れる</button></div>
-      <p class="desc">暗転（黒）や回想（白）のシーン、ボタン代わりのマーカーに使えます。1920 × 1080px の PNG です。</p>
+      <div class="inline" style="margin-top: 8px;"><input type="color" id="solidColor" value="#000000" aria-label="単色の画像の色"><button type="button" class="small" id="solidAdd">単色の画像を作る</button></div>
     </fieldset>
 
     <fieldset>
       <legend>2. まとめて設定</legend>
       <div class="row"><label for="commonFg">共通の前景</label>
         <div class="inline"><select id="commonFg"></select><button type="button" class="small" id="commonFgAdd" aria-label="共通の前景にファイルから画像を追加">＋ 画像</button></div></div>
-      <p class="desc">前景が「共通の前景」になっているシーン（最初はすべて）に、同じ枠が付きます。<a href="https://shiki365.github.io/foreground-frame-maker/">前景フレームメーカー</a>で作った PNG がそのまま使えます。</p>
-      <div class="btns" style="margin-top: 8px;"><button type="button" class="small" id="allFgCommon">全シーンの前景を「共通の前景」に戻す</button></div>
+      <div class="btns" style="margin-top: 8px;"><button type="button" class="small" id="allFgCommon">全シーンを共通の前景に</button></div>
 
       <div class="row"><label for="defLongSide">大きさ</label>
-        <div class="inline">長い辺を <input type="number" id="defLongSide" min="1" max="1000" step="1" aria-label="長い辺のマス数"> マスに <button type="button" class="small" id="allSize">全シーンを背景の形に合わせる</button></div></div>
+        <div class="inline">長い辺 <input type="number" id="defLongSide" min="1" max="1000" step="1" aria-label="長い辺のマス数"> マス <button type="button" class="small" id="allSize">全シーンに</button></div></div>
       <div class="row"><label>グリッド</label>
-        <div class="inline"><label class="check"><input type="checkbox" id="defGrid"> 表示する</label>　<span class="grp"><span>間隔</span> <input type="number" id="defGridSize" min="1" max="1000" step="1" aria-label="グリッドの間隔（マス）"> <span>マス</span></span> <button type="button" class="small" id="allGrid">全シーンに</button></div></div>
-      <div class="row"><label for="defFit">画像のはめ方</label>
-        <div class="inline"><select id="defFit"><option value="fill">フィールドに合わせて伸ばす（標準）</option><option value="cover">形を保って、はみ出しを切る</option></select><button type="button" class="small" id="allFit">全シーンに</button></div></div>
-      <p class="desc">ここの値は、これから追加するシーンの最初の値にもなります。フィールドの大きさの単位はマスで、ココフォリアの盤面では <b>1 マス = 24px</b> です（48 × 27 マス = 1152 × 648px）。「形を保って、はみ出しを切る」は、ココフォリアのフィールド設定の「画像を自動トリミングする」と同じです。</p>
+        <div class="inline"><label class="check"><input type="checkbox" id="defGrid"> 表示</label> <span class="grp">間隔 <input type="number" id="defGridSize" min="1" max="1000" step="1" aria-label="グリッドの間隔（マス）"></span> <button type="button" class="small" id="allGrid">全シーンに</button></div></div>
+      <div class="row"><label for="defFit">はめ方</label>
+        <div class="inline"><select id="defFit"><option value="fill">伸ばす</option><option value="cover">切り抜く</option></select><button type="button" class="small" id="allFit">全シーンに</button></div></div>
+      <p class="desc">1 マス = 24px。</p>
     </fieldset>
 
     <fieldset>
       <legend>テンプレート</legend>
-      <p class="desc">よく使うシーンの形（区切り、暗転、マーカーの付いた場面など）を取っておいて、何度でも足せます。テンプレートはこのブラウザに保存され、ほかの部屋の作業でも使えます。</p>
       <div class="tpl-list" id="tplList"></div>
       <div class="btns" style="margin-top: 8px;">
-        <button type="button" class="small" id="tplSave">選んでいるシーンをテンプレートに</button>
+        <button type="button" class="small" id="tplSave">選んだシーンを登録</button>
+        <button type="button" class="small" id="tplExport">書き出す</button>
+        <button type="button" class="small" id="tplImport">読み込む</button>
       </div>
-      <div class="btns" style="margin-top: 6px;">
-        <button type="button" class="small" id="tplExport">テンプレートを書き出す</button>
-        <button type="button" class="small" id="tplImport">テンプレートを読み込む</button>
-      </div>
-      <p class="desc">「足す」と、選んでいるシーンのすぐ下に入ります。書き出したファイルは、別の PC に移すときや、ほかの人と分け合うときに使えます。</p>
     </fieldset>
 
     <fieldset>
@@ -412,13 +409,11 @@
       <div class="btns">
         <button type="button" class="small" id="undo" disabled>元に戻す</button>
         <button type="button" class="small" id="redo" disabled>やり直す</button>
+        <button type="button" class="small" id="saveProject">プロジェクト保存</button>
+        <button type="button" class="small" id="loadProject">開く</button>
+        <button type="button" class="small danger" id="resetAll">全部消す</button>
       </div>
-      <div class="btns" style="margin-top: 6px;">
-        <button type="button" class="small" id="saveProject">プロジェクトを保存</button>
-        <button type="button" class="small" id="loadProject">プロジェクトを開く</button>
-        <button type="button" class="small danger" id="resetAll">最初に戻す</button>
-      </div>
-      <p class="desc">作業内容と置き場の画像は、このブラウザに自動で保存されます。別の PC やブラウザに移すとき、あとで直したくなりそうなときは「プロジェクトを保存」を使ってください（画像もファイルに入ります）。</p>
+      <p class="desc">作業はこのブラウザに自動保存されます。</p>
       <p class="status" id="status" role="status" aria-live="polite"></p>
     </fieldset>
   </div>
@@ -427,125 +422,124 @@
     <section class="card">
       <div class="card-head">
         <h2>3. シーン（<span id="count">0</span> 件）</h2>
-        <div class="btns"><button type="button" class="small" id="addEmpty">＋ 空のシーン</button><button type="button" class="small" id="namesFromFiles">名前を画像の名前にそろえる</button></div>
+        <div class="btns"><button type="button" class="small" id="addEmpty">＋ 空のシーン</button><button type="button" class="small" id="namesFromFiles">名前を画像名に</button></div>
       </div>
       <div class="cols">
         <div>
-          <div class="scene-list" id="sceneList" role="listbox" aria-label="シーン一覧（ココフォリアのシーン一覧の見本）"></div>
-          <p class="stage-note" style="margin-top: 6px;">ココフォリアのシーン一覧に近い見え方です。ココフォリアでは、前景のあるシーンの小さい絵は<b>前景だけ</b>になります。書き出しの「背景と前景を重ねた 1 枚を前景にする」（最初から付いています）で、ここと同じく背景も出ます。ドラッグか ↑↓ で並べ替え。</p>
+          <div class="scene-list" id="sceneList" role="listbox" aria-label="シーン一覧"></div>
+          <p class="stage-note" style="margin-top: 6px;">ドラッグか ↑↓ で並べ替え。</p>
         </div>
         <div class="editor" id="editor" hidden>
           <div class="stage" id="stage" aria-label="盤面の見本"><div class="board" id="board"></div><div class="aid-grid" id="aidGrid" hidden></div>
-            <div class="view-ctl" role="group" aria-label="盤面の見本の表示"><button type="button" class="small" id="viewOut" aria-label="縮小" title="縮小（Ctrl＋ホイールでも）">−</button><output id="viewZoom">100%</output><button type="button" class="small" id="viewIn" aria-label="拡大" title="拡大（Ctrl＋ホイールでも）">＋</button><button type="button" class="small" id="viewFit" title="フィールドがちょうど入る大きさに戻す">フィールド</button><button type="button" class="small" id="viewAll" title="フィールドの外のマーカーも、全部が入るようにする">全体</button><button type="button" class="small" id="viewGrid" aria-pressed="false" title="盤面の見本の全体に 1 マスごとの線を出す（見るためだけで、書き出しには入りません）">マス目</button></div></div>
+            <div class="view-ctl" role="group" aria-label="盤面の見本の表示"><button type="button" class="small" id="viewOut" aria-label="縮小" title="縮小（Ctrl＋ホイール）">−</button><output id="viewZoom">100%</output><button type="button" class="small" id="viewIn" aria-label="拡大" title="拡大（Ctrl＋ホイール）">＋</button><button type="button" class="small" id="viewFit" title="フィールドに合わせる">枠</button><button type="button" class="small" id="viewAll" title="マーカーまで全部入れる">全体</button><button type="button" class="small" id="viewGrid" aria-pressed="false" title="1 マスごとの線（表示だけ）">マス目</button></div></div>
           <p class="stage-note" id="stageNote"></p>
           <div class="two">
-            <label class="f">シーンタイトル<input type="text" id="edName" placeholder="空なら「新しいシーン」と出ます"></label>
-            <label class="f">画像のはめ方<select id="edFit"><option value="fill">フィールドに合わせて伸ばす（標準）</option><option value="cover">形を保って、はみ出しを切る</option></select></label>
-            <label class="f">背景<span class="inline"><select id="edBg"></select><button type="button" class="small" id="edBgAdd" aria-label="このシーンの背景にファイルから画像を追加">＋ 画像</button></span></label>
-            <label class="f">前景<span class="inline"><select id="edFg"></select><button type="button" class="small" id="edFgAdd" aria-label="このシーンの前景にファイルから画像を追加">＋ 画像</button></span></label>
+            <label class="f">タイトル<input type="text" id="edName" placeholder="新しいシーン"></label>
+            <label class="f">はめ方<select id="edFit"><option value="fill">伸ばす</option><option value="cover">切り抜く</option></select></label>
+            <label class="f">背景<span class="inline"><select id="edBg"></select><button type="button" class="small" id="edBgAdd" aria-label="このシーンの背景にファイルから画像を追加">＋</button></span></label>
+            <label class="f">前景<span class="inline"><select id="edFg"></select><button type="button" class="small" id="edFgAdd" aria-label="このシーンの前景にファイルから画像を追加">＋</button></span></label>
           </div>
-          <div class="f">フィールドの大きさ（マス）
-            <span class="inline"><span>横幅</span> <input type="number" id="edWidth" min="1" max="1000" step="1" aria-label="フィールドの横幅（マス）"> × <span>縦幅</span> <input type="number" id="edHeight" min="1" max="1000" step="1" aria-label="フィールドの縦幅（マス）">
-              <button type="button" class="small" id="edSizeAuto">背景の形に合わせる</button></span></div>
-          <div class="inline"><label class="check"><input type="checkbox" id="edGrid"> グリッドを表示</label>　<span class="grp"><span>間隔</span> <input type="number" id="edGridSize" min="1" max="1000" step="1" aria-label="グリッドの間隔（マス）"> <span>マス</span></span></div>
+          <div class="f">大きさ（マス）
+            <span class="inline"><input type="number" id="edWidth" min="1" max="1000" step="1" aria-label="横幅（マス）"> × <input type="number" id="edHeight" min="1" max="1000" step="1" aria-label="縦幅（マス）">
+              <button type="button" class="small" id="edSizeAuto">背景に合わせる</button></span></div>
+          <div class="inline"><label class="check"><input type="checkbox" id="edGrid"> グリッド</label> <span class="grp">間隔 <input type="number" id="edGridSize" min="1" max="1000" step="1" aria-label="グリッドの間隔（マス）"></span></div>
           <div class="markers" id="markers">
-            <div class="mk-head"><span class="mk-title">マーカーパネル</span>
+            <div class="mk-head"><span class="mk-title">マーカー</span>
               <span class="seg" id="mkMode" role="group" aria-label="置くマーカー"><button type="button" data-mk-mode="scene" aria-pressed="true">このシーン</button><button type="button" data-mk-mode="common" aria-pressed="false">全シーン共通</button></span></div>
-            <label class="check"><input type="checkbox" id="edUseCommon"> 全シーン共通のマーカーも、このシーンに付ける</label>
-            <div class="mk-list" id="mkList" role="listbox" aria-label="マーカーパネルの一覧"></div>
-            <div class="btns"><button type="button" class="small" id="mkAdd">＋ マーカー</button><button type="button" class="small" id="mkAddFile">＋ 画像からマーカー</button></div>
+            <label class="check"><input type="checkbox" id="edUseCommon"> 共通のマーカーも付ける</label>
+            <div class="mk-list" id="mkList" role="listbox" aria-label="マーカーの一覧"></div>
+            <div class="btns"><button type="button" class="small" id="mkAdd">＋ マーカー</button><button type="button" class="small" id="mkAddFile">＋ 画像から</button></div>
             <div class="mk-detail" id="mkDetail" hidden>
               <div class="two">
                 <label class="f">画像<span class="inline"><select id="mkImage"></select></span></label>
-                <label class="f">メモ（マウスを乗せると出る文字）<input type="text" id="mkText"></label>
+                <label class="f">メモ<input type="text" id="mkText"></label>
               </div>
               <div class="inline">
-                <span class="grp"><span>位置</span> X <input type="number" id="mkX" min="-1000" max="1000" step="1" aria-label="マーカーの位置 X（マス）"> Y <input type="number" id="mkY" min="-1000" max="1000" step="1" aria-label="マーカーの位置 Y（マス）"></span>
-                <span class="grp"><span>横幅</span> <input type="number" id="mkW" min="1" max="1000" step="1" aria-label="マーカーの横幅（マス）"> <span>縦幅</span> <input type="number" id="mkH" min="1" max="1000" step="1" aria-label="マーカーの縦幅（マス）"></span>
-                <span class="grp"><span>角度</span> <input type="number" id="mkAngle" min="-360" max="360" step="1" aria-label="マーカーの角度（度）"></span>
+                <span class="grp">X <input type="number" id="mkX" min="-1000" max="1000" step="1" aria-label="位置 X（マス）"> Y <input type="number" id="mkY" min="-1000" max="1000" step="1" aria-label="位置 Y（マス）"></span>
+                <span class="grp">幅 <input type="number" id="mkW" min="1" max="1000" step="1" aria-label="横幅（マス）"> 高 <input type="number" id="mkH" min="1" max="1000" step="1" aria-label="縦幅（マス）"></span>
+                <span class="grp">角度 <input type="number" id="mkAngle" min="-360" max="360" step="1" aria-label="角度（度）"></span>
               </div>
-              <div class="inline"><label class="check"><input type="checkbox" id="mkLocked"> 配置固定</label>　<label class="check"><input type="checkbox" id="mkFreezed"> サイズ固定</label></div>
+              <div class="inline"><label class="check"><input type="checkbox" id="mkLocked"> 配置固定</label> <label class="check"><input type="checkbox" id="mkFreezed"> サイズ固定</label></div>
               <div class="two">
-                <label class="f">クリックアクション<select id="mkClick"><option value="none">使用しない</option><option value="message">チャットに送信</option></select></label>
+                <label class="f">クリック<select id="mkClick"><option value="none">なし</option><option value="message">チャットに送信</option></select></label>
                 <label class="f" id="mkClickRow">送信する文<input type="text" id="mkClickValue"></label>
               </div>
               <div class="btns">
                 <button type="button" class="small" id="mkBack">後ろへ</button>
                 <button type="button" class="small" id="mkFront">前へ</button>
                 <button type="button" class="small" id="mkDup">複製</button>
-                <button type="button" class="small danger" id="mkDelete">このマーカーを削除</button>
+                <button type="button" class="small danger" id="mkDelete">削除</button>
               </div>
             </div>
-            <p class="desc">盤面の見本の上でドラッグして動かし、右下の角で大きさを変えます（マス単位。矢印キーでも 1 マスずつ動きます）。フィールドの外にも置けます。盤面の見本は、右上のボタンか Ctrl＋ホイールで拡大・縮小し、空いた所をドラッグして見る場所を動かせます。「マス目」で、フィールドの外まで 1 マスごとの線が出ます。「全シーン共通」に切り替えると、全シーンに付くマーカーを置けます。チャットに送信は、クリックした人の発言として送られます。</p>
+            <p class="desc">見本の上でドラッグして動かし、右下の角で大きさを変えます。</p>
           </div>
-          <label class="f">シーン切替メッセージ（空でよい。入れると、シーンを反映したときにシーンタイトルの名前でメインに発言されます）<textarea id="edText"></textarea></label>
+          <label class="f">切替メッセージ（空でよい）<textarea id="edText"></textarea></label>
           <div class="warnline" id="edWarn" hidden></div>
           <div class="btns">
             <button type="button" class="small" id="edDup">複製</button>
-            <button type="button" class="small" id="edTemplate">テンプレートにする</button>
-            <button type="button" class="small danger" id="edDelete">このシーンを削除</button>
+            <button type="button" class="small" id="edTemplate">テンプレートに</button>
+            <button type="button" class="small danger" id="edDelete">削除</button>
           </div>
         </div>
-        <p class="desc" id="editorEmpty" style="margin: 0;">左の「1. 背景の画像を入れる」に画像をドロップすると、ここにシーンが並びます。一覧で選ぶと、盤面の見本と手直しの欄が出ます。</p>
+        <p class="desc" id="editorEmpty" style="margin: 0;">画像を入れると、ここにシーンが並びます。</p>
       </div>
     </section>
 
     <section class="card">
       <h2>4. 書き出し</h2>
       <div class="mode" role="radiogroup" aria-label="読み込んだときの動き">
-        <label><input type="radio" name="exportMode" value="add"><span><b>新しいシーンとして追加する</b>読み込むたびに、シーン一覧の最後に足されます。はじめて入れるときはこちら。</span></label>
-        <label><input type="radio" name="exportMode" value="overwrite"><span><b>前に入れたシーンを上書きする（手直し用）</b>前にこのツールで書き出して読み込んだシーンを、同じ場所で置き換えます（まだ無いシーンは追加）。<span class="warn">置き換わったシーンは、ココフォリアで付けた BGM・マーカーパネルも消えます。</span></span></label>
+        <label><input type="radio" name="exportMode" value="add"><span><b>追加</b>シーン一覧の最後に足す</span></label>
+        <label><input type="radio" name="exportMode" value="overwrite"><span><b>上書き</b>前に入れたシーンを置き換える<span class="warn">（ココフォリアで付けた BGM は消える）</span></span></label>
       </div>
-      <label class="check"><input type="checkbox" id="optShrink"> 5MB を超える静止画は、縮小して書き出す（動く画像は縮小しません）</label>
-      <label class="check"><input type="checkbox" id="optBake"> 前景（枠）のあるシーンは、背景と前景を重ねた 1 枚を前景にする（ココフォリアのシーン一覧の小さい絵は前景だけなので、枠だけにならないように。盤面の見た目は変わりません。動く画像のシーンは重ねません）</label>
+      <label class="check"><input type="checkbox" id="optShrink"> 5MB 超えの画像を縮小</label>
+      <label class="check"><input type="checkbox" id="optBake"> 背景と前景を重ねて一覧の絵にする</label>
+      <label class="check"><input type="checkbox" id="optReedit"> あとで直せる情報を入れる</label>
       <p class="summary" id="exportSummary"></p>
       <div class="btns">
-        <button type="button" class="primary" id="exportZip" disabled>ルームデータ（ZIP）を書き出す</button>
-        <button type="button" id="exportAssets" disabled>素材（ZIP）を書き出す</button>
+        <button type="button" class="primary" id="exportZip" disabled>ルームデータ（ZIP）</button>
+        <button type="button" id="exportAssets" disabled>素材（ZIP）</button>
       </div>
-      <p class="desc" style="margin: 0;"><b>素材（ZIP）</b>は、使った画像を「背景」「前景」のフォルダに分けて、分かる名前で入れたものです。ルームデータを読み込んでも、画像はココフォリアの<b>画像選択の一覧（自分の素材）には入りません</b>。あとで盤面を直すときに素材として選びたい場合は、展開して、ココフォリアの画像選択の画面（背景・前景のタブ）にまとめてドロップしてください。縮小した画像は、縮小後のものが入ります。</p>
       <p class="status" id="exportStatus" role="status" aria-live="polite"></p>
     </section>
 
     <section class="card">
-      <div class="note">
-        <h2 style="margin-top: 0;">ココフォリアでの読み込みかた</h2>
+      <details class="note">
+        <summary>使い方と注意</summary>
+        <h2>ココフォリアに入れる</h2>
         <ol>
-          <li>ルームに <b>GM（ルームマスター・サブルームマスター）</b>として入る。ゲストのログインでは読み込めません</li>
-          <li>左上のルーム名 →「ルーム設定」→「ルームデータ」→「ルームデータのインポート」の「インポート」で、書き出した ZIP を選ぶ（盤面に ZIP をドラッグ＆ドロップしても読み込めます）</li>
-          <li>「外部ツールで作成および編集されたデータです。信頼できるデータのみ取り込むようにしてください。」と出るので、このツールで作ったものなら OK。<b>このツールのデータは、いつもこの確認が出ます</b></li>
-          <li>上のメニューの「シーン一覧」に並んでいます。<b>読み込んだだけでは、今の盤面は変わりません</b>。使うときに、シーンの左の小さい絵を押すと盤面に反映されます</li>
+          <li>GM でルームに入る</li>
+          <li>ルーム設定 →「ルームデータのインポート」で ZIP を選ぶ（盤面にドロップでも可）</li>
+          <li>「外部ツールで作成…」の確認は OK</li>
+          <li>シーン一覧に並ぶ。小さい絵を押すと盤面に出る</li>
         </ol>
-        <h2>知っておいてほしいこと</h2>
+        <h2>直すとき</h2>
         <ul>
-          <li><b>BGM・効果音は入れられません</b>（ルームデータに音声を入れる場所が無いため）。読み込んだあと、ココフォリアで盤面に BGM を付けて、シーンの「盤面を保存」を押してください</li>
-          <li>「上書き」で読み込み直すと、そのシーンにココフォリアで付けた BGM やマーカーパネルは消えます（このツールで置いたマーカーパネルは、もう一度入ります）。BGM を付けたあとの手直しは、ココフォリアの中でするのがおすすめです</li>
-          <li>マーカーパネルは、シーンを反映したときに盤面に置かれます。<b>反映すると、盤面にあったマーカーパネルは、そのシーンのものに入れ替わります</b></li>
-          <li>画像は 1 枚 5MB までです。超えると、ココフォリアに上がらないことがあります。静止画は縮小して書き出せます。動く画像（動く WebP・APNG・GIF）は、作ったツールで軽くしてください</li>
-          <li>画像は読み込んだときにココフォリアへアップロードされます（ルームデータの画像と同じ共有の置き場）。<b>ほかの人の素材を使うときは、その素材の利用規約の範囲で</b></li>
-          <li>置き場の画像は、このブラウザの中にだけ保存されます（ブラウザのサイトデータを消すと消えます）。大事なものは「プロジェクトを保存」でファイルにも残してください</li>
-          <li>自分で作ったルームで使ってください。購入したシナリオ（CCFOLIA GAMES など）のルームデータは、改変が禁止されています。このツールは、ルームデータを読み込んで書き換えることはしません</li>
-          <li class="warn">ココフォリアの非公式のツールです（CCFOLIA 1.37.6 のデータの形で作っています）。ココフォリアのアップデートで、読み込めなくなることがあります</li>
+          <li>「書き出した ZIP を開いて直す」で ZIP を開き、直して「上書き」で書き出す</li>
+          <li>ココフォリアから書き出した ZIP も開ける（前景は重ねたままの絵になる）</li>
         </ul>
-        <h2>素材を作るなら</h2>
-        <p>全シーンに付ける枠は<a href="https://shiki365.github.io/foreground-frame-maker/">前景フレームメーカー</a>、場面転換の動く素材は<a href="https://shiki365.github.io/scene-transition-maker/">場面転換素材メーカー</a>で作れます。</p>
-      </div>
+        <h2>注意</h2>
+        <ul>
+          <li>BGM・効果音は入れられない</li>
+          <li>画像は 1 枚 5MB まで</li>
+          <li>素材（ZIP）は、ココフォリアの画像選択に入れたいとき用</li>
+          <li class="warn">非公式ツール。ココフォリアの更新で使えなくなることがある</li>
+        </ul>
+        <p>枠は<a href="https://shiki365.github.io/foreground-frame-maker/">前景フレームメーカー</a>、動く素材は<a href="https://shiki365.github.io/scene-transition-maker/">場面転換素材メーカー</a>で作れます。</p>
+      </details>
     </section>
   </div>
 </main>
 
 <input type="file" id="projectFile" accept=".json,application/json" hidden>
+<input type="file" id="roomZipFile" accept=".zip,application/zip" hidden>
 <input type="file" id="tplFile" accept=".json,application/json" hidden>
 <input type="file" id="imageFile" accept="image/png,image/jpeg,image/gif,image/webp" hidden>
 <input type="file" id="sceneFiles" accept="image/png,image/jpeg,image/gif,image/webp" multiple hidden>
 <input type="file" id="shelfFiles" accept="image/png,image/jpeg,image/gif,image/webp" multiple hidden>
 
 <footer>
-  ブラウザだけで動くツールです。作ったデータは自由に使えます。<br>
-  ココフォリアのデータの形が変わると、読み込めなくなることがあります。いずれのサービスとも関係のない<strong>非公式</strong>のツールです。<br>
-  元にしたツール：<a href="https://github.com/shiki365/scene-maker">shiki365/scene-maker</a>（MIT License, Copyright (c) 2026 shiki365。<a href="LICENSE.txt">ライセンス全文</a>）を、mogutools 向けに見た目を変えて日本語だけにしたものです。<br>
-  <a href="../">mogutools のトップへ</a><br>
-  <span>v1.0-mogu</span> ・ <span>最終更新</span> 2026-11-23
+  元にしたツール：<a href="https://github.com/shiki365/scene-maker">shiki365/scene-maker</a>（MIT License, Copyright (c) 2026 shiki365・<a href="LICENSE.txt">ライセンス</a>）。ココフォリアとは関係のない非公式ツールです。<br>
+  <span>v1.1-mogu</span> ・ 最終更新 2026-11-23
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" integrity="sha512-XMVd28F1oH/O71fzwBnV7HucLxVwtxf26XV8P4wPk26EDxuGZ91N8bsOttmnomcCD3CS5ZMRL50H0GgOHvegtg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

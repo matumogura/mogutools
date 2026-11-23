@@ -606,6 +606,9 @@
   const view = { zoom: 1, x: 0, y: 0, grid: false };
   const VIEW_GRID_KEY = "ccf-scene-maker.view-grid";
   try { view.grid = localStorage.getItem(VIEW_GRID_KEY) === "1"; } catch (err) { /* not kept */ }
+  const VIEW_ITEMS_KEY = "mogu-scene-maker.view-items";
+  view.items = true;
+  try { view.items = localStorage.getItem(VIEW_ITEMS_KEY) !== "0"; } catch (err) { /* not kept */ }
   const VIEW_MIN = 0.1, VIEW_MAX = 8;
   const fitScale = (sc, stage) => Math.min(Math.max(40, stage.clientWidth - 24) / (sc.width * M.CELL), Math.max(40, stage.clientHeight - 24) / (sc.height * M.CELL));
 
@@ -638,7 +641,7 @@
     if ($("#stageEmpty")) $("#stageEmpty").hidden = !!sc;
     if (!sc) return;
     // A newly chosen scene starts with everything in view (markers may sit outside the field, as in CCFOLIA).
-    if (sc.id !== lastShown) { lastShown = sc.id; if (shownMarkers(sc).length) { $("#viewAll").click(); return; } Object.assign(view, { zoom: 1, x: 0, y: 0 }); }
+    if (sc.id !== lastShown) { lastShown = sc.id; if (shownMarkers(sc).length || (view.items && state.items.length)) { $("#viewAll").click(); return; } Object.assign(view, { zoom: 1, x: 0, y: 0 }); }
     const stage = $("#stage");
     const scale = fitScale(sc, stage) * view.zoom;
     const w = sc.width * M.CELL * scale, h = sc.height * M.CELL * scale;
@@ -671,6 +674,7 @@
       board.append(g);
     }
     drawMarkers(sc, board, M.CELL * scale);
+    if (view.items) drawItems(sc, board, M.CELL * scale);
     const ratio = im => im && im.w && im.h ? Math.abs(im.w / im.h - sc.width / sc.height) / (sc.width / sc.height) : 0;
     const off = [];
     if (ratio(bg) > 0.05) off.push(t("背景"));
@@ -679,6 +683,7 @@
     $("#stageNote").textContent = t("盤面 {w} × {h} マス（{pw} × {ph}px）。", { w: sc.width, h: sc.height, pw: sc.width * M.CELL, ph: sc.height * M.CELL })
       + (!off.length ? "" : sc.fit === "cover" ? t("{parts}のはみ出しは切れます。", { parts })
         : t("{parts}は伸びて表示されます。", { parts }));
+    document.dispatchEvent(new Event("board-drawn"));
   }
 
   // ---------------------------------------------------------------- marker panels
@@ -714,6 +719,20 @@
       if (src) el.append(boardImgOnce(src));
       if (editable && m.id === selectedMarker) { const h = document.createElement("div"); h.className = "mk-h"; el.append(h); }
       placeMarker(el, m, sc, cs);
+      board.append(el);
+    });
+  }
+
+  // CCFOLIA's screen panels: over the markers on every scene. Only shown, not edited or exported.
+  function drawItems(sc, board, cs) {
+    state.items.forEach((it, z) => {
+      const el = document.createElement("div");
+      el.className = "mk it" + (it.imageId ? "" : " empty");
+      el.style.zIndex = 1000 + z;
+      if (it.text) el.title = it.text;
+      const src = srcOf(it.imageId);
+      if (src) el.append(boardImgOnce(src));
+      placeMarker(el, it, sc, cs);
       board.append(el);
     });
   }
@@ -925,7 +944,7 @@
   // its resources, so this folder rides along unread. Images reuse the zip's own files where the bytes match.
   async function packReedit(zip, cache) {
     const images = [];
-    const used = state.images.filter(im => blobs.has(im.id) && (isUsed(im.id) || im.id === state.commonFg || state.commonMarkers.some(m => m.imageId === im.id)));
+    const used = state.images.filter(im => blobs.has(im.id) && (isUsed(im.id) || im.id === state.commonFg || state.commonMarkers.concat(state.items).some(m => m.imageId === im.id)));
     for (const im of used) {
       const p = await prepared(im, cache);
       const name = R.hex(await crypto.subtle.digest("SHA-256", p.bytes)) + "." + R.EXT[p.type];
@@ -1054,13 +1073,22 @@
       hasBoard = true;
     }
     for (const [ccfId, sc] of list) next.scenes.push(await build(sc, ccfId, String(sc.name || "")));
+    // Screen panels (entities.items) belong to the room and stay over every scene. Ones put away (active: false) are left out.
+    const items = Object.entries((data.entities && data.entities.items) || {})
+      .filter(([, it]) => it && typeof it === "object" && it.active !== false)
+      .sort((a, b) => (Number(a[1].z) || 0) - (Number(b[1].z) || 0));
+    for (const [key, it] of items) {
+      const src = it.closed && it.coverImageUrl ? it.coverImageUrl : it.imageUrl;
+      next.items.push({ id: "p" + key, imageId: await take(src, (it.memo || t("スクリーンパネル")).slice(0, 30)), text: it.memo || "",
+        x: it.x, y: it.y, width: it.width, height: it.height, angle: it.angle, locked: true, freezed: true, click: "none", clickValue: "" });
+    }
     const out = M.normalize(next);
     // Keep each scene's place in CCFOLIA's list when writing back over it.
     out.orderBase = (list.length && Number(list[0][1].order)) || Math.floor(Date.now() / 1000);
     out.exportOpts.mode = "overwrite";
     out.exportOpts.bake = false; // the foregrounds may already be baked
     let note = t("再編集用のデータが無い ZIP なので、前景はシーンごとの画像として読み込みました（共通の前景はありません）。");
-    note += t("マーカーは {n} 個読み込みました。", { n: markerN });
+    note += t("マーカーは {n} 個、スクリーンパネルは {m} 枚読み込みました。", { n: markerN, m: next.items.length });
     if (hasBoard) note += t("一覧の先頭の「いまの盤面」は、ココフォリアで今の盤面に置いてあるものです（上書きしても、ルームの盤面は変わりません。新しいシーンとして入ります）。");
     if (lost) note += t("読み込めなかった画像が {n} 個あります（ZIP に入っていない画像は、ココフォリアの設定で取ってこられないことがあります）。", { n: lost });
     return { state: out, note, warn: lost > 0 };
@@ -1396,6 +1424,16 @@
       try { localStorage.setItem(VIEW_GRID_KEY, view.grid ? "1" : "0"); } catch (err) { /* not kept */ }
       placeAidGrid();
     });
+    const itemsBtn = $("#viewItems");
+    const syncItems = () => { itemsBtn.setAttribute("aria-pressed", String(view.items)); itemsBtn.hidden = !state.items.length; };
+    syncItems();
+    itemsBtn.addEventListener("click", () => {
+      view.items = !view.items;
+      try { localStorage.setItem(VIEW_ITEMS_KEY, view.items ? "1" : "0"); } catch (err) { /* not kept */ }
+      syncItems();
+      renderBoard();
+    });
+    document.addEventListener("board-drawn", syncItems);
     $("#viewFit").addEventListener("click", () => { Object.assign(view, { zoom: 1, x: 0, y: 0 }); renderBoard(); });
     // The field and every marker shown on it, with a cell to spare.
     $("#viewAll").addEventListener("click", () => {
@@ -1403,7 +1441,7 @@
       if (!sc) return;
       const ox = Math.floor(sc.width / 2), oy = Math.floor(sc.height / 2);
       let x0 = 0, y0 = 0, x1 = sc.width, y1 = sc.height;
-      for (const m of shownMarkers(sc)) {
+      for (const m of shownMarkers(sc).concat(view.items ? state.items : [])) {
         x0 = Math.min(x0, m.x + ox); y0 = Math.min(y0, m.y + oy);
         x1 = Math.max(x1, m.x + ox + m.width); y1 = Math.max(y1, m.y + oy + m.height);
       }

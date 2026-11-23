@@ -802,6 +802,7 @@
       fillImageSelect($("#pnCover"), [["", t("なし")]], m.coverId || "");
       $("#pnClosed").checked = !!m.closed;
     }
+    $("#mkSameAll").hidden = m.id !== KPV_ID || markerMode !== "scene";
     const i = list.indexOf(m);
     $("#mkBack").disabled = i <= 0;
     $("#mkFront").disabled = i >= list.length - 1;
@@ -997,6 +998,13 @@
     if (!window.JSZip) { status(t("ZIP を読む部品を読み込めませんでした。ネットにつながった状態で開き直してください。"), true); return; }
     let zip;
     try { zip = await window.JSZip.loadAsync(file); } catch (err) { status(t("ZIP を読めませんでした。"), true); return; }
+    // A zip from キパビュー's 「シーンメーカー用に保存」: adds to the work instead of replacing it.
+    const kpv = zip.file(KPV_FILE);
+    if (kpv) {
+      try { await fromKpv(zip, JSON.parse(await kpv.async("string"))); }
+      catch (err) { console.error(err); status(t("キパビューの ZIP を読み込めませんでした: {error}", { error: err.message }), true); }
+      return;
+    }
     if (state.scenes.length && !confirm(t("今の作業を、この ZIP の中身に置き換えます。よろしいですか？（「元に戻す」で戻せます）"))) return;
     status(t("ZIP を読み込んでいます…"));
     try {
@@ -1016,6 +1024,47 @@
       console.error(err);
       status(t("ZIP を読み込めませんでした: {error}", { error: err.message }), true);
     }
+  }
+
+  // ---- キパビュー: one exploration list per place. The scene of the same name gets the list as a marker
+  // (made if there is none). The marker has a fixed id, so opening the zip again swaps the image and keeps where it was put.
+  const KPV_FILE = "scenemaker-kpv.json", KPV_ID = "kpv-list";
+  const squash = s => String(s || "").replace(/[\s　]+/g, "");
+  function kpvSpot(sc, im) {
+    const width = Math.max(4, Math.min(12, Math.floor(sc.width / 3)));
+    const height = Math.max(1, Math.round(width * (im.h && im.w ? im.h / im.w : 1)));
+    return { x: sc.width - Math.floor(sc.width / 2) - width - 1, y: -Math.floor(sc.height / 2) + 1, width, height };
+  }
+  async function fromKpv(zip, data) {
+    if (!data || data.app !== "kp-viewer" || !Array.isArray(data.lists)) throw new Error(t("中身の形が違います"));
+    let put = 0, made = 0, lost = 0;
+    for (const l of data.lists) {
+      if (!l || !l.title) continue;
+      const got = await readImage(zip, String(l.file || ""));
+      if (!got) { lost++; continue; }
+      const hash = R.hex(await crypto.subtle.digest("SHA-256", got.bytes));
+      let im = state.images.find(x => x.hash === hash && blobs.has(x.id));
+      if (!im) {
+        const { w, h } = await sizeOf(got.blob);
+        im = { id: M.uid("i"), name: t("探索箇所_{name}", { name: String(l.title) }).slice(0, 60), type: got.type, size: got.bytes.length, hash, w, h, moving: isMoving(got.type, got.bytes) };
+        holdBlob(im.id, got.blob);
+        state.images.push(im);
+        await storeBlob(im.id, got.blob);
+      }
+      let sc = state.scenes.find(s => squash(s.name) === squash(l.title));
+      if (!sc) { sc = M.newScene(state, null, R.newId(random)); sc.name = String(l.title); state.scenes.push(sc); made++; }
+      const old = sc.markers.find(m => m.id === KPV_ID);
+      if (old) old.imageId = im.id;
+      else sc.markers.push(Object.assign(M.newMarker(im), { id: KPV_ID, text: (Array.isArray(l.items) ? l.items.join(" / ") : "").slice(0, 200) }, kpvSpot(sc, im)));
+      put++;
+    }
+    selected = null;
+    touch();
+    commit();
+    saveNow();
+    status(t("キパビューの探索箇所の一覧を {n} か所に付けました（新しく作ったシーン {m} 件）。", { n: put, m: made })
+      + (lost ? t("画像の無い一覧が {n} 個ありました。", { n: lost }) : "")
+      + t("位置を直したら、マーカーの「この位置を全シーンに」でほかのシーンもそろえられます。"), lost > 0);
   }
 
   async function fromReedit(zip, data) {
@@ -1361,6 +1410,16 @@
     const shift = d => { const s = cur(), list = markerList(s), i = list.findIndex(m => m.id === selectedMarker), j = i + d;
       if (i < 0 || j < 0 || j >= list.length) return; [list[i], list[j]] = [list[j], list[i]]; touch({ keepGallery: true }); commit(); };
     $("#mkBack").addEventListener("click", () => shift(-1));
+    // The キパビュー list sits in the same place on every scene.
+    $("#mkSameAll").addEventListener("click", () => {
+      const m = curMarker();
+      if (!m || m.id !== KPV_ID) return;
+      let n = 0;
+      for (const s of state.scenes) for (const k of s.markers) if (k.id === KPV_ID && k !== m) { Object.assign(k, { x: m.x, y: m.y, width: m.width, height: m.height, angle: m.angle }); n++; }
+      touch({ keepGallery: true });
+      commit();
+      status(t("ほかの {n} シーンのキパビューの一覧を、同じ位置・大きさにしました。", { n }));
+    });
     $("#mkFront").addEventListener("click", () => shift(1));
     $("#mkDup").addEventListener("click", () => {
       const s = cur(), m = curMarker();

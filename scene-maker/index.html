@@ -352,87 +352,112 @@
   footer a { color: #4a3426; }
   details.note summary { cursor: pointer; font-weight: 900; font-size: 16px; color: var(--fg); }
   details.note[open] summary { margin-bottom: 4px; }
+
+  /* ---- ココフォリア風の配置：上にバー、左に大きな盤面、右にシーン一覧、間に引き出し */
+  html, body { height: 100%; }
+  body { overflow: hidden; }
+  .app { height: 100vh; height: 100dvh; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; }
+  .bar { display: flex; align-items: center; gap: 12px; padding: 8px 14px; background: linear-gradient(180deg, var(--sky), #eef8fb); }
+  .bar h1 { font-size: 20px; margin: 0; white-space: nowrap; }
+  .bar h1::before { width: 10px; height: 10px; margin: 0 10px 0 2px; }
+  .bar .home-link { font-size: 22px; font-weight: 900; text-decoration: none; color: var(--fg); padding: 0 4px; }
+  .bar-btns { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-left: auto; }
+  .bar-btns button { padding: 6px 14px; }
+  .bar-btns button[aria-pressed=true] { background: var(--fg); color: #fff; border-color: var(--fg); }
+  .bar-btns button.primary[aria-pressed=true] { background: var(--coral); border-color: var(--coral); box-shadow: 0 4px 0 #c96a58; }
+  .bar-btns .sep { width: 1px; align-self: stretch; background: var(--line); margin: 0 4px; }
+  #undo, #redo { padding: 4px 12px; font-size: 18px; line-height: 1; }
+
+  .work { display: grid; grid-template-columns: minmax(0, 1fr) auto 340px; align-items: stretch; gap: 0; padding: 0; min-height: 0; background: #1c1c1c; }
+  .stage-area { position: relative; min-width: 0; min-height: 0; }
+  .stage-area { grid-column: 1; grid-row: 1; }
+  .drawer { grid-column: 2; grid-row: 1; }
+  .side { grid-column: 3; grid-row: 1; }
+  .stage:has(#stageEmpty:not([hidden])) .view-ctl { display: none; }
+  .stage-area .stage { position: absolute; inset: 0; height: auto; border: 0; border-radius: 0; background: #202020; overflow: hidden; }
+  .stage-blur { position: absolute; inset: -60px; z-index: 0; background: center / cover no-repeat; filter: blur(14px); pointer-events: none; }
+  .stage .board { z-index: 0; box-shadow: 0 0 0 4px rgba(0,0,0,.25), 0 10px 40px rgba(0,0,0,.45); outline: 0; }
+  .stage .view-ctl { top: 10px; right: 10px; }
+  .stage .stage-note { position: absolute; left: 10px; bottom: 10px; z-index: 2; margin: 0; padding: 3px 10px; border-radius: 999px;
+                       background: rgba(0,0,0,.6); color: #eee; font-size: 13px; pointer-events: none; }
+  .stage .stage-note:empty { display: none; }
+  .stage-empty { position: absolute; inset: 24px; z-index: 1; display: grid; place-content: center; gap: 6px; text-align: center;
+                 border: 2px dashed rgba(255,255,255,.35); border-radius: 22px; color: #ddd; font-size: 15px; pointer-events: none; }
+  .stage-empty b { font-size: 20px; color: #fff; }
+  .stage.over .stage-empty { border-color: var(--sun); }
+
+  .drawer { width: 420px; min-height: 0; display: flex; flex-direction: column; background: var(--bg); border-left: 1px solid #000; }
+  .drawer[hidden] { display: none !important; }
+  .dw-head { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: #fff; border-bottom: 1px solid var(--line); }
+  .dw-head h2 { margin: 0; font-size: 17px; font-weight: 900; }
+  .dw-close { border: 0; background: none; font-size: 22px; line-height: 1; padding: 2px 8px; }
+  .dw-body { overflow: auto; padding: 4px 16px 18px; display: grid; gap: 10px; align-content: start; }
+  #dwExport { overflow: auto; }
+  #dwExport .dw-body { overflow: visible; padding-top: 14px; }
+  .dw-body > fieldset:first-child { border-top-color: transparent; margin-top: 6px; }
+  .editor { padding-top: 10px; }
+
+  /* シーン一覧：ココフォリアの暗い一覧 */
+  .side { display: flex; flex-direction: column; min-height: 0; background: #212121; color: #fff; border-left: 1px solid #000; }
+  .side-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 12px; background: #2b2b2b; }
+  .side-head h2 { margin: 0; font-size: 16px; font-weight: 700; letter-spacing: .04em; }
+  .side-btns { display: flex; gap: 4px; }
+  .side-btns button { background: transparent; color: #fff; border-color: rgba(255,255,255,.3); padding: 3px 12px; }
+  .side-btns button:hover { background: rgba(255,255,255,.1); border-color: #fff; }
+  .side .scene-list { flex: 1; max-height: none; border-radius: 0; overflow: auto; padding: 4px; }
+  .scene { margin: 0 0 4px; border-radius: 4px; overflow: hidden; }
+  .scene[aria-selected=true] { outline: 2px solid #8fb8ff; outline-offset: -2px; background: #34394a; }
+  .scene .pic { width: 72px; height: 56px; }
+  .scene .txt { padding-left: 10px; }
+  .scene .mv { gap: 0; align-items: center; }
+  .scene .mv button { font-size: 15px; padding: 6px 5px; border-radius: 4px; }
+  .scene .mv button.del:hover { color: #ff9c8a; }
+
+  footer { padding: 6px 14px; font-size: 12px; font-weight: 500; }
+
+  @media (max-width: 900px) {
+    body { overflow: auto; }
+    .app { height: auto; min-height: 100vh; }
+    .bar { flex-wrap: wrap; }
+    .bar-btns { margin-left: 0; }
+    .work { grid-template-columns: minmax(0, 1fr); padding: 0; }
+    .work > .stage-area, .work > .drawer, .work > .side { grid-column: 1; grid-row: auto; }
+    .stage-area { height: 56vh; }
+    .drawer { width: auto; border-left: 0; }
+    .side .scene-list { max-height: 60vh; }
+  }
 </style>
 </head>
 <body>
+<div class="app">
+  <header class="bar">
+    <a class="home-link" href="../" title="mogutools">‹</a>
+    <h1>シーンメーカー</h1>
+    <div class="bar-btns">
+      <button type="button" id="barAdd">＋ 画像</button>
+      <button type="button" id="loadZip">ZIP を開く</button>
+      <span class="sep"></span>
+      <button type="button" id="undo" disabled title="元に戻す（Ctrl+Z）" aria-label="元に戻す">↶</button>
+      <button type="button" id="redo" disabled title="やり直す（Ctrl+Y）" aria-label="やり直す">↷</button>
+      <span class="sep"></span>
+      <button type="button" data-dw="dwTools" aria-pressed="false">素材・設定</button>
+      <button type="button" class="primary" data-dw="dwExport" aria-pressed="false">書き出し</button>
+    </div>
+  </header>
 
-<header>
-  <div class="topline">
-    <a class="home-link" href="../">‹ mogutools</a>
-  </div>
-  <h1>シーンメーカー</h1>
-  <p>背景の画像を入れると、ココフォリアのシーンをまとめて作れます。画像はブラウザの外に送られません。</p>
-</header>
+  <main class="work">
+    <section class="stage-area">
+      <div class="stage" id="stage" aria-label="盤面の見本"><div class="stage-blur" id="stageBlur"></div><div class="board" id="board"></div><div class="aid-grid" id="aidGrid" hidden></div>
+            <div class="view-ctl" role="group" aria-label="盤面の見本の表示"><button type="button" class="small" id="viewOut" aria-label="縮小" title="縮小（Ctrl＋ホイール）">−</button><output id="viewZoom">100%</output><button type="button" class="small" id="viewIn" aria-label="拡大" title="拡大（Ctrl＋ホイール）">＋</button><button type="button" class="small" id="viewFit" title="フィールドに合わせる">枠</button><button type="button" class="small" id="viewAll" title="マーカーまで全部入れる">全体</button><button type="button" class="small" id="viewGrid" aria-pressed="false" title="1 マスごとの線（表示だけ）">マス目</button></div><p class="stage-note" id="stageNote"></p><div class="stage-empty" id="stageEmpty"><b>背景の画像をここにドロップ</b><span>1 枚が 1 シーンになります</span></div></div>
+    </section>
 
-<main>
-  <div class="panel">
-    <fieldset>
-      <legend>1. 画像を入れる</legend>
-      <div class="drop" id="dropScenes" role="button" tabindex="0"><b>背景の画像をドロップ</b>／クリックで選ぶ<br><span>1 枚 = 1 シーン</span></div>
-      <div class="drop sub" id="dropShelf" role="button" tabindex="0">前景（枠）はこちら<br><span>シーンは増えません</span></div>
-      <div class="btns" style="margin-top: 10px;"><button type="button" id="loadZip">書き出した ZIP を開いて直す</button></div>
-    </fieldset>
-
-    <fieldset>
-      <legend>画像の置き場（<span id="imageCount">0</span> 枚）</legend>
-      <div class="gallery" id="gallery"></div>
-      <div class="inline" style="margin-top: 8px;"><input type="color" id="solidColor" value="#000000" aria-label="単色の画像の色"><button type="button" class="small" id="solidAdd">単色の画像を作る</button></div>
-    </fieldset>
-
-    <fieldset>
-      <legend>2. まとめて設定</legend>
-      <div class="row"><label for="commonFg">共通の前景</label>
-        <div class="inline"><select id="commonFg"></select><button type="button" class="small" id="commonFgAdd" aria-label="共通の前景にファイルから画像を追加">＋ 画像</button></div></div>
-      <div class="btns" style="margin-top: 8px;"><button type="button" class="small" id="allFgCommon">全シーンを共通の前景に</button></div>
-
-      <div class="row"><label for="defLongSide">大きさ</label>
-        <div class="inline">長い辺 <input type="number" id="defLongSide" min="1" max="1000" step="1" aria-label="長い辺のマス数"> マス <button type="button" class="small" id="allSize">全シーンに</button></div></div>
-      <div class="row"><label>グリッド</label>
-        <div class="inline"><label class="check"><input type="checkbox" id="defGrid"> 表示</label> <span class="grp">間隔 <input type="number" id="defGridSize" min="1" max="1000" step="1" aria-label="グリッドの間隔（マス）"></span> <button type="button" class="small" id="allGrid">全シーンに</button></div></div>
-      <div class="row"><label for="defFit">はめ方</label>
-        <div class="inline"><select id="defFit"><option value="fill">伸ばす</option><option value="cover">切り抜く</option></select><button type="button" class="small" id="allFit">全シーンに</button></div></div>
-      <p class="desc">1 マス = 24px。</p>
-    </fieldset>
-
-    <fieldset>
-      <legend>テンプレート</legend>
-      <div class="tpl-list" id="tplList"></div>
-      <div class="btns" style="margin-top: 8px;">
-        <button type="button" class="small" id="tplSave">選んだシーンを登録</button>
-        <button type="button" class="small" id="tplExport">書き出す</button>
-        <button type="button" class="small" id="tplImport">読み込む</button>
-      </div>
-    </fieldset>
-
-    <fieldset>
-      <legend>保存</legend>
-      <div class="btns">
-        <button type="button" class="small" id="undo" disabled>元に戻す</button>
-        <button type="button" class="small" id="redo" disabled>やり直す</button>
-        <button type="button" class="small" id="saveProject">プロジェクト保存</button>
-        <button type="button" class="small" id="loadProject">開く</button>
-        <button type="button" class="small danger" id="resetAll">全部消す</button>
-      </div>
-      <p class="desc">作業はこのブラウザに自動保存されます。</p>
-      <p class="status" id="status" role="status" aria-live="polite"></p>
-    </fieldset>
-  </div>
-
-  <div class="stack">
-    <section class="card">
-      <div class="card-head">
-        <h2>3. シーン（<span id="count">0</span> 件）</h2>
-        <div class="btns"><button type="button" class="small" id="addEmpty">＋ 空のシーン</button><button type="button" class="small" id="namesFromFiles">名前を画像名に</button></div>
-      </div>
-      <div class="cols">
-        <div>
-          <div class="scene-list" id="sceneList" role="listbox" aria-label="シーン一覧"></div>
-          <p class="stage-note" style="margin-top: 6px;">ドラッグか ↑↓ で並べ替え。</p>
-        </div>
+    <div class="drawer" id="dwEdit" hidden>
+      <div class="dw-head"><h2>シーン編集</h2><button type="button" class="dw-close" data-close aria-label="閉じる">×</button></div>
+      <div class="dw-body">
+        <p class="desc" id="editorEmpty" style="margin: 0;">シーンを選んでください。</p>
         <div class="editor" id="editor" hidden>
-          <div class="stage" id="stage" aria-label="盤面の見本"><div class="board" id="board"></div><div class="aid-grid" id="aidGrid" hidden></div>
-            <div class="view-ctl" role="group" aria-label="盤面の見本の表示"><button type="button" class="small" id="viewOut" aria-label="縮小" title="縮小（Ctrl＋ホイール）">−</button><output id="viewZoom">100%</output><button type="button" class="small" id="viewIn" aria-label="拡大" title="拡大（Ctrl＋ホイール）">＋</button><button type="button" class="small" id="viewFit" title="フィールドに合わせる">枠</button><button type="button" class="small" id="viewAll" title="マーカーまで全部入れる">全体</button><button type="button" class="small" id="viewGrid" aria-pressed="false" title="1 マスごとの線（表示だけ）">マス目</button></div></div>
-          <p class="stage-note" id="stageNote"></p>
+          
+          
           <div class="two">
             <label class="f">タイトル<input type="text" id="edName" placeholder="新しいシーン"></label>
             <label class="f">はめ方<select id="edFit"><option value="fill">伸ばす</option><option value="cover">切り抜く</option></select></label>
@@ -481,12 +506,62 @@
             <button type="button" class="small danger" id="edDelete">削除</button>
           </div>
         </div>
-        <p class="desc" id="editorEmpty" style="margin: 0;">画像を入れると、ここにシーンが並びます。</p>
+        
       </div>
-    </section>
+    </div>
 
-    <section class="card">
-      <h2>4. 書き出し</h2>
+    <div class="drawer" id="dwTools" hidden>
+      <div class="dw-head"><h2>素材・設定</h2><button type="button" class="dw-close" data-close aria-label="閉じる">×</button></div>
+      <div class="dw-body">
+        <fieldset>
+      <legend>画像を入れる</legend>
+      <div class="drop" id="dropScenes" role="button" tabindex="0"><b>背景の画像をドロップ</b>／クリックで選ぶ<br><span>1 枚 = 1 シーン</span></div>
+      <div class="drop sub" id="dropShelf" role="button" tabindex="0">前景（枠）はこちら<br><span>シーンは増えません</span></div>
+    </fieldset>
+        <fieldset>
+      <legend>画像の置き場（<span id="imageCount">0</span> 枚）</legend>
+      <div class="gallery" id="gallery"></div>
+      <div class="inline" style="margin-top: 8px;"><input type="color" id="solidColor" value="#000000" aria-label="単色の画像の色"><button type="button" class="small" id="solidAdd">単色の画像を作る</button></div>
+    </fieldset>
+        <fieldset>
+      <legend>2. まとめて設定</legend>
+      <div class="row"><label for="commonFg">共通の前景</label>
+        <div class="inline"><select id="commonFg"></select><button type="button" class="small" id="commonFgAdd" aria-label="共通の前景にファイルから画像を追加">＋ 画像</button></div></div>
+      <div class="btns" style="margin-top: 8px;"><button type="button" class="small" id="allFgCommon">全シーンを共通の前景に</button></div>
+
+      <div class="row"><label for="defLongSide">大きさ</label>
+        <div class="inline">長い辺 <input type="number" id="defLongSide" min="1" max="1000" step="1" aria-label="長い辺のマス数"> マス <button type="button" class="small" id="allSize">全シーンに</button></div></div>
+      <div class="row"><label>グリッド</label>
+        <div class="inline"><label class="check"><input type="checkbox" id="defGrid"> 表示</label> <span class="grp">間隔 <input type="number" id="defGridSize" min="1" max="1000" step="1" aria-label="グリッドの間隔（マス）"></span> <button type="button" class="small" id="allGrid">全シーンに</button></div></div>
+      <div class="row"><label for="defFit">はめ方</label>
+        <div class="inline"><select id="defFit"><option value="fill">伸ばす</option><option value="cover">切り抜く</option></select><button type="button" class="small" id="allFit">全シーンに</button></div></div>
+      <p class="desc">1 マス = 24px。</p>
+    </fieldset>
+        <fieldset>
+      <legend>テンプレート</legend>
+      <div class="tpl-list" id="tplList"></div>
+      <div class="btns" style="margin-top: 8px;">
+        <button type="button" class="small" id="tplSave">選んだシーンを登録</button>
+        <button type="button" class="small" id="tplExport">書き出す</button>
+        <button type="button" class="small" id="tplImport">読み込む</button>
+      </div>
+    </fieldset>
+        <fieldset>
+      <legend>保存</legend>
+      <div class="btns">
+        <button type="button" class="small" id="saveProject">プロジェクト保存</button>
+        <button type="button" class="small" id="loadProject">開く</button>
+        <button type="button" class="small danger" id="resetAll">全部消す</button>
+      </div>
+      <p class="desc">作業はこのブラウザに自動保存されます。</p>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+    </fieldset>
+      </div>
+    </div>
+
+    <div class="drawer" id="dwExport" hidden>
+      <div class="dw-head"><h2>書き出し</h2><button type="button" class="dw-close" data-close aria-label="閉じる">×</button></div>
+      <div class="dw-body">
       <div class="mode" role="radiogroup" aria-label="読み込んだときの動き">
         <label><input type="radio" name="exportMode" value="add"><span><b>追加</b>シーン一覧の最後に足す</span></label>
         <label><input type="radio" name="exportMode" value="overwrite"><span><b>上書き</b>前に入れたシーンを置き換える<span class="warn">（ココフォリアで付けた BGM は消える）</span></span></label>
@@ -500,10 +575,8 @@
         <button type="button" id="exportAssets" disabled>素材（ZIP）</button>
       </div>
       <p class="status" id="exportStatus" role="status" aria-live="polite"></p>
-    </section>
-
-    <section class="card">
-      <details class="note">
+    </div>
+      <div class="dw-body"><details class="note">
         <summary>使い方と注意</summary>
         <h2>ココフォリアに入れる</h2>
         <ol>
@@ -525,10 +598,22 @@
           <li class="warn">非公式ツール。ココフォリアの更新で使えなくなることがある</li>
         </ul>
         <p>枠は<a href="https://shiki365.github.io/foreground-frame-maker/">前景フレームメーカー</a>、動く素材は<a href="https://shiki365.github.io/scene-transition-maker/">場面転換素材メーカー</a>で作れます。</p>
-      </details>
-    </section>
-  </div>
-</main>
+      </details></div>
+    </div>
+
+    <aside class="side">
+      <div class="side-head">
+        <h2>シーン一覧（<span id="count">0</span>）</h2>
+        <div class="side-btns"><button type="button" id="addEmpty" title="空のシーンを足す" aria-label="空のシーンを足す">＋</button><button type="button" id="namesFromFiles" title="名前を画像名にそろえる">名前</button></div>
+      </div>
+      <div class="scene-list" id="sceneList" role="listbox" aria-label="シーン一覧"></div>
+    </aside>
+  </main>
+  <footer>
+  元にしたツール：<a href="https://github.com/shiki365/scene-maker">shiki365/scene-maker</a>（MIT License, Copyright (c) 2026 shiki365・<a href="LICENSE.txt">ライセンス</a>）。ココフォリアとは関係のない非公式ツールです。<br>
+  <span>v1.2-mogu</span> ・ 最終更新 2026-11-23
+</footer>
+</div>
 
 <input type="file" id="projectFile" accept=".json,application/json" hidden>
 <input type="file" id="roomZipFile" accept=".zip,application/zip" hidden>
@@ -537,14 +622,10 @@
 <input type="file" id="sceneFiles" accept="image/png,image/jpeg,image/gif,image/webp" multiple hidden>
 <input type="file" id="shelfFiles" accept="image/png,image/jpeg,image/gif,image/webp" multiple hidden>
 
-<footer>
-  元にしたツール：<a href="https://github.com/shiki365/scene-maker">shiki365/scene-maker</a>（MIT License, Copyright (c) 2026 shiki365・<a href="LICENSE.txt">ライセンス</a>）。ココフォリアとは関係のない非公式ツールです。<br>
-  <span>v1.1-mogu</span> ・ 最終更新 2026-11-23
-</footer>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" integrity="sha512-XMVd28F1oH/O71fzwBnV7HucLxVwtxf26XV8P4wPk26EDxuGZ91N8bsOttmnomcCD3CS5ZMRL50H0GgOHvegtg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="roomdata.v1.js?v=2"></script>
 <script src="model.v1.js?v=4"></script>
-<script src="app.v1.js?v=8"></script>
+<script src="app.v1.js?v=9"></script>
+<script src="layout.v1.js?v=1"></script>
 </body>
 </html>

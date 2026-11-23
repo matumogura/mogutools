@@ -619,6 +619,7 @@
   }
   // Images of more than one place on the board (two markers with one image) need their own node.
   const boardUsed = new Set();
+  let lastShown = null;
   function boardImgOnce(src) {
     if (boardUsed.has(src)) { const img = document.createElement("img"); img.src = src; img.alt = ""; img.draggable = false; return img; }
     boardUsed.add(src);
@@ -636,6 +637,8 @@
     if (blur) blur.style.backgroundImage = bgSrc ? `url("${bgSrc}")` : "";
     if ($("#stageEmpty")) $("#stageEmpty").hidden = !!sc;
     if (!sc) return;
+    // A newly chosen scene starts with everything in view (markers may sit outside the field, as in CCFOLIA).
+    if (sc.id !== lastShown) { lastShown = sc.id; if (shownMarkers(sc).length) { $("#viewAll").click(); return; } Object.assign(view, { zoom: 1, x: 0, y: 0 }); }
     const stage = $("#stage");
     const scale = fitScale(sc, stage) * view.zoom;
     const w = sc.width * M.CELL * scale, h = sc.height * M.CELL * scale;
@@ -993,7 +996,10 @@
     const list = Object.entries((data.entities && data.entities.scenes) || {})
       .filter(([, sc]) => sc && typeof sc === "object")
       .sort((a, b) => (Number(a[1].order) || 0) - (Number(b[1].order) || 0));
-    if (!list.length) { status(t("この ZIP にはシーンが入っていません。"), true); return null; }
+    const r0 = data.entities && data.entities.room;
+    if (!list.length && !(r0 && (r0.backgroundUrl || r0.foregroundUrl || (r0.markers && Object.keys(r0.markers).length)))) {
+      status(t("この ZIP にはシーンも盤面も入っていません。"), true); return null;
+    }
     const next = M.defaultState();
     const byKey = new Map();
     let lost = 0;
@@ -1017,32 +1023,46 @@
       byKey.set(value, im.id);
       return im.id;
     };
-    for (const [ccfId, sc] of list) {
-      const name = String(sc.name || "");
+    let markerN = 0;
+    // One scene (or the room's current board, which has the same fields) -> a scene of this tool.
+    const build = async (sc, ccfId, name) => {
       const bg = await take(sc.backgroundUrl, name + t("（背景）"));
       const fg = await take(sc.foregroundUrl, name + t("（前景）"));
       const markers = [];
-      const ms = Object.entries(sc.markers && typeof sc.markers === "object" ? sc.markers : {})
+      const raw = sc.markers && typeof sc.markers === "object" ? sc.markers : {};
+      const ms = (Array.isArray(raw) ? raw.map((m, k) => [String((m && m._id) || k), m]) : Object.entries(raw))
         .sort((a, b) => (Number(a[1] && a[1].z) || 0) - (Number(b[1] && b[1].z) || 0));
       for (const [key, m] of ms) {
         if (!m || typeof m !== "object") continue;
         const ca = m.clickAction || null;
-        markers.push({ id: key, imageId: await take(m.imageUrl, (m.text || name) + t("（マーカー）")), text: m.text, x: m.x, y: m.y,
+        markers.push({ id: "k" + key, imageId: await take(m.imageUrl, (m.text || name) + t("（マーカー）")), text: m.text, x: m.x, y: m.y,
           width: m.width, height: m.height, angle: m.angle, locked: m.locked, freezed: m.freezed,
           click: ca && ca.type === "message" ? "message" : ca && ca.type === "link" ? "link" : "none",
           clickValue: ca ? (ca.type === "link" ? ca.url : ca.text) : "" });
       }
-      next.scenes.push({ id: M.uid("s"), ccfId, name, text: String(sc.text || ""), bg, fg: fg || "none",
+      markerN += markers.length;
+      return { id: M.uid("s"), ccfId, name, text: String(sc.text || ""), bg, fg: fg || "none",
         width: sc.fieldWidth, height: sc.fieldHeight, sizeAuto: false, displayGrid: sc.displayGrid, gridSize: sc.gridSize,
-        fit: sc.fieldObjectFit, markers, useCommonMarkers: false });
+        fit: sc.fieldObjectFit, markers, useCommonMarkers: false };
+    };
+    // What is on CCFOLIA's board now lives in the room, not in a scene (a scene only has what "盤面を保存" put in it).
+    const room = data.entities && data.entities.room;
+    const roomMarkers = room && room.markers && typeof room.markers === "object" ? Object.keys(room.markers).length : 0;
+    let hasBoard = false;
+    if (room && typeof room === "object" && (room.backgroundUrl || room.foregroundUrl || roomMarkers)) {
+      next.scenes.push(await build(room, "", t("いまの盤面")));
+      hasBoard = true;
     }
+    for (const [ccfId, sc] of list) next.scenes.push(await build(sc, ccfId, String(sc.name || "")));
     const out = M.normalize(next);
     // Keep each scene's place in CCFOLIA's list when writing back over it.
-    out.orderBase = Number(list[0][1].order) || Math.floor(Date.now() / 1000);
+    out.orderBase = (list.length && Number(list[0][1].order)) || Math.floor(Date.now() / 1000);
     out.exportOpts.mode = "overwrite";
     out.exportOpts.bake = false; // the foregrounds may already be baked
     let note = t("再編集用のデータが無い ZIP なので、前景はシーンごとの画像として読み込みました（共通の前景はありません）。");
-    if (lost) note += t("読み込めなかった画像が {n} 個あります。", { n: lost });
+    note += t("マーカーは {n} 個読み込みました。", { n: markerN });
+    if (hasBoard) note += t("一覧の先頭の「いまの盤面」は、ココフォリアで今の盤面に置いてあるものです（上書きしても、ルームの盤面は変わりません。新しいシーンとして入ります）。");
+    if (lost) note += t("読み込めなかった画像が {n} 個あります（ZIP に入っていない画像は、ココフォリアの設定で取ってこられないことがあります）。", { n: lost });
     return { state: out, note, warn: lost > 0 };
   }
 

@@ -567,6 +567,13 @@
       up.addEventListener("click", ev => { ev.stopPropagation(); moveScene(i, i - 1); });
       down.addEventListener("click", ev => { ev.stopPropagation(); moveScene(i, i + 1); });
       mv.append(up, down);
+      // Like CCFOLIA's row: edit, duplicate, delete (the layout opens the editor on "scene-edit").
+      const act = (label, aria, fn, cls) => { const b = button(label, { aria }); b.className = cls || ""; b.title = aria;
+        b.addEventListener("click", ev => { ev.stopPropagation(); selected = sc.id; touch({ keepGallery: true }); fn(); }); return b; };
+      mv.append(
+        act("✎", t("編集"), () => document.dispatchEvent(new CustomEvent("scene-edit"))),
+        act("⧉", t("複製"), () => $("#edDup").click()),
+        act("🗑", t("削除"), () => $("#edDelete").click(), "del"));
       row.append(pic, txt, mv);
       const pick = () => { selected = sc.id; touch({ keepGallery: true }); };
       row.addEventListener("click", pick);
@@ -602,10 +609,32 @@
   const VIEW_MIN = 0.1, VIEW_MAX = 8;
   const fitScale = (sc, stage) => Math.min(Math.max(40, stage.clientWidth - 24) / (sc.width * M.CELL), Math.max(40, stage.clientHeight - 24) / (sc.height * M.CELL));
 
+  // Images already on the board, by src: reused so animated images keep running across redraws.
+  const boardImgs = new Map();
+  function boardImg(src) {
+    let img = boardImgs.get(src);
+    if (!img) { img = document.createElement("img"); img.src = src; img.alt = ""; img.draggable = false; boardImgs.set(src, img); }
+    img.removeAttribute("style");
+    return img;
+  }
+  // Images of more than one place on the board (two markers with one image) need their own node.
+  const boardUsed = new Set();
+  function boardImgOnce(src) {
+    if (boardUsed.has(src)) { const img = document.createElement("img"); img.src = src; img.alt = ""; img.draggable = false; return img; }
+    boardUsed.add(src);
+    return boardImg(src);
+  }
+
   function renderBoard() {
     const sc = sceneById(selected);
     const board = $("#board");
     board.textContent = "";
+    boardUsed.clear();
+    const blur = $("#stageBlur");
+    const bgSrc = sc && bgOf(sc) ? srcOf(bgOf(sc).id) : "";
+    // CCFOLIA spreads the background, blurred, behind the whole board.
+    if (blur) blur.style.backgroundImage = bgSrc ? `url("${bgSrc}")` : "";
+    if ($("#stageEmpty")) $("#stageEmpty").hidden = !!sc;
     if (!sc) return;
     const stage = $("#stage");
     const scale = fitScale(sc, stage) * view.zoom;
@@ -620,10 +649,7 @@
     // CCFOLIA stacks two imgs of the field's size, both with object-fit = fieldObjectFit.
     for (const im of [bg, fg]) {
       if (!im || !srcOf(im.id)) continue;
-      const img = document.createElement("img");
-      img.src = srcOf(im.id);
-      img.alt = "";
-      img.draggable = false;
+      const img = boardImgOnce(srcOf(im.id));
       img.style.objectFit = sc.fit;
       board.append(img);
     }
@@ -682,7 +708,7 @@
       if (editable) { el.tabIndex = 0; el.setAttribute("aria-label", markerLabel(m, edited.indexOf(m))); }
       if (m.text) el.title = m.text;
       const src = srcOf(m.imageId);
-      if (src) { const img = document.createElement("img"); img.src = src; img.alt = ""; img.draggable = false; el.append(img); }
+      if (src) el.append(boardImgOnce(src));
       if (editable && m.id === selectedMarker) { const h = document.createElement("div"); h.className = "mk-h"; el.append(h); }
       placeMarker(el, m, sc, cs);
       board.append(el);
@@ -1211,7 +1237,12 @@
       commit();
       status(t("シーンを削除しました（置き場の画像は残ります）。「元に戻す」で戻せます。"));
     });
-    dropTarget($("#stage"), ids => { const s = cur(); if (s && ids.length) { setBg(s, ids[0]); touch(); commit(); } });
+    dropTarget($("#stage"), ids => {
+      if (!ids.length) return;
+      const s = cur();
+      if (s) setBg(s, ids[0]); else addScenes(ids);
+      touch(); commit();
+    });
   }
 
   function wireMarkers() {

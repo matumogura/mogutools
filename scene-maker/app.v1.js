@@ -648,8 +648,8 @@
     if (ratio(fg) > 0.05) off.push(t("前景"));
     const parts = off.join(t("・"));
     $("#stageNote").textContent = t("盤面 {w} × {h} マス（{pw} × {ph}px）。", { w: sc.width, h: sc.height, pw: sc.width * M.CELL, ph: sc.height * M.CELL })
-      + (!off.length ? "" : sc.fit === "cover" ? t("{parts}の形がフィールドと違うので、はみ出しが切れます。", { parts })
-        : t("{parts}の形がフィールドと違うので、伸びて表示されます。", { parts }));
+      + (!off.length ? "" : sc.fit === "cover" ? t("{parts}のはみ出しは切れます。", { parts })
+        : t("{parts}は伸びて表示されます。", { parts }));
   }
 
   // ---------------------------------------------------------------- marker panels
@@ -780,6 +780,7 @@
     for (const el of document.querySelectorAll('input[name="exportMode"]')) el.checked = el.value === state.exportOpts.mode;
     $("#optShrink").checked = state.exportOpts.shrink;
     $("#optBake").checked = state.exportOpts.bake;
+    $("#optReedit").checked = state.exportOpts.reedit;
     const used = state.images.filter(im => isUsed(im.id));
     const big = used.filter(im => tooBig(im) && !im.moving), bigMoving = used.filter(im => tooBig(im) && im.moving);
     const el = $("#exportSummary");
@@ -866,6 +867,7 @@
         scenes[sc.ccfId] = M.toEntity(sc, await file(bg), fgFile || await file(fg), state.orderBase + i, markers);
       }
       const { zip, files } = await R.build({ scenes }, { JSZip: window.JSZip, subtle: crypto.subtle });
+      if (state.exportOpts.reedit) await packReedit(zip, cache);
       // Images are already compressed; storing them keeps the export quick.
       const blob = await zip.generateAsync({ type: "blob", compression: "STORE" });
       download(blob, `scenes-${stamp()}.zip`);
@@ -873,17 +875,149 @@
       const all = [...cache.values()];
       const small = all.filter(p => p.small).length, over = all.filter(p => p.bytes.length > MAX_IMAGE).length;
       exportStatus(t("書き出しました（シーン {n} 件・画像 {m} 枚・{size}）。", { n: state.scenes.length, m: files.length, size: sizeText(blob.size) })
-        + (adding ? t("ココフォリアのルーム設定からインポートすると、シーン一覧の最後に追加されます。") : t("インポートすると、前に入れたシーンが置き換わります。"))
+        
         + (small ? t("{n} 枚は 5MB 以下に縮小しました。", { n: small }) : "")
-        + (bakedN ? t("前景のある {n} シーンは、背景と前景を重ねた 1 枚を前景にしました（シーン一覧の小さい絵に背景も出ます）。", { n: bakedN }) : "")
-        + (notBaked ? t("動く画像を使っている {n} シーンは重ねていないので、シーン一覧の小さい絵は前景だけになります。", { n: notBaked }) : "")
-        + (over ? t("5MB を超える画像が {n} 枚あり、ココフォリアに上がらないことがあります。", { n: over }) : ""), over > 0);
+        + (bakedN ? t("{n} シーンは背景と前景を重ねました。", { n: bakedN }) : "")
+        + (notBaked ? t("動く画像の {n} シーンは重ねていません。", { n: notBaked }) : "")
+        + (over ? t("5MB 超えの画像が {n} 枚あります。", { n: over }) : ""), over > 0);
     } catch (err) {
       console.error(err);
       exportStatus(t("ZIP を作れませんでした: {error}", { error: err.message }), true);
     } finally {
       btn.disabled = state.scenes.length === 0 || state.scenes.length > M.MAX_SCENES;
     }
+  }
+
+  // ---------------------------------------------------------------- room data zip -> back to editing
+
+  const REEDIT_DIR = "scenemaker/", REEDIT_FILE = REEDIT_DIR + "project.json";
+
+  // The work as it was before baking, for openRoomZip. CCFOLIA reads only __data.json and the files listed in
+  // its resources, so this folder rides along unread. Images reuse the zip's own files where the bytes match.
+  async function packReedit(zip, cache) {
+    const images = [];
+    const used = state.images.filter(im => blobs.has(im.id) && (isUsed(im.id) || im.id === state.commonFg || state.commonMarkers.some(m => m.imageId === im.id)));
+    for (const im of used) {
+      const p = await prepared(im, cache);
+      const name = R.hex(await crypto.subtle.digest("SHA-256", p.bytes)) + "." + R.EXT[p.type];
+      const path = zip.file(name) ? name : REEDIT_DIR + name;
+      if (!zip.file(path)) zip.file(path, p.bytes);
+      images.push(Object.assign({}, im, { type: p.type, size: p.bytes.length, w: p.w || im.w, h: p.h || im.h, file: path }));
+    }
+    const keep = Object.assign({}, state, { images });
+    zip.file(REEDIT_FILE, JSON.stringify({ app: APP_ID, kind: "room-zip", version: 1, state: keep }));
+  }
+
+  async function readImage(zip, path) {
+    const f = zip.file(path);
+    if (!f) return null;
+    const bytes = await f.async("uint8array");
+    const ext = path.split(".").pop().toLowerCase();
+    const type = Object.keys(R.EXT).find(k => R.EXT[k] === ext) || (ext === "jpg" ? "image/jpeg" : "");
+    if (!type) return null;
+    return { blob: new Blob([bytes], { type }), bytes, type };
+  }
+
+  // A room data zip (made here, or exported from CCFOLIA) -> the work. Replaces what is open now.
+  async function openRoomZip(file) {
+    if (!window.JSZip) { status(t("ZIP を読む部品を読み込めませんでした。ネットにつながった状態で開き直してください。"), true); return; }
+    let zip;
+    try { zip = await window.JSZip.loadAsync(file); } catch (err) { status(t("ZIP を読めませんでした。"), true); return; }
+    if (state.scenes.length && !confirm(t("今の作業を、この ZIP の中身に置き換えます。よろしいですか？（「元に戻す」で戻せます）"))) return;
+    status(t("ZIP を読み込んでいます…"));
+    try {
+      const own = zip.file(REEDIT_FILE);
+      const next = own ? await fromReedit(zip, JSON.parse(await own.async("string"))) : await fromRoomData(zip);
+      if (!next) return;
+      state = next.state;
+      ensureCcfIds();
+      keepBlobsStored();
+      selected = null;
+      touch();
+      commit();
+      saveNow();
+      status(t("ZIP を読み込みました（シーン {n} 件）。", { n: state.scenes.length })
+        + (next.note || "") + t("書き出しは「上書き」になっています。"), !!next.warn);
+    } catch (err) {
+      console.error(err);
+      status(t("ZIP を読み込めませんでした: {error}", { error: err.message }), true);
+    }
+  }
+
+  async function fromReedit(zip, data) {
+    if (!data || data.app !== APP_ID || !data.state) throw new Error(t("再編集用のデータが壊れています"));
+    const raw = data.state;
+    for (const im of Array.isArray(raw.images) ? raw.images : []) {
+      const got = im && im.file ? await readImage(zip, im.file) : null;
+      if (!got) continue;
+      holdBlob(String(im.id), got.blob);
+      stored.delete(String(im.id));
+      im.hash = R.hex(await crypto.subtle.digest("SHA-256", got.bytes));
+    }
+    const next = M.normalize(raw);
+    next.exportOpts.mode = "overwrite";
+    return { state: next };
+  }
+
+  // No project.json: rebuild the scenes from __data.json. Each scene keeps its own foreground (a baked one stays baked).
+  async function fromRoomData(zip) {
+    const f = zip.file("__data.json");
+    if (!f) { status(t("ココフォリアのルームデータ（ZIP）ではありません。"), true); return null; }
+    const data = JSON.parse(await f.async("string"));
+    const list = Object.entries((data.entities && data.entities.scenes) || {})
+      .filter(([, sc]) => sc && typeof sc === "object")
+      .sort((a, b) => (Number(a[1].order) || 0) - (Number(b[1].order) || 0));
+    if (!list.length) { status(t("この ZIP にはシーンが入っていません。"), true); return null; }
+    const next = M.defaultState();
+    const byKey = new Map();
+    let lost = 0;
+    const take = async (value, name) => {
+      if (!value || typeof value !== "string") return null;
+      if (byKey.has(value)) return byKey.get(value);
+      let got = await readImage(zip, value);
+      if (!got && /^https?:\/\//.test(value)) {
+        try {
+          const res = await fetch(value);
+          const blob = res.ok ? await res.blob() : null;
+          if (blob && R.EXT[blob.type]) got = { blob, bytes: new Uint8Array(await blob.arrayBuffer()), type: blob.type };
+        } catch (err) { /* the host does not let a page read it */ }
+      }
+      if (!got) { lost++; byKey.set(value, null); return null; }
+      const { w, h } = await sizeOf(got.blob);
+      const im = { id: M.uid("i"), name, type: got.type, size: got.bytes.length, w, h, moving: isMoving(got.type, got.bytes),
+        hash: R.hex(await crypto.subtle.digest("SHA-256", got.bytes)) };
+      holdBlob(im.id, got.blob);
+      next.images.push(im);
+      byKey.set(value, im.id);
+      return im.id;
+    };
+    for (const [ccfId, sc] of list) {
+      const name = String(sc.name || "");
+      const bg = await take(sc.backgroundUrl, name + t("（背景）"));
+      const fg = await take(sc.foregroundUrl, name + t("（前景）"));
+      const markers = [];
+      const ms = Object.entries(sc.markers && typeof sc.markers === "object" ? sc.markers : {})
+        .sort((a, b) => (Number(a[1] && a[1].z) || 0) - (Number(b[1] && b[1].z) || 0));
+      for (const [key, m] of ms) {
+        if (!m || typeof m !== "object") continue;
+        const ca = m.clickAction || null;
+        markers.push({ id: key, imageId: await take(m.imageUrl, (m.text || name) + t("（マーカー）")), text: m.text, x: m.x, y: m.y,
+          width: m.width, height: m.height, angle: m.angle, locked: m.locked, freezed: m.freezed,
+          click: ca && ca.type === "message" ? "message" : ca && ca.type === "link" ? "link" : "none",
+          clickValue: ca ? (ca.type === "link" ? ca.url : ca.text) : "" });
+      }
+      next.scenes.push({ id: M.uid("s"), ccfId, name, text: String(sc.text || ""), bg, fg: fg || "none",
+        width: sc.fieldWidth, height: sc.fieldHeight, sizeAuto: false, displayGrid: sc.displayGrid, gridSize: sc.gridSize,
+        fit: sc.fieldObjectFit, markers, useCommonMarkers: false });
+    }
+    const out = M.normalize(next);
+    // Keep each scene's place in CCFOLIA's list when writing back over it.
+    out.orderBase = Number(list[0][1].order) || Math.floor(Date.now() / 1000);
+    out.exportOpts.mode = "overwrite";
+    out.exportOpts.bake = false; // the foregrounds may already be baked
+    let note = t("再編集用のデータが無い ZIP なので、前景はシーンごとの画像として読み込みました（共通の前景はありません）。");
+    if (lost) note += t("読み込めなかった画像が {n} 個あります。", { n: lost });
+    return { state: out, note, warn: lost > 0 };
   }
 
   // The images as plain files with readable names, to drop into CCFOLIA's own image picker.
@@ -995,7 +1129,7 @@
     });
     // A file dropped outside a drop area would make the browser leave the page to show it.
     window.addEventListener("dragover", ev => { if (hasFiles(ev)) ev.preventDefault(); });
-    window.addEventListener("drop", ev => { if (hasFiles(ev) && !ev.defaultPrevented) { ev.preventDefault(); status(t("画像は「1. 背景の画像を入れる」の枠にドロップしてください。"), true); } });
+    window.addEventListener("drop", ev => { if (hasFiles(ev) && !ev.defaultPrevented) { ev.preventDefault(); status(t("画像は「1. 画像を入れる」の枠にドロップしてください。"), true); } });
   }
 
   function wireCommon() {
@@ -1363,7 +1497,7 @@
     templates.push(tp);
     saveTemplates();
     renderTemplates();
-    status(t("テンプレート「{name}」を作りました。「足す」で何度でも使えます。", { name: tp.label }) + (db ? "" : t("このブラウザでは画像を保存できないので、閉じる前に「テンプレートを書き出す」でファイルに残してください。")));
+    status(t("テンプレート「{name}」を登録しました。", { name: tp.label }) + (db ? "" : t("このブラウザでは画像を保存できないので、閉じる前に「テンプレートを書き出す」でファイルに残してください。")));
   }
 
   // The template's images go on the shelf (one already there with the same content is used), then the scene
@@ -1449,6 +1583,7 @@
     }
     $("#optShrink").addEventListener("change", ev => { state.exportOpts.shrink = ev.target.checked; touch({ keepGallery: true }); commit(); });
     $("#optBake").addEventListener("change", ev => { state.exportOpts.bake = ev.target.checked; touch({ keepGallery: true }); commit(); });
+    $("#optReedit").addEventListener("change", ev => { state.exportOpts.reedit = ev.target.checked; touch({ keepGallery: true }); commit(); });
     $("#exportZip").addEventListener("click", exportZip);
     $("#exportAssets").addEventListener("click", exportAssets);
 
@@ -1474,6 +1609,12 @@
       }
     });
     $("#loadProject").addEventListener("click", () => $("#projectFile").click());
+    $("#loadZip").addEventListener("click", () => $("#roomZipFile").click());
+    $("#roomZipFile").addEventListener("change", ev => {
+      const file = ev.target.files[0];
+      ev.target.value = "";
+      if (file) openRoomZip(file);
+    });
     $("#projectFile").addEventListener("change", ev => {
       const file = ev.target.files[0];
       ev.target.value = "";

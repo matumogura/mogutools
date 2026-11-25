@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>うごき画像メーカー｜動画をココフォリアで動く画像に｜mogutools</title>
+<meta name="description" content="MP4 などの動画を、ココフォリアの前景・背景・カットインで使える動く画像（APNG・WebP）に変換します。黒などの背景色を抜いて透過でき、1MB に収まるよう自動で調整。動画は端末の中だけで処理します。">
+<meta property="og:title" content="うごき画像メーカー｜mogutools">
+<meta property="og:description" content="動画を、ココフォリアで動く画像に。黒い背景も抜けます。">
+<link rel="icon" href="../img/kpviewer.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky:#d8eff7; --cream:#fff8ec; --sun:#ffd45c; --coral:#ff8f7a; --mint:#9fdcc6; --sage:#a9cf8f;
+  --ink:#2e3a5e; --ink2:#5b6585; --line:#e8dcc6; --tint:#ddf3ea;
+  --body:"Zen Maru Gothic","Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",sans-serif;
+  --checker:repeating-conic-gradient(#e9e4da 0 25%, #fbf8f2 0 50%) 0 0/20px 20px;
+}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);font:500 15px/1.7 var(--body);letter-spacing:.04em;background:linear-gradient(180deg,var(--sky),#eef8fb 220px,var(--cream) 420px) no-repeat,var(--cream);min-height:100vh}
+a{color:inherit}
+button,input,select{font:inherit;color:inherit;letter-spacing:inherit}
+:focus-visible{outline:3px solid var(--ink);outline-offset:2px;border-radius:10px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px 60px}
+.top{display:flex;align-items:center;gap:12px;padding:18px 0}
+.logo{font:900 20px/1 var(--body);text-decoration:none}
+.top small{color:var(--ink2);font-weight:700}
+h1{font:900 clamp(28px,4.4vw,44px)/1.3 var(--body);margin:18px 0 6px}
+.lead{margin:0 0 22px;color:var(--ink2);font-weight:700}
+.lead b{color:var(--ink)}
+
+/* 取り込み */
+.drop{display:grid;place-items:center;text-align:center;gap:8px;padding:48px 20px;border-radius:32px;background:#fff;border:3px dashed #bcd9e4;cursor:pointer;transition:border-color .15s,transform .15s;box-shadow:0 10px 30px rgba(46,58,94,.08)}
+.drop:hover,.drop.over{border-color:var(--ink2);transform:translateY(-2px)}
+.drop .ic{width:72px;height:72px;border-radius:22px;background:var(--sun);display:grid;place-items:center;box-shadow:0 4px 0 rgba(46,58,94,.15)}
+.drop b{font-size:19px}
+.drop small{color:var(--ink2);font-weight:700}
+.drop.mini{padding:12px 16px;border-radius:18px;grid-auto-flow:column;justify-content:start;gap:12px;border-width:2px}
+.drop.mini .ic{width:40px;height:40px;border-radius:12px}
+.drop.mini b{font-size:15px}
+.drop.mini small{display:none}
+
+/* 作業画面 */
+.work{display:none;grid-template-columns:1.35fr 1fr;gap:22px;margin-top:18px;align-items:start}
+.work.on{display:grid}
+.card{background:#fff;border-radius:26px;padding:18px;box-shadow:0 10px 30px rgba(46,58,94,.08)}
+.stage{position:relative;border-radius:18px;overflow:hidden;background:var(--checker);display:grid;place-items:center;min-height:200px}
+.stage[data-bg="dark"]{background:#2b2f3a}
+.stage[data-bg="light"]{background:#f4f1ea}
+.stage canvas{max-width:100%;height:auto;display:block}
+.stage.pick canvas{cursor:crosshair}
+.stage .hint{position:absolute;left:10px;top:10px;padding:4px 12px;border-radius:999px;background:rgba(255,255,255,.92);font-size:12.5px;font-weight:700;pointer-events:none;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.bar{display:flex;align-items:center;gap:10px;margin-top:12px}
+.bar input[type=range]{flex:1}
+.tc{font-variant-numeric:tabular-nums;font-size:13px;color:var(--ink2);font-weight:700;min-width:92px;text-align:right}
+.bgs{display:flex;gap:6px}
+.bgs button{width:28px;height:28px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 2px var(--line);cursor:pointer;padding:0}
+.bgs button[aria-pressed="true"]{box-shadow:0 0 0 3px var(--ink)}
+.bgs .b1{background:var(--checker)} .bgs .b2{background:#2b2f3a} .bgs .b3{background:#f4f1ea}
+.trim{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px;font-size:13.5px;font-weight:700;color:var(--ink2)}
+.trim .seg{flex:1;min-width:150px;height:10px;border-radius:999px;background:#eee6d6;position:relative;overflow:hidden}
+.trim .seg i{position:absolute;top:0;bottom:0;background:var(--mint);border-radius:999px}
+.chip{padding:6px 12px;border-radius:999px;border:0;background:var(--cream);box-shadow:0 2px 0 rgba(46,58,94,.12);cursor:pointer;font-weight:700;font-size:13px;white-space:nowrap}
+.chip:hover{background:#fff1d6}
+
+.set h2{font:900 15px/1.4 var(--body);margin:0 0 8px;display:flex;align-items:center;gap:8px}
+.set h2 small{font-weight:700;color:var(--ink2);font-size:12px}
+.set section+section{margin-top:18px;padding-top:16px;border-top:2px dotted var(--line)}
+.tabs{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:6px;background:var(--cream);padding:5px;border-radius:16px}
+.tabs button{border:0;background:transparent;border-radius:12px;padding:8px 6px;cursor:pointer;font-weight:700;font-size:13.5px;line-height:1.35}
+.tabs button small{display:block;font-size:11px;color:var(--ink2);font-weight:700}
+.tabs button[aria-pressed="true"]{background:#fff;box-shadow:0 3px 0 rgba(46,58,94,.14)}
+.row{display:flex;align-items:center;gap:10px;margin-top:10px;font-weight:700;font-size:13.5px}
+.row label{min-width:6.6em;color:var(--ink2)}
+.row input[type=range]{flex:1}
+.row output{min-width:3.2em;text-align:right;font-variant-numeric:tabular-nums}
+.sw{display:flex;align-items:center;gap:10px;margin-top:10px}
+.sw .col{width:42px;height:42px;border-radius:14px;border:3px solid #fff;box-shadow:0 0 0 2px var(--line);position:relative;overflow:hidden;cursor:pointer}
+.sw .col input{position:absolute;inset:-8px;width:60px;height:60px;opacity:0;cursor:pointer}
+.sw p{margin:0;font-size:12.5px;color:var(--ink2);font-weight:700;line-height:1.5}
+.note{margin:8px 0 0;font-size:12.5px;color:var(--ink2);font-weight:700;line-height:1.6}
+.sub{display:none}.sub.on{display:block}
+input[type=range]{accent-color:#3fa88a;height:22px}
+
+.go{width:100%;margin-top:18px;padding:15px;border:0;border-radius:999px;background:var(--ink);color:#fff;font-weight:900;font-size:17px;cursor:pointer;box-shadow:0 5px 0 #1d2645;transition:transform .12s,box-shadow .12s}
+.go:hover{transform:translateY(2px);box-shadow:0 3px 0 #1d2645}
+.go:disabled{opacity:.55;cursor:default;transform:none;box-shadow:0 5px 0 #1d2645}
+.prog{display:none;margin-top:12px}
+.prog.on{display:block}
+.prog .t{height:12px;border-radius:999px;background:#eee6d6;overflow:hidden}
+.prog .t i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--mint),var(--sage));border-radius:999px;transition:width .2s}
+.prog p{margin:6px 0 0;font-size:13px;font-weight:700;color:var(--ink2)}
+
+/* 結果 */
+.result{display:none;margin-top:22px}
+.result.on{display:block}
+.result .card{display:grid;grid-template-columns:1.35fr 1fr;gap:22px;align-items:center;background:var(--tint)}
+.result .stage{background:var(--checker);border:5px solid #fff}
+.result .stage img{max-width:100%;height:auto;display:block}
+.facts{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0 0 14px;padding:0}
+.facts li{padding:6px 14px;border-radius:999px;background:#fff;font-weight:700;font-size:14px}
+.facts li.ok{background:#e9f7ef}
+.facts li.ng{background:#ffe7e1}
+.result h2{font:900 22px/1.4 var(--body);margin:0 0 10px}
+.dl{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:999px;background:var(--ink);color:#fff;text-decoration:none;font-weight:900;box-shadow:0 4px 0 #1d2645}
+.dl:hover{transform:translateY(2px);box-shadow:0 2px 0 #1d2645}
+.adj{margin:12px 0 0;font-size:13px;color:var(--ink2);font-weight:700}
+
+.how{margin-top:40px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.how div{background:#fff;border-radius:22px;padding:16px 18px;box-shadow:0 6px 20px rgba(46,58,94,.06)}
+.how b{display:block;margin-bottom:4px}
+.how p{margin:0;font-size:13.5px;color:var(--ink2);font-weight:700}
+.foot{margin-top:34px;font-size:12.5px;color:var(--ink2);text-align:center}
+
+@media (max-width:860px){
+  .work,.work.on,.result .card{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="top"><a class="logo" href="../">mogutools</a><small>／ うごき画像メーカー</small></nav>
+  <h1>動画を、ココフォリアで<br>動く画像に。</h1>
+  <p class="lead">MP4 を <b>APNG・WebP</b> に。黒い背景も抜けて、<b>1MB に収まるよう自動で調整</b>します。動画は端末の中だけで処理し、どこにも送りません。</p>
+
+  <label class="drop" id="drop" tabindex="0">
+    <span class="ic" aria-hidden="true"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#2e3a5e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5v5l4.5-2.5z" fill="#2e3a5e"/></svg></span>
+    <b id="dropText">動画をここへドロップ</b>
+    <small>またはクリックして選ぶ（MP4・WebM・MOV）</small>
+    <input type="file" id="file" accept="video/*" hidden>
+  </label>
+
+  <div class="work" id="work">
+    <div class="card">
+      <div class="stage" id="stage" data-bg="checker">
+        <canvas id="view" width="640" height="360" aria-label="透過したプレビュー"></canvas>
+        <span class="hint" id="hint">動画をクリックすると、その色を抜きます</span>
+      </div>
+      <div class="bar">
+        <input type="range" id="scrub" min="0" max="1000" value="0" step="1" aria-label="再生位置">
+        <span class="tc" id="tc">0.0 / 0.0 秒</span>
+        <div class="bgs" role="group" aria-label="プレビューの背景">
+          <button class="b1" data-bg="checker" aria-pressed="true" title="市松模様"></button>
+          <button class="b2" data-bg="dark" aria-pressed="false" title="暗い背景"></button>
+          <button class="b3" data-bg="light" aria-pressed="false" title="明るい背景"></button>
+        </div>
+      </div>
+      <div class="trim">
+        <button class="chip" id="setIn">ここから</button>
+        <span class="seg"><i id="segFill"></i></span>
+        <button class="chip" id="setOut">ここまで</button>
+        <span id="trimText">0.0〜0.0 秒</span>
+      </div>
+    </div>
+
+    <div class="card set">
+      <section>
+        <h2>使う場所</h2>
+        <div class="tabs" id="plan">
+          <button data-v="free" aria-pressed="true">ココフォリア<small>無料・1MB</small></button>
+          <button data-v="pro" aria-pressed="false">ココフォリア<small>PRO・5MB</small></button>
+          <button data-v="none" aria-pressed="false">そのまま<small>容量おまかせしない</small></button>
+        </div>
+      </section>
+      <section>
+        <h2>形式</h2>
+        <div class="tabs" id="fmt">
+          <button data-v="apng" aria-pressed="true">APNG<small>おすすめ・公式対応</small></button>
+          <button data-v="webp" aria-pressed="false">WebP<small>より軽い</small></button>
+        </div>
+        <p class="note sub" id="webpNote">WebP はココフォリアで動きますが、公式の対応形式には入っていません。</p>
+      </section>
+      <section>
+        <h2>背景を抜く</h2>
+        <div class="tabs" id="mode">
+          <button data-v="none" aria-pressed="false">抜かない</button>
+          <button data-v="color" aria-pressed="true">色を抜く</button>
+          <button data-v="light" aria-pressed="false">明るさで抜く<small>炎・光向け</small></button>
+        </div>
+        <div class="sub on" id="colorBox">
+          <div class="sw">
+            <span class="col" id="colSw" style="background:#000"><input type="color" id="keyColor" value="#000000" aria-label="抜く色"></span>
+            <p>抜く色。動画をクリックしても拾えます。</p>
+          </div>
+          <div class="row"><label for="tol">抜く範囲</label><input type="range" id="tol" min="0" max="100" value="18"><output id="tolO">18</output></div>
+          <div class="row"><label for="soft">ふちのぼかし</label><input type="range" id="soft" min="0" max="100" value="20"><output id="softO">20</output></div>
+          <p class="note sub" id="blackTip">炎や光のようにふちがぼやけた素材は、<a href="#" id="toLight">「明るさで抜く」</a>のほうが黒いふちが残りません。</p>
+        </div>
+        <div class="sub" id="lightBox">
+          <div class="row"><label for="low">黒の残り</label><input type="range" id="low" min="0" max="80" value="10"><output id="lowO">10</output></div>
+          <p class="note">黒いところは透明に、明るいところほど濃く残します。光や炎がふんわり半透明になります。</p>
+        </div>
+      </section>
+      <section>
+        <h2>なめらかさ <small>1秒あたりの枚数</small></h2>
+        <div class="tabs" id="fps">
+          <button data-v="8" aria-pressed="false">8</button>
+          <button data-v="12" aria-pressed="true">12</button>
+          <button data-v="15" aria-pressed="false">15</button>
+          <button data-v="24" aria-pressed="false">24</button>
+        </div>
+      </section>
+      <section>
+        <h2>大きさ <small>横幅（容量に合わせて自動で小さくなることがあります）</small></h2>
+        <div class="row"><input type="range" id="width" min="120" max="1280" value="960" step="8" aria-label="横幅"><output id="widthO">960px</output></div>
+      </section>
+      <button class="go" id="go">動く画像をつくる</button>
+      <div class="prog" id="prog"><div class="t"><i id="progBar"></i></div><p id="progText">準備しています…</p></div>
+    </div>
+  </div>
+
+  <div class="result" id="result">
+    <div class="card">
+      <div class="stage"><img id="outImg" alt="できあがった動く画像"></div>
+      <div>
+        <h2>できました</h2>
+        <ul class="facts" id="facts"></ul>
+        <a class="dl" id="dl" href="#" download>保存する</a>
+        <p class="adj" id="adj"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="how">
+    <div><b>ココフォリアに入れるとき</b><p>「画像を圧縮しますか？」と聞かれたら「キャンセル」。圧縮すると動かなくなることがあります。</p></div>
+    <div><b>1MB をこえると</b><p>無料プランでは小さく縮められて粗くなります。「使う場所」を選べば、収まるように自動で調整します。</p></div>
+    <div><b>黒い背景の素材は</b><p>炎や光なら「明るさで抜く」、くっきりした絵なら「色を抜く」がきれいに抜けます。</p></div>
+  </div>
+  <p class="foot"><a href="../">mogutools</a> ・ 個人制作の非公式ツールです。ココフォリアの公式とは関係ありません。 ・ APNG の書き出しに <a href="https://github.com/photopea/UPNG.js" target="_blank" rel="noopener">UPNG.js</a>（MIT）を使っています。</p>
+</div>
+
+<video id="vid" muted playsinline preload="auto" hidden></video>
+
+<script>
+(() => {
+'use strict';
+const $ = (id) => document.getElementById(id);
+const vid = $('vid'), view = $('view'), vctx = view.getContext('2d', { willReadFrequently: true });
+const PLANS = { free: { bytes: 1000 * 1000 * 0.98, w: 1280, h: 720 }, pro: { bytes: 5000 * 1000 * 0.98, w: 2560, h: 1440 }, none: { bytes: Infinity, w: 4096, h: 4096 } };
+const MAX_FRAMES = 360;
+
+const st = { plan: 'free', fmt: 'apng', mode: 'color', fps: 12, key: [0, 0, 0], tol: 18, soft: 20, low: 10, width: 960, tin: 0, tout: 0, name: 'ugoki', busy: false, url: null, outUrl: null };
+
+/* ---------- 色の抜き方 ---------- */
+function keyPixels(d, o) {
+  const n = d.length;
+  if (o.mode === 'color') {
+    const [kr, kg, kb] = o.key;
+    const T = o.tol * 2.2, S = Math.max(1, o.soft * 1.6);
+    for (let i = 0; i < n; i += 4) {
+      const r = d[i], g = d[i + 1], b = d[i + 2];
+      const dr = r - kr, dg = g - kg, db = b - kb;
+      const dist = Math.sqrt(dr * dr + dg * dg + db * db);
+      if (dist <= T) { d[i + 3] = 0; continue; }
+      if (dist < T + S) {
+        const a = (dist - T) / S;
+        // ふちに残る背景色を取りのぞく
+        d[i] = clamp((r - kr * (1 - a)) / a);
+        d[i + 1] = clamp((g - kg * (1 - a)) / a);
+        d[i + 2] = clamp((b - kb * (1 - a)) / a);
+        d[i + 3] = Math.round(d[i + 3] * a);
+      }
+    }
+  } else if (o.mode === 'light') {
+    const low = o.low * 2.55, span = 255 - low;
+    for (let i = 0; i < n; i += 4) {
+      const r = d[i], g = d[i + 1], b = d[i + 2];
+      const m = r > g ? (r > b ? r : b) : (g > b ? g : b);
+      const a = (m - low) / span;
+      if (a <= 0) { d[i] = d[i + 1] = d[i + 2] = d[i + 3] = 0; continue; }
+      const aa = a > 1 ? 1 : a;
+      d[i] = clamp(r / aa); d[i + 1] = clamp(g / aa); d[i + 2] = clamp(b / aa);
+      d[i + 3] = Math.round(255 * aa);
+    }
+  }
+}
+function clamp(v) { return v < 0 ? 0 : v > 255 ? 255 : v; }
+
+/* ---------- 取り込み ---------- */
+const drop = $('drop'), file = $('file');
+drop.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); file.click(); } });
+['dragenter', 'dragover'].forEach((t) => drop.addEventListener(t, (e) => { e.preventDefault(); drop.classList.add('over'); }));
+['dragleave', 'drop'].forEach((t) => drop.addEventListener(t, (e) => { e.preventDefault(); drop.classList.remove('over'); }));
+drop.addEventListener('drop', (e) => { const f = e.dataTransfer.files[0]; if (f) load(f); });
+file.addEventListener('change', () => { if (file.files[0]) load(file.files[0]); file.value = ''; });
+// ページのどこにドロップしても読み込む
+document.addEventListener('dragover', (e) => e.preventDefault());
+document.addEventListener('drop', (e) => { e.preventDefault(); const f = e.dataTransfer && e.dataTransfer.files[0]; if (f && f.type.startsWith('video')) load(f); });
+
+function load(f) {
+  if (st.busy) return;
+  if (st.url) URL.revokeObjectURL(st.url);
+  st.url = URL.createObjectURL(f);
+  st.name = f.name.replace(/\.[^.]+$/, '') || 'ugoki';
+  vid.src = st.url;
+  vid.onloadedmetadata = () => {
+    if (!vid.videoWidth) { alert('この動画は読み込めませんでした。MP4（H.264）で書き出したものを試してください。'); return; }
+    st.tin = 0; st.tout = Math.min(vid.duration, 10);
+    const maxW = Math.min(vid.videoWidth, PLANS[st.plan].w);
+    $('width').max = Math.max(120, Math.min(vid.videoWidth, 2560));
+    st.width = Math.min(maxW, 960);
+    $('width').value = st.width;
+    view.width = vid.videoWidth; view.height = vid.videoHeight;
+    $('work').classList.add('on');
+    $('result').classList.remove('on');
+    drop.classList.add('mini');
+    $('dropText').textContent = f.name + '（ほかの動画にする）';
+    syncUI();
+    seekTo(0);
+  };
+  vid.onerror = () => alert('この動画は読み込めませんでした。MP4（H.264）で書き出したものを試してください。');
+}
+
+/* ---------- プレビュー ---------- */
+const raw = document.createElement('canvas'), rctx = raw.getContext('2d', { willReadFrequently: true });
+let rawData = null;
+function seek(t) {
+  return new Promise((res) => {
+    const done = () => { vid.removeEventListener('seeked', done); res(); };
+    vid.addEventListener('seeked', done);
+    vid.currentTime = Math.min(Math.max(0, t), Math.max(0, vid.duration - 0.001));
+  });
+}
+let seekChain = Promise.resolve(), pendingT = null;
+function seekTo(t) {
+  pendingT = t;
+  seekChain = seekChain.then(async () => {
+    if (pendingT === null) return;
+    const tt = pendingT; pendingT = null;
+    await seek(tt);
+    grabRaw(); render();
+    $('tc').textContent = vid.currentTime.toFixed(1) + ' / ' + vid.duration.toFixed(1) + ' 秒';
+  });
+}
+function grabRaw() {
+  raw.width = vid.videoWidth; raw.height = vid.videoHeight;
+  rctx.drawImage(vid, 0, 0);
+  rawData = rctx.getImageData(0, 0, raw.width, raw.height);
+}
+let rq = 0;
+function render() {
+  if (!rawData) return;
+  cancelAnimationFrame(rq);
+  rq = requestAnimationFrame(() => {
+    const img = new ImageData(new Uint8ClampedArray(rawData.data), rawData.width, rawData.height);
+    keyPixels(img.data, st);
+    vctx.putImageData(img, 0, 0);
+  });
+}
+$('scrub').addEventListener('input', (e) => seekTo(vid.duration * e.target.value / 1000));
+
+// クリックで色を拾う
+view.addEventListener('click', (e) => {
+  if (!rawData || st.mode === 'light') return;
+  const r = view.getBoundingClientRect();
+  const x = Math.floor((e.clientX - r.left) / r.width * rawData.width);
+  const y = Math.floor((e.clientY - r.top) / r.height * rawData.height);
+  const i = (y * rawData.width + x) * 4, d = rawData.data;
+  st.key = [d[i], d[i + 1], d[i + 2]];
+  if (st.mode === 'none') st.mode = 'color';
+  syncUI(); render();
+});
+
+/* ---------- 設定 ---------- */
+function tabs(id, key, conv = (v) => v) {
+  $(id).addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    st[key] = conv(b.dataset.v); syncUI(); render();
+  });
+}
+tabs('plan', 'plan'); tabs('fmt', 'fmt'); tabs('mode', 'mode'); tabs('fps', 'fps', Number);
+document.querySelector('.bgs').addEventListener('click', (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  $('stage').dataset.bg = b.dataset.bg;
+  document.querySelectorAll('.bgs button').forEach((x) => x.setAttribute('aria-pressed', x === b));
+});
+const hex = (c) => '#' + c.map((v) => v.toString(16).padStart(2, '0')).join('');
+$('keyColor').addEventListener('input', (e) => { const v = e.target.value; st.key = [1, 3, 5].map((i) => parseInt(v.substr(i, 2), 16)); syncUI(); render(); });
+[['tol', 'tol'], ['soft', 'soft'], ['low', 'low'], ['width', 'width']].forEach(([id, k]) => {
+  $(id).addEventListener('input', (e) => { st[k] = Number(e.target.value); syncUI(); if (k !== 'width') render(); });
+});
+$('toLight').addEventListener('click', (e) => { e.preventDefault(); st.mode = 'light'; syncUI(); render(); });
+$('setIn').addEventListener('click', () => { st.tin = vid.currentTime; if (st.tout <= st.tin) st.tout = Math.min(vid.duration, st.tin + 1); syncUI(); });
+$('setOut').addEventListener('click', () => { st.tout = vid.currentTime; if (st.tout <= st.tin) st.tin = Math.max(0, st.tout - 1); syncUI(); });
+
+function syncUI() {
+  for (const [id, k] of [['plan', 'plan'], ['fmt', 'fmt'], ['mode', 'mode'], ['fps', 'fps']]) {
+    $(id).querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v) === String(st[k])));
+  }
+  $('colorBox').classList.toggle('on', st.mode === 'color');
+  $('lightBox').classList.toggle('on', st.mode === 'light');
+  $('webpNote').classList.toggle('on', st.fmt === 'webp');
+  $('blackTip').classList.toggle('on', st.key[0] + st.key[1] + st.key[2] < 90);
+  $('colSw').style.background = hex(st.key);
+  $('keyColor').value = hex(st.key);
+  $('tolO').textContent = st.tol; $('softO').textContent = st.soft; $('lowO').textContent = st.low;
+  $('widthO').textContent = st.width + 'px';
+  $('stage').classList.toggle('pick', st.mode !== 'light');
+  $('hint').textContent = st.mode === 'light' ? '黒いところほど透明になります' : '動画をクリックすると、その色を抜きます';
+  if (vid.duration) {
+    const D = vid.duration;
+    $('segFill').style.left = (st.tin / D * 100) + '%';
+    $('segFill').style.width = ((st.tout - st.tin) / D * 100) + '%';
+    $('trimText').textContent = st.tin.toFixed(1) + '〜' + st.tout.toFixed(1) + ' 秒（' + (st.tout - st.tin).toFixed(1) + '秒）';
+  }
+}
+
+/* ---------- 書き出し ---------- */
+const worker = new Worker('encoder.js');
+let jobId = 0;
+function encodeAPNG(frames, w, h, cnum, delay) {
+  return new Promise((res, rej) => {
+    const id = ++jobId;
+    const bufs = frames.map((f) => f.buffer.slice(0));
+    const on = (e) => {
+      if (e.data.id !== id) return;
+      worker.removeEventListener('message', on);
+      e.data.ok ? res(new Blob([e.data.data], { type: 'image/png' })) : rej(new Error(e.data.error));
+    };
+    worker.addEventListener('message', on);
+    worker.postMessage({ id, bufs, w, h, cnum, dels: frames.map(() => delay) }, bufs);
+  });
+}
+
+const enc = document.createElement('canvas'), ectx = enc.getContext('2d');
+function frameToWebP(rgba, w, h, q) {
+  enc.width = w; enc.height = h;
+  ectx.putImageData(new ImageData(rgba, w, h), 0, 0);
+  return new Promise((res) => enc.toBlob(res, 'image/webp', q));
+}
+// 1枚ずつの WebP をつなげて、動く WebP にする
+function riffChunks(u8) {
+  const out = []; let p = 12;
+  while (p + 8 <= u8.length) {
+    const tag = String.fromCharCode(u8[p], u8[p + 1], u8[p + 2], u8[p + 3]);
+    const size = u8[p + 4] | (u8[p + 5] << 8) | (u8[p + 6] << 16) | (u8[p + 7] << 24);
+    out.push({ tag, data: u8.subarray(p + 8, p + 8 + size) });
+    p += 8 + size + (size & 1);
+  }
+  return out;
+}
+function chunk(tag, data) {
+  const pad = data.length & 1, b = new Uint8Array(8 + data.length + pad);
+  for (let i = 0; i < 4; i++) b[i] = tag.charCodeAt(i);
+  le32(b, 4, data.length); b.set(data, 8); return b;
+}
+function le24(b, o, v) { b[o] = v & 255; b[o + 1] = (v >> 8) & 255; b[o + 2] = (v >> 16) & 255; }
+function le32(b, o, v) { b[o] = v & 255; b[o + 1] = (v >> 8) & 255; b[o + 2] = (v >> 16) & 255; b[o + 3] = (v >>> 24) & 255; }
+function concat(parts) { const n = parts.reduce((s, p) => s + p.length, 0), o = new Uint8Array(n); let k = 0; for (const p of parts) { o.set(p, k); k += p.length; } return o; }
+async function encodeWebP(frames, w, h, q, delay, onp) {
+  const anmf = [];
+  for (let i = 0; i < frames.length; i++) {
+    const blob = await frameToWebP(new Uint8ClampedArray(frames[i]), w, h, q);
+    if (!blob || blob.type !== 'image/webp') throw new Error('nowebp');
+    const cs = riffChunks(new Uint8Array(await blob.arrayBuffer())).filter((c) => c.tag === 'ALPH' || c.tag === 'VP8 ' || c.tag === 'VP8L');
+    const head = new Uint8Array(16);
+    le24(head, 6, w - 1); le24(head, 9, h - 1); le24(head, 12, delay); head[15] = 0b10; // 重ねずに置きかえる
+    anmf.push(chunk('ANMF', concat([head, ...cs.map((c) => chunk(c.tag, c.data))])));
+    if (onp) onp((i + 1) / frames.length);
+  }
+  const vp8x = new Uint8Array(10); vp8x[0] = 0x10 | 0x02; le24(vp8x, 4, w - 1); le24(vp8x, 7, h - 1);
+  const anim = new Uint8Array(6); // 背景色0・無限ループ
+  const body = concat([new TextEncoder().encode('WEBP'), chunk('VP8X', vp8x), chunk('ANIM', anim), ...anmf]);
+  const riff = new Uint8Array(8); riff.set(new TextEncoder().encode('RIFF')); le32(riff, 4, body.length);
+  return new Blob([riff, body], { type: 'image/webp' });
+}
+
+function scaleFrames(frames, w0, h0, w, h) {
+  if (w === w0) return frames;
+  const a = document.createElement('canvas'); a.width = w0; a.height = h0;
+  const b = document.createElement('canvas'); b.width = w; b.height = h;
+  const ac = a.getContext('2d'), bc = b.getContext('2d', { willReadFrequently: true });
+  bc.imageSmoothingQuality = 'high';
+  return frames.map((f) => {
+    ac.putImageData(new ImageData(new Uint8ClampedArray(f), w0, h0), 0, 0);
+    bc.clearRect(0, 0, w, h); bc.drawImage(a, 0, 0, w, h);
+    return bc.getImageData(0, 0, w, h).data;
+  });
+}
+
+function fitSize(w, plan) {
+  const ar = vid.videoHeight / vid.videoWidth;
+  let W = Math.min(w, plan.w), H = Math.round(W * ar);
+  if (H > plan.h) { H = plan.h; W = Math.round(H / ar); }
+  return [Math.max(2, W & ~1), Math.max(2, Math.round(Math.max(2, W & ~1) * ar))];
+}
+
+function progress(p, text) { $('progBar').style.width = Math.round(p * 100) + '%'; if (text) $('progText').textContent = text; }
+const kb = (n) => n >= 1e6 ? (n / 1e6).toFixed(2) + 'MB' : Math.round(n / 1e3) + 'KB';
+
+$('go').addEventListener('click', async () => {
+  if (st.busy || !vid.duration) return;
+  st.busy = true; $('go').disabled = true; $('prog').classList.add('on'); $('result').classList.remove('on');
+  const plan = PLANS[st.plan];
+  try {
+    // 1) 切り出して、色を抜く
+    const len = Math.max(0.1, st.tout - st.tin);
+    let fps = st.fps, count = Math.max(1, Math.round(len * fps));
+    if (count > MAX_FRAMES) { fps = MAX_FRAMES / len; count = MAX_FRAMES; } // 長い動画はコマ数を抑える
+    const [W0, H0] = fitSize(st.width, plan);
+    const cap = document.createElement('canvas'); cap.width = W0; cap.height = H0;
+    const cc = cap.getContext('2d', { willReadFrequently: true }); cc.imageSmoothingQuality = 'high';
+    let frames = [];
+    for (let i = 0; i < count; i++) {
+      await seek(st.tin + i / fps);
+      cc.drawImage(vid, 0, 0, W0, H0);
+      const d = cc.getImageData(0, 0, W0, H0).data;
+      keyPixels(d, st);
+      frames.push(d);
+      progress((i + 1) / count * 0.4, 'コマを切り出しています… ' + (i + 1) + ' / ' + count);
+    }
+    let delay = Math.round(1000 / fps);
+
+    // 2) 容量に収まるまで書き出しをくり返す
+    let w = W0, h = H0, q = 0.8, cnum = 256, step = 0, blob = null, cur = frames, notes = [];
+    const minW = Math.min(W0, 320);
+    while (true) {
+      step++;
+      const label = '書き出しています…' + (step > 1 ? '（' + kb(plan.bytes) + ' に収まるよう調整中・' + step + '回目）' : '');
+      progress(0.4 + Math.min(0.55, step * 0.12), label);
+      blob = st.fmt === 'apng'
+        ? await encodeAPNG(cur, w, h, cnum, delay)
+        : await encodeWebP(cur, w, h, q, delay, (p) => progress(0.4 + Math.min(0.55, (step - 1 + p) * 0.12), label));
+      if (blob.size <= plan.bytes || step >= 9) break;
+      const ratio = plan.bytes / blob.size;
+      if (w > minW) {
+        const nw = Math.max(minW, Math.floor(w * Math.sqrt(ratio) * 0.93));
+        [w, h] = [nw & ~1, Math.round((nw & ~1) * H0 / W0)];
+        cur = scaleFrames(frames, W0, H0, w, h);
+      } else if (st.fmt === 'apng' && cnum > 128) {
+        cnum = 128; // 色を減らしすぎるとグラデーションが縞になるので 128 色まで
+      } else if (st.fmt === 'webp' && q > 0.4) {
+        q = Math.max(0.4, q - 0.2);
+      } else if (cur.length > 4) {
+        // コマ数を半分にする
+        frames = frames.filter((_, i) => i % 2 === 0); cur = cur.filter((_, i) => i % 2 === 0);
+        fps = fps / 2; delay *= 2;
+      } else break;
+    }
+    if (w !== W0) notes.push('横幅 ' + W0 + '→' + w + 'px');
+    if (st.fmt === 'apng' && cnum < 256) notes.push('色数 ' + cnum + ' 色');
+    if (st.fmt === 'webp' && q < 0.8) notes.push('画質 ' + Math.round(q * 100));
+    if (fps !== st.fps) notes.push('なめらかさ ' + st.fps + '→' + (Math.round(fps * 10) / 10));
+    progress(1, '');
+    show(blob, w, h, cur.length, fps, notes, plan);
+  } catch (err) {
+    console.error(err);
+    alert(err.message === 'nowebp' ? 'このブラウザは WebP の書き出しに対応していません。APNG を選ぶか、Chrome・Edge で開いてください。' : '書き出しに失敗しました：' + err.message);
+  } finally {
+    st.busy = false; $('go').disabled = false; $('prog').classList.remove('on');
+  }
+});
+
+function show(blob, w, h, n, fps, notes, plan) {
+  if (st.outUrl) URL.revokeObjectURL(st.outUrl);
+  st.outUrl = URL.createObjectURL(blob);
+  $('outImg').src = st.outUrl;
+  const ext = st.fmt === 'apng' ? '.png' : '.webp';
+  $('dl').href = st.outUrl; $('dl').download = st.name + ext;
+  $('dl').textContent = (st.fmt === 'apng' ? 'APNG' : 'WebP') + ' を保存する';
+  const okSize = blob.size <= plan.bytes;
+  $('facts').innerHTML = '';
+  [[kb(blob.size), plan.bytes === Infinity ? '' : okSize ? 'ok' : 'ng'], [w + '×' + h, ''], [n + 'コマ・' + (n / fps).toFixed(1) + '秒', '']].forEach(([t, c]) => {
+    const li = document.createElement('li'); li.textContent = t; if (c) li.className = c; $('facts').append(li);
+  });
+  $('adj').textContent = !okSize ? '小さくしきれませんでした。切り出す時間を短くするか、なめらかさを下げてみてください。'
+    : notes.length ? kb(plan.bytes) + ' に収めるため、' + notes.join('、') + ' にしました。' : '';
+  $('result').classList.add('on');
+  $('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+})();
+</script>
+</body>
+</html>

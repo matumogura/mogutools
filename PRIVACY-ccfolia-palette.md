@@ -54,7 +54,7 @@ localhost への通信と nativeMessaging は、使う人だけが許可する�
 
 ## 7. お問い合わせ
 
-Discord サーバー：https://discord.gg/KTBmA3N7tW
+Discord サーバー：https://discord.gg/h3uGnbw7Nj
 
 ---
 

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Macchan Bot 使用指南｜mogutools</title>
+<meta name="description" content="TRPG 用 Discord 骰子机器人 Macchan Bot 的使用方法：骰子、暗骰、BCDice、表格、角色登记、语音频道操作与服务器设置。">
+<meta property="og:title" content="Macchan Bot 使用指南">
+<meta property="og:description" content="按想做的事整理的 Macchan Bot 使用方法。">
+<link rel="canonical" href="https://matumogura.github.io/mogutools/macchan/guide/zh-CN/">
+<link rel="alternate" hreflang="ja" href="https://matumogura.github.io/mogutools/macchan/guide/">
+<link rel="alternate" hreflang="en" href="https://matumogura.github.io/mogutools/macchan/guide/en/">
+<link rel="alternate" hreflang="ko" href="https://matumogura.github.io/mogutools/macchan/guide/ko/">
+<link rel="alternate" hreflang="zh-CN" href="https://matumogura.github.io/mogutools/macchan/guide/zh-CN/">
+<link rel="alternate" hreflang="zh-TW" href="https://matumogura.github.io/mogutools/macchan/guide/zh-TW/">
+<link rel="alternate" hreflang="x-default" href="https://matumogura.github.io/mogutools/macchan/guide/en/">
+<link rel="icon" href="../../../img/macchan.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../kipaview/guide/guide.css">
+<link rel="stylesheet" href="../guide-extra.css">
+<style>:root{--f:"Noto Sans SC","Noto Sans JP","PingFang SC","Microsoft YaHei",sans-serif}</style>
+</head>
+<body>
+<header class="top"><div class="topin">
+  <a class="brand" href="./"><img src="../../../img/macchan.png" alt=""><span>Macchan Bot</span><small>使用指南</small></a>
+  <span class="sp"></span>
+  <details class="lang"><summary class="toplink" aria-label="Language">🌐 简体中文</summary><ul><li><a href=".././" hreflang="ja" lang="ja">日本語</a></li><li><a href="../en/" hreflang="en" lang="en">English</a></li><li><a href="../ko/" hreflang="ko" lang="ko">한국어</a></li><li><a href="../zh-CN/" hreflang="zh-CN" lang="zh-CN" aria-current="page">简体中文</a></li><li><a href="../zh-TW/" hreflang="zh-TW" lang="zh-TW">繁體中文</a></li></ul></details>
+  <a class="toplink" href="../hiyori.html" hreflang="ja">卓日和指南（日文）</a>
+  <a class="toplink" href="../../../">工具介绍</a>
+</div></header>
+
+<div class="hero">
+  <span class="kicker">按想做的事查找</span>
+  <h1>Macchan Bot 使用指南</h1>
+  <p>Macchan Bot 是一款以克苏鲁的呼唤 TRPG（CoC）为中心、把跑团需要的功能都装进去的 Discord 骰子机器人。骰子、各种表格、调查员创建、语音频道操作，甚至日程协调都能处理。它还支持 BCDice，因此也能掷克苏鲁的呼唤第 7 版、剑世界、忍神等其他规则的骰子。请从想做的事开始选择。</p>
+  <ul class="quick">
+    <li><a href="#start"><span class="n">1</span>开始使用</a></li>
+    <li><a href="#dice"><span class="n">2</span>掷骰</a></li>
+    <li><a href="#secret"><span class="n">3</span>暗骰</a></li>
+    <li><a href="#bcdice"><span class="n">4</span>用其他规则掷骰</a></li>
+    <li><a href="#tables"><span class="n">5</span>抽表·随机选择</a></li>
+    <li><a href="#mytable"><span class="n">6</span>制作自己的表</a></li>
+    <li><a href="#char"><span class="n">7</span>创建·登记调查员</a></li>
+    <li><a href="#vc"><span class="n">8</span>语音与频道操作</a></li>
+    <li><a href="#remind"><span class="n">9</span>提醒·休息</a></li>
+    <li><a href="#sched"><span class="n">10</span>决定跑团日程</a></li>
+    <li><a href="#server"><span class="n">11</span>服务器设置</a></li>
+    <li><a href="#plan"><span class="n">12</span>付费方案</a></li>
+    <li><a href="#list"><span class="n">13</span>指令一览</a></li>
+    <li><a href="#faq"><span class="n">?</span>遇到问题时</a></li>
+  </ul>
+</div>
+
+<div class="wrap">
+<nav class="toc" aria-label="目录"><b>目录</b><ol>
+  <li><a href="#start">开始使用</a></li>
+  <li><a href="#dice">掷骰</a></li>
+  <li><a href="#secret">暗骰</a></li>
+  <li><a href="#bcdice">用其他规则掷骰（BCDice）</a></li>
+  <li><a href="#tables">抽表·随机选择</a></li>
+  <li><a href="#mytable">制作自己的表（自定表）</a></li>
+  <li><a href="#char">创建·登记调查员</a></li>
+  <li><a href="#vc">语音频道与频道操作</a></li>
+  <li><a href="#remind">提醒·休息</a></li>
+  <li><a href="#sched">决定跑团日程（卓日和）</a></li>
+  <li><a href="#server">服务器设置</a></li>
+  <li><a href="#plan">付费方案</a></li>
+  <li><a href="#list">指令一览</a></li>
+  <li><a href="#faq">遇到问题时</a></li>
+</ol></nav>
+
+<main>
+<div class="note"><b>说明</b><span>Macchan Bot 是在日本制作的机器人。机器人的回复和指令名称会跟随你的 Discord 语言设置，但网页（Macchan Bot 控制台、角色登记页面、卓日和）只有日文。下文中出现的日文会附上意思。</span></div>
+
+<section id="start">
+  <h2><span class="n">1</span>开始使用</h2>
+  <p class="lead">把机器人加入 Discord 后，输入 <code>/</code> 或直接在聊天中书写即可使用。</p>
+  <h3>添加机器人</h3>
+  <p>在 <a href="https://macchan.onrender.com/invite" target="_blank" rel="noopener">将 Macchan Bot 添加到 Discord</a> 中选择添加方式。</p>
+  <table class="os">
+    <tr><th>添加到服务器</th><td>把机器人加入服务器。服务器里的所有人都能使用。</td></tr>
+    <tr><th>添加到我的应用</th><td>添加到你自己的账号。在没有机器人的服务器或私信中也能使用主要指令（<code>/骰子</code> <code>/随机选择</code> <code>/代言</code> <code>/帮助</code> <code>/抽签</code> <code>/创建调查员</code> <code>/疯狂表</code> <code>/自定表</code> <code>/我的角色</code> <code>/个人设置</code>）。<code>/自定表</code> 和 <code>/我的角色</code> 使用的是你自己的表和“我的应用”用的角色。</td></tr>
+  </table>
+  <p>用户 ID：<code>546059094537011211</code></p>
+  <h3>两种使用方式</h3>
+  <ul class="pts">
+    <li><b>斜杠指令</b>：输入 <code>/</code> 就会出现列表。每个输入栏都有说明，不确定时输入 <code>/</code> 看看。</li>
+    <li><b>消息输入</b>：直接写 <code>1d100</code> 或 <code>80 侦查</code> 也会有反应。</li>
+  </ul>
+  <div class="note"><b>提示</b><span>指令名称会根据 Discord 的语言设置切换为 日本語·English·简体中文·繁體中文·한국어。<b>也可以用英文名称搜索</b>，输入 <code>/dice</code> 就会出现 <code>/骰子</code>。</span></div>
+</section>
+
+<section id="dice">
+  <h2><span class="n">2</span>掷骰</h2>
+  <p class="lead">使用 <code>/骰子</code> 或直接书写。机器人会根据写法自动区分骰子、技能检定、成功检定和计算器。</p>
+  <table class="cmd">
+    <thead><tr><th>写法</th><th>功能</th></tr></thead>
+    <tbody>
+      <tr><td><code>1d100</code> <code>2d6+3</code></td><td>普通骰子、带计算的骰子</td></tr>
+      <tr><td><code>80 侦查</code></td><td>用两位数的技能值和技能名检定（也会显示大成功、大失败、1/2、1/5）</td></tr>
+      <tr><td><code>1d100&lt;=60 #侦查</code></td><td>带目标值的成功检定。技能名可以写成 <code>#侦查</code> 或 <code>【侦查】</code></td></tr>
+      <tr><td><code>1d100&gt;80 【成长】</code></td><td>不等号检定（<code>&lt;=</code> <code>&lt;</code> <code>&gt;=</code> <code>&gt;</code>）</td></tr>
+      <tr><td><code>1d3*2+2*(4+5)</code> <code>1+1</code></td><td>四则运算、括号与骰子的计算。也能当计算器用</td></tr>
+      <tr><td><code>d66</code></td><td>D66（两颗六面骰读作两位数）</td></tr>
+      <tr><td><code>res50-30</code></td><td>对抗检定（主动方 50、被动方 30）</td></tr>
+      <tr><td><code>siz13</code></td><td>根据 SIZ 值给出大致身高</td></tr>
+    </tbody>
+  </table>
+  <p><code>/骰子</code> 省略 <code>算式:</code> 时会掷 1d100。</p>
+  <div class="note"><b>提示</b><span>字母和空格用半角、全角都可以。技能名以中文、日文等全角字符开头时，可以不加空格直接接在数字后面，如 <code>80侦查</code>。英文技能名请加空格，如 <code>80 spot</code>。</span></div>
+  <h3>和机器人聊天（闲聊模式）</h3>
+  <ul class="pts">
+    <li><code>@Macchan ～？</code>：回答“也许是吧”或“也许不是”</li>
+    <li>こんにちは（你好）·おやすみ（晚安）·またね（再见）等日语问候：会回以问候</li>
+    <li>其他内容：骨碌碌地掷个骰子</li>
+  </ul>
+</section>
+
+<section id="secret">
+  <h2><span class="n">3</span>暗骰</h2>
+  <p class="lead">在骰子前加 <code>s</code>，或使用 <code>/密骰</code>，结果只会发给掷骰者本人。</p>
+  <ol class="steps">
+    <li>写成 <code>s1d100</code> <code>s80 侦查</code> <code>s1d100&lt;=60 #侦查</code>（为了隐藏内容，消息会被删除）。也可以用 <code>/密骰 内容:</code>。输入非骰子的文字会变成秘密消息。</li>
+    <li>频道里会出现有人进行了暗骰的通知。结果只发给本人。</li>
+    <li>想公开时，按通知上的 <span class="k">🔓 公开</span>。结果会发到频道里。</li>
+  </ol>
+  <div class="note"><b>重点</b><span><b>只有掷骰者本人能按这个按钮。</b>别人按下时，只会对那个人显示“只有掷骰者本人可以使用”。</span></div>
+  <h3>结果的发送方式可以按服务器选择</h3>
+  <p>在 Macchan Bot 控制台的 秘匿ロール（暗骰）→ 結果の届け方と公開のしかた（结果发送与公开方式）中选择。</p>
+  <table class="os">
+    <tr><th>用频道按钮公开<br><span class="tag free">默认</span></th><td>结果发到私信。用频道里的 <span class="k">🔓 公开</span> 公开。</td></tr>
+    <tr><th>不使用私信</th><td>不发私信，按频道里的 <span class="k">👁 查看结果</span> 后只对本人显示（可以看多次）。用 <code>/密骰</code> 掷骰时会立即只对本人显示。</td></tr>
+    <tr><th>用私信里的 🔓 公开</th><td>以前的方式。结果发到私信，按私信上的 🔓 即可公开。</td></tr>
+  </table>
+  <p>即使关闭了私信，在“用频道按钮公开”设置下也会自动改为“不使用私信”的方式，因此照样可以掷骰。</p>
+</section>
+
+<section id="bcdice">
+  <h2><span class="n">4</span>用其他规则掷骰（BCDice）</h2>
+  <p class="lead">支持 <a href="https://github.com/bcdice/BCDice" target="_blank" rel="noopener">BCDice</a> 的骰子，可以用和 CCFolia 等工具相同的指令掷骰。所有方案都免费。</p>
+  <h3>无需设置就能使用的指令</h3>
+  <p>不与其他规则重复的代表性指令，会自动判断规则后掷骰。结果下方会显示所用规则，例如“双重十字（自动）”。</p>
+  <table class="cmd">
+    <thead><tr><th>写法</th><th>规则</th></tr></thead>
+    <tbody>
+      <tr><td><code>3B6</code> <code>3R6</code> <code>3U6</code> <code>C(1+2)</code> <code>x3 2d6</code></td><td>所有规则通用（通用骰子）</td></tr>
+      <tr><td><code>CCB&lt;=60</code> <code>RESB(10-5)</code></td><td>克苏鲁的呼唤（第 6 版）</td></tr>
+      <tr><td><code>CC&lt;=60</code> <code>CC(1)&lt;=60</code> <code>CBR(50,60)</code></td><td>克苏鲁的呼唤第 7 版</td></tr>
+      <tr><td><code>K20+5@10</code></td><td>剑世界 2.5</td></tr>
+      <tr><td><code>10DX+3@8</code></td><td>双重十字</td></tr>
+      <tr><td><code>1NC</code> <code>NM</code></td><td>永远的后日谈：死灵年代记</td></tr>
+      <tr><td><code>SG&gt;=5</code> <code>MT</code></td><td>忍神</td></tr>
+      <tr><td><code>4SK</code> <code>HOT</code></td><td>银剑的星骑士</td></tr>
+      <tr><td><code>AT</code></td><td>魔导书大战</td></tr>
+    </tbody>
+  </table>
+  <p><code>ST</code>（场景表）<code>DT</code> <code>FT</code> <code>BT</code> <code>RTT</code> 等在不同规则中内容不同，因此不会自动掷骰。请在下方“选择规则”中设定了规则的频道里掷，或在 <code>/骰子</code> 的 <code>系统</code> 中选择规则。<code>1d100&lt;=60</code> 和 <code>80 侦查</code> 等 Macchan 本来就能读懂的写法，仍和以前一样由 Macchan 判定。</p>
+  <h3>掷骰示例</h3>
+  <ul class="pts">
+    <li><code>CC&lt;=60 侦查</code>：克苏鲁的呼唤第 7 版技能检定 → 【侦查】困难成功</li>
+    <li><code>K20+5@10 #小刀</code>：剑世界 2.5 的威力表</li>
+    <li><code>ST</code>：忍神·疯狂（Insane）的场景表（在设定了规则的频道里）</li>
+    <li><code>sCC&lt;=40</code>：前面加 <code>s</code> 就会成为暗骰</li>
+  </ul>
+  <p>技能名可以写在空格后面，或写成 <code>#侦查</code> <code>【侦查】</code>。</p>
+  <h3>选择规则 <span class="who">服务器管理员</span></h3>
+  <p>在 Macchan Bot 控制台的 ダイスシステム（BCDice）（骰子规则）中选择。</p>
+  <table class="os">
+    <tr><th>本服务器使用的规则</th><td>为整个服务器选择一个规则。默认为“不选择”。可以用名称的一部分或英文名搜索。</td></tr>
+    <tr><th>未选择规则时</th><td>“自动判断代表性指令”（默认）或“只用 Macchan 的骰子”。如果和其他骰子机器人重复反应，请选“只用 Macchan 的骰子”。</td></tr>
+    <tr><th>按频道更改</th><td>如果 CoC 团和剑世界团在同一个服务器，可以为每个频道选择不同的规则。子区使用父频道的规则。</td></tr>
+    <tr><th>与 Macchan 骰子重叠时</th><td><b>先看 Macchan 的骰子</b>（推荐）：显示与以前相同，只有 <code>CC</code> <code>K20</code> 等 Macchan 不认识的指令交给 BCDice。<br><b>先看 BCDice</b>：连 <code>1d100&lt;=60</code> 也按该规则判定（第 7 版则显示困难成功等）。</td></tr>
+  </table>
+  <p>常用规则排在列表上方：克苏鲁的呼唤 / 克苏鲁的呼唤第 7 版 / 剑世界 RPG / 2.0 / 2.5 / 忍神 / 疯狂（Insane）/ 双重十字 The 2nd·3rd Edition / 死灵年代记 / 魔导书大战 / 银剑的星骑士 / 双人搜查。此外还能从 BCDice 的 300 多种规则中选择。</p>
+  <div class="note"><b>提示</b><span>每种规则的指令写法不同。输入 <code>/骰子 算式:help</code>，会只对你显示该频道规则的用法。在 <code>/骰子</code> 中选择 <code>系统</code>，即使在未设定规则的频道或私信里，也能掷任意规则的骰子。</span></div>
+</section>
+
+<section id="tables">
+  <h2><span class="n">5</span>抽表·随机选择</h2>
+  <p class="lead">疯狂表、御神签等表格，以及从候选中随机选择的功能。</p>
+  <h3>内置表格</h3>
+  <table class="cmd">
+    <thead><tr><th>写法</th><th>功能</th></tr></thead>
+    <tbody>
+      <tr><td><code>/疯狂表 哪个表:</code></td><td>CoC 疯狂表（临时、不定、冬）。有 日本語·English·简体中文·繁體中文·한국어 的内容，会以掷骰者的语言显示</td></tr>
+      <tr><td><code>一時的狂気</code>（<code>一時的</code> <code>狂気表</code>）</td><td>临时疯狂表（用日文输入）</td></tr>
+      <tr><td><code>不定の狂気</code>（<code>不定</code> <code>長期的な狂気</code>）</td><td>不定疯狂表</td></tr>
+      <tr><td><code>冬の狂気</code>（<code>冬狂気</code>）</td><td>冬之疯狂表</td></tr>
+      <tr><td><code>/抽签 抽什么:</code></td><td>从御神签、占卜、吃什么、颜色、日期中随机抽一个</td></tr>
+      <tr><td><code>おみくじ</code> <code>誕生日</code></td><td>御神签、随机生日（用日文输入）</td></tr>
+    </tbody>
+  </table>
+  <h3>随机选择·打乱·投票</h3>
+  <table class="cmd">
+    <thead><tr><th>写法</th><th>功能</th></tr></thead>
+    <tbody>
+      <tr><td><code>choice 苹果 橘子 葡萄</code></td><td>从候选中选一个。用空格或逗号分隔</td></tr>
+      <tr><td><code>choice2 苹果 橘子 葡萄 梨</code></td><td>指定选择的数量</td></tr>
+      <tr><td><code>choicex4 正 反</code></td><td>允许重复，选 4 次</td></tr>
+      <tr><td><code>shuffle A B C D</code></td><td>随机打乱顺序</td></tr>
+      <tr><td><code>/随机选择 候选:</code></td><td>可在输入栏中指定选择数量和是否允许重复</td></tr>
+      <tr><td><code>poll 早 中 晚</code> <code>/投票 选项:</code></td><td>创建投票（选项 2～10 个）</td></tr>
+      <tr><td><code>echo 你好</code> <code>/代言 内容:</code></td><td>机器人代你发言。因为看不出是谁说的，<b>默认只有有权限的人</b>才能使用</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="mytable">
+  <h2><span class="n">6</span>制作自己的表（自定表）</h2>
+  <p class="lead">登记自己的表后，用 <code>/自定表</code> 或直接输入表名就能掷。</p>
+  <ol class="steps">
+    <li>在 <a href="https://macchan.onrender.com/console" target="_blank" rel="noopener">Macchan Bot 控制台</a> 的 マイ表（自定表）中创建表。</li>
+    <li>直接写表名，或用 <code>/自定表 表: 次数:</code>（1～10 次）掷。</li>
+    <li>在你有管理权限的服务器上“设置”后，该服务器的<b>其他人</b>也能掷。</li>
+  </ol>
+  <ul class="pts">
+    <li>表属于创建者。添加到“我的应用”后，在没有机器人的服务器或私信里也能掷。</li>
+    <li>如果取与 <code>一時的狂気</code> <code>不定の狂気</code> <code>冬の狂気</code> <code>おみくじ</code> <code>誕生日</code> 相同的名字，会掷自定表而不是内置表（适合房规疯狂表等）。</li>
+    <li>在条目开头加 <code>【秘】</code>，抽到该条目时结果只发给掷骰者。用 <code>||这里||</code> 包起来，可以只隐藏那一部分。发送方式与<a href="#secret">暗骰</a>设置相同。</li>
+    <li>在结果中写 <code>@サーバー主</code>，会通知表的创建者。</li>
+    <li>同一个服务器不能设置两个同名的表。</li>
+  </ul>
+  <table class="os">
+    <tr><th>免费</th><td>1 个表，每个表 10 个条目，每个条目 100 字以内</td></tr>
+    <tr><th>付费 <span class="tag">PRO</span></th><td>10 个表、500 个条目、2,000 字以内（按人计算）</td></tr>
+  </table>
+  <p>支持结束后表也不会删除。只有最早创建的 1 个表可以使用，其余只是暂停，重新支持后又能全部使用。</p>
+</section>
+
+<section id="char">
+  <h2><span class="n">7</span>创建·登记调查员</h2>
+  <p class="lead">可以掷属性来创建调查员。登记后，只要输入技能名就能用自己的技能值检定。</p>
+  <h3>掷属性</h3>
+  <p>使用 <code>/创建调查员</code>，或写 <code>キャラ作成</code>（<code>PC作成</code> <code>キャラ生成</code>）。会掷 CoC 第 6 版的属性，也可以输出为 CCFolia 的棋子。</p>
+  <h3>登记角色</h3>
+  <ol class="steps">
+    <li>打开 <a href="https://macchan.onrender.com/character" target="_blank" rel="noopener">角色登记页面</a>（日文），用 Discord 登录。<b>不需要管理权限</b>，请把这个网址发给团里的各位。</li>
+    <li>粘贴 Iachara 或 Character Hokanjo 的<b>“输出为 CCFolia 用”（ココフォリア用に出力）</b>内容（在 CCFolia 中复制的棋子只有名字）。</li>
+    <li>会显示读取到的技能和属性，确认后登记。</li>
+    <li>在名字列表右侧指定要使用的服务器。</li>
+  </ol>
+  <ul class="pts">
+    <li>登记的角色会放进“库存”。有未指定服务器的角色也没关系。</li>
+    <li>一个服务器里每人只能使用 1 个角色。同一个角色也可以指定给多个服务器。</li>
+    <li>粘贴同名角色会替换。库存免费为 1 个，PRO 为 5 个。PRO 到期 30 天后，超过 1 个的部分会被删除（保留最早创建的 1 个）。</li>
+    <li>只能指定你有管理权限的服务器。指定到“我的应用”后，在没有机器人的服务器或私信中也能用 <code>/我的角色</code> <span class="tag">PRO</span>。</li>
+  </ul>
+  <h3>掷骰·修改状态</h3>
+  <table class="cmd">
+    <thead><tr><th>写法</th><th>功能</th></tr></thead>
+    <tbody>
+      <tr><td><code>目星</code>（技能名）</td><td>只写技能名，就用登记的技能值检定。像 <code>芸術</code>（艺术）这样有两个以上候选时会反问</td></tr>
+      <tr><td><code>目星-20</code> <code>目星+10</code> <code>目星/2</code></td><td>仅限当次的修正（不保存）</td></tr>
+      <tr><td><code>:HP-3</code> <code>:SAN-1d3</code> <code>:MP+2</code></td><td>增减 HP·MP·SAN。不会超过最大值，也不会低于 0。减少 SAN 时，用 SAN 的检定也会降低</td></tr>
+      <tr><td><code>/我的角色 输入:</code></td><td>用指令也能做同样的事（如 <code>/我的角色 HP-3</code>，不需要冒号）。省略输入时，只对你显示当前的状态、属性和技能</td></tr>
+    </tbody>
+  </table>
+  <p>HP·MP·SAN 的增减会反映到角色本身（在指定的任何服务器上数值都相同）。要解除角色时，从 <code>/个人设置</code> 显示的链接打开登记页面。</p>
+  <div class="note warn"><b>注意</b><span>技能名会<b>先于</b>御神签等表格判断。拥有与表格同名技能的人，会掷技能。如果和其他骰子机器人冲突，也可以在<a href="#server">服务器设置</a>中只关闭消息输入（<code>/我的角色</code> 仍可使用）。</span></div>
+</section>
+
+<section id="vc">
+  <h2><span class="n">8</span>语音频道与频道操作</h2>
+  <p class="lead">可以统一处理团房间的进出，以及语音频道的断开和静音。</p>
+  <table class="cmd">
+    <thead><tr><th>指令</th><th>功能</th></tr></thead>
+    <tbody>
+      <tr><td><code>/入室 对象:</code> <code>/退室 对象:</code></td><td>让指定的人进入或离开这个房间（对方无需操作）</td></tr>
+      <tr><td><code>/语音 解散</code></td><td>断开你所在语音频道里的所有人</td></tr>
+      <tr><td><code>/断开 对象:</code></td><td>把指定成员从语音频道断开</td></tr>
+      <tr><td><code>/语音 静音 操作: 对象: 语音频道:</code></td><td>秘密语音（静音）。指定对象时只对该人生效，省略时对语音频道所有人生效。省略 <code>语音频道:</code> 时以你所在的语音频道为对象</td></tr>
+      <tr><td><code>/面板 邀请</code></td><td>放置“邀请”按钮，按下的人可以进入指定频道</td></tr>
+      <tr><td><code>/面板 身份组</code></td><td>创建按下即可获得身份组的“身份组面板”</td></tr>
+    </tbody>
+  </table>
+  <p>语音操作需要机器人有“移动成员”权限。涉及频道查看权限或身份组的功能，分别需要“管理频道”“管理身份组”权限。</p>
+  <h3>自动运行的功能</h3>
+  <p>都可以在 <a href="https://macchan.onrender.com/console" target="_blank" rel="noopener">Macchan Bot 控制台</a> 中决定对象语音频道和通知位置。</p>
+  <table class="os">
+    <tr><th>🔔 语音通知</th><td>语音频道开始通话时发出邀请通知（结束时也会）。通知位置可选“集中到一个频道”“按语音频道分别设定 <span class="tag">PRO</span>”“与语音频道同名的频道”。对象语音频道可选“按符号选择（默认 🔔）”“只选指定的频道”“所有频道”。也可以选择开始时的提及（<code>@everyone</code> / <code>@here</code> / 身份组 / 无）和结束通知。</td></tr>
+    <tr><th>🕛 晚安通知</th><td>午夜 0 点，向对象语音频道里的人发出晚安通知（默认按 🕛 符号选择）。</td></tr>
+    <tr><th>💤 自动解散</th><td>在设定时间（默认 2:00·日本时间）断开对象语音频道里的所有人。5 分钟前预告，按 ⏰ 可延长 30 分钟（每晚最多 2 次）。<b>默认关闭。</b></td></tr>
+  </table>
+  <p>在未做任何设置的服务器上，名字带 🔔 的语音频道开始通话时，会在名为 <code>🔔ボイチャお知らせ</code> 的频道附带 <code>@everyone</code> 通知。PRO 到期后，“按语音频道分别设定”的对应表也不会删除（只是暂时恢复为“集中”的行为）。</p>
+</section>
+
+<section id="remind">
+  <h2><span class="n">9</span>提醒·休息 <span class="tag">PRO</span></h2>
+  <p class="lead">在设定的时间于本频道提醒。PRO 服务器可用；本人是 PRO 的话在任何地方都能用。</p>
+  <table class="cmd">
+    <thead><tr><th>指令</th><th>功能</th></tr></thead>
+    <tbody>
+      <tr><td><code>/提醒 预约 时间: 内容:</code></td><td>时间可写成 <code>明日 21:00</code>（明天 21:00）<code>10/15 21:00</code> <code>30分後</code>（30 分钟后）<code>来週</code>（下周）等。在没有机器人的地方会发到私信</td></tr>
+      <tr><td><code>/提醒 休息 时长:</code></td><td>发出休息到几点的通知，到时间后通知开始时间到了。30 分钟以上还会在 5 分钟前提醒</td></tr>
+      <tr><td><code>/提醒 列表</code></td><td>查看并取消自己的预约</td></tr>
+    </tbody>
+  </table>
+  <p>发送的文字可以在控制台中修改。</p>
+</section>
+
+<section id="sched">
+  <h2><span class="n">10</span>决定跑团日程（卓日和）</h2>
+  <p class="lead">卓日和是用于决定跑团日程和招募成员的功能。可以从 Discord 内开始，回答的人只需在浏览器里画圈（无需登录）。</p>
+  <pre class="type">/创建日程 名称:11月的团 成员:@macha ken sakura 开始日:11/9</pre>
+  <ul class="pts">
+    <li>公开用的网址会发到频道里。主持人用的网址只发给执行指令的人。</li>
+    <li>用 <code>/个人设置</code> 可以打开角色和日程协调的“我的设置”页面。</li>
+    <li>卓日和网站只有日文。</li>
+  </ul>
+  <a class="jump" href="../hiyori.html"><span><b>卓日和使用指南（日文）</b><small>询问大致时间、招募成员、剧本候选、公开日历、关注等详细用法</small></span><span class="go">查看 →</span></a>
+</section>
+
+<section id="server">
+  <h2><span class="n">11</span>服务器设置</h2>
+  <span class="who">服务器管理员</span>
+  <p class="lead">可以为每个功能决定开关和“谁可以使用”。</p>
+  <ol class="steps">
+    <li>打开 <a href="https://macchan.onrender.com/console" target="_blank" rel="noopener">Macchan Bot 控制台</a>（日文），用 Discord 登录（需要“管理服务器”权限）。</li>
+    <li>选择服务器后会显示功能列表。用开关切换开/关，在 <span class="k">詳細</span>（详细）中修改反应对象、可用的人和各功能的设置，然后按 <span class="k">保存する</span>（保存）。</li>
+  </ol>
+  <ul class="pts">
+    <li><b>与其他骰子机器人反应冲突时，可以只关闭重叠的功能。</b>例如只停用消息输入的骰子，保留 <code>/骰子</code>。</li>
+    <li>骰子规则（BCDice）的选择和暗骰的发送方式也在这里设定。</li>
+    <li>在 Discord 中输入 <code>/服务器设置</code> 可以查看当前设置。</li>
+  </ul>
+</section>
+
+<section id="plan">
+  <h2><span class="n">12</span>付费方案</h2>
+  <p class="lead">付费方案用于支付服务器费用（每月 $7）。<b>骰子、各种表格、调查员创建等基本功能会一直免费。</b></p>
+  <p>付费方案有两种，<b>适用对象不同</b>。</p>
+  <table class="cmd">
+    <thead><tr><th></th><th>Macchan Bot PRO</th></tr></thead>
+    <tbody>
+      <tr><td>适用对象</td><td><b>服务器</b>（自定表、角色等也适用于兑换的本人）</td></tr>
+      <tr><td>兑换码</td><td><code>MACC-XXXX-XXXX-XXXX</code>（两个服务器用为 <code>PATR-</code>）</td></tr>
+      <tr><td>服务器获得</td><td>可按语音频道设定语音通知位置。提醒·休息计时</td></tr>
+      <tr><td>本人获得</td><td>自定表 1 个 → 10 个（条目 10 → 500·字数 100 → 2,000 字）。角色库存 1 个 → 5 个，以及“我的应用”用角色。任何地方都能提醒。卓日和付费方案</td></tr>
+      <tr><td>输入位置</td><td><a href="https://macchan.onrender.com/console" target="_blank" rel="noopener">Macchan Bot 控制台</a> 的 プラン（方案）</td></tr>
+    </tbody>
+  </table>
+  <p>卓日和的付费方案（<code>HIYO-</code> 兑换码·适用于个人）请参阅 <a href="../hiyori.html#plan">卓日和指南（日文）</a>。兑换码以前四个字母区分，输错地方只会被拒绝，不会因为弄错而作废。</p>
+</section>
+
+<section id="list">
+  <h2><span class="n">13</span>指令一览</h2>
+  <p class="lead">斜杠指令列表。详情请看各章节。</p>
+  <table class="cmd">
+    <thead><tr><th>指令</th><th>功能</th></tr></thead>
+    <tbody>
+      <tr><td><code>/骰子 算式: 系统:</code></td><td>骰子·计算（<a href="#dice">2</a>）。可在 <code>系统</code> 中选择 BCDice 规则（<a href="#bcdice">4</a>）</td></tr>
+      <tr><td><code>/密骰 内容:</code></td><td>暗骰·秘密消息（<a href="#secret">3</a>）</td></tr>
+      <tr><td><code>/疯狂表 哪个表:</code></td><td>CoC 疯狂表（<a href="#tables">5</a>）</td></tr>
+      <tr><td><code>/抽签 抽什么:</code></td><td>御神签·占卜·吃什么·颜色·日期（<a href="#tables">5</a>）</td></tr>
+      <tr><td><code>/随机选择 候选:</code> <code>/投票 选项:</code> <code>/代言 内容:</code></td><td>选择·投票·代言（<a href="#tables">5</a>）</td></tr>
+      <tr><td><code>/自定表 表: 次数:</code></td><td>掷自定表（<a href="#mytable">6</a>）</td></tr>
+      <tr><td><code>/创建调查员</code> <code>/我的角色 输入:</code></td><td>创建调查员·用登记的角色掷骰（<a href="#char">7</a>）</td></tr>
+      <tr><td><code>/入室</code> <code>/退室</code> <code>/断开</code> <code>/语音 解散</code> <code>/语音 静音</code> <code>/面板</code></td><td>语音频道与频道操作（<a href="#vc">8</a>）</td></tr>
+      <tr><td><code>/提醒 预约</code> <code>/提醒 休息</code> <code>/提醒 列表</code></td><td>提醒·休息（<a href="#remind">9</a>）</td></tr>
+      <tr><td><code>/创建日程</code> <code>/个人设置</code></td><td>日程协调·我的设置（<a href="#sched">10</a>）</td></tr>
+      <tr><td><code>/服务器设置</code></td><td>查看本服务器的功能设置（<a href="#server">11</a>）</td></tr>
+      <tr><td><code>/帮助</code></td><td>使用方法与指令列表</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="faq">
+  <h2><span class="n">?</span>遇到问题时</h2>
+  <dl class="faq">
+    <dt>写了骰子却没有反应</dt>
+    <dd>服务器设置中“骰子”可能被关闭，或设成了“只用 /骰子”。请用 <code>/服务器设置</code> 确认。<code>/骰子</code> 随时都能用。</dd>
+    <dt>和其他骰子机器人重复反应</dt>
+    <dd>请在控制台中只关闭重叠功能的消息输入。把“未选择规则时”设为“只用 Macchan 的骰子”，BCDice 的自动判断就会停止。</dd>
+    <dt>ST（场景表）掷不出来</dt>
+    <dd><code>ST</code> 在不同规则中内容不同，只能在设定了规则的频道里掷。也可以像 <code>/骰子 算式:ST 系统:忍神</code> 这样选择 <code>系统</code> 来掷。</dd>
+    <dt>看不到暗骰的结果</dt>
+    <dd>关闭私信时不会收到私信。如果频道通知上有 <span class="k">👁 查看结果</span>，可以从那里查看。</dd>
+    <dt>输入技能名后掷的是技能而不是表格</dt>
+    <dd>登记角色后，会先于表格判断技能名。请参阅<a href="#char">创建·登记调查员</a>。</dd>
+  </dl>
+  <p style="margin-top:18px">使用方法的提问、需求和错误报告，欢迎来支持服务器。</p>
+  <div class="help">
+    <a class="btn" href="https://discord.gg/KTBmA3N7tW" target="_blank" rel="noopener">支持服务器</a>
+    <a class="btn sub" href="https://macchan.onrender.com/terms" target="_blank" rel="noopener">使用条款（日文）</a>
+    <a class="btn sub" href="https://macchan.onrender.com/privacy" target="_blank" rel="noopener">隐私政策（日文）</a>
+  </div>
+  <p class="updated">最后更新：2026-11-22</p>
+</section>
+</main>
+</div>
+
+<footer>© mogumogura / Macchan Bot 是个人制作的非官方机器人，与 Discord 官方无关。</footer>
+
+<script>
+// 目次：いま見ている所に印
+const links=[...document.querySelectorAll('nav.toc a')];
+const io=new IntersectionObserver(es=>{ es.forEach(en=>{ if(en.isIntersecting){ links.forEach(a=>a.classList.toggle('on', a.getAttribute('href')==='#'+en.target.id)); } }); }, {rootMargin:'-30% 0px -60% 0px'});
+document.querySelectorAll('main section').forEach(s=>io.observe(s));
+// 言語メニュー：外を押したら閉じる
+document.addEventListener('click',e=>{ const d=document.querySelector('details.lang'); if(d&&d.open&&!d.contains(e.target)) d.open=false; });
+</script>
+</body>
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>卓日和 使い方ガイド｜mogutools</title>
+<meta name="description" content="TRPG の卓の日程調整・メンバー募集「卓日和（たくびより）」の使い方を、やりたいこと別にまとめたガイドです。">
+<meta property="og:title" content="卓日和 使い方ガイド">
+<meta property="og:description" content="やりたいこと別に、卓日和の使い方をまとめました。">
+<link rel="icon" href="../../img/hiyori-icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../kipaview/guide/guide.css">
+<link rel="stylesheet" href="guide-extra.css">
+</head>
+<body>
+<header class="top"><div class="topin">
+  <a class="brand" href="hiyori.html"><img src="../../img/hiyori-icon.svg" alt=""><span>卓日和</span><small>使い方ガイド</small></a>
+  <span class="sp"></span>
+  <a class="toplink" href="./">Macchan Bot のガイド</a>
+  <a class="toplink" href="../../">ツールの紹介へ</a>
+</div></header>
+
+<div class="hero">
+  <span class="kicker">やりたいこと別</span>
+  <h1><ruby>卓日和<rt>たくびより</rt></ruby>の使い方</h1>
+  <p>卓日和は、TRPG の卓の日程決めとメンバー募集のためのページです。Discord の Macchan Bot から始めることも、ブラウザだけで作ることもできます。答える人はログインなしで、丸を付けるだけです。はじめての人に渡すときは <a href="https://macchan.onrender.com/hiyori" target="_blank" rel="noopener">卓日和の紹介ページ</a> が向いています。やりたいことから選んでください。</p>
+  <a class="qsban" href="https://macchan.onrender.com/sched" target="_blank" rel="noopener"><span class="qsi">▶</span><span><b>卓日和を開く</b><small>Discord でログインして「＋ 新しく作る」から始められます</small></span><span class="qsgo">開く →</span></a>
+  <ul class="quick">
+    <li><a href="#make"><span class="n">1</span>日程調整を作る</a></li>
+    <li><a href="#notify"><span class="n">2</span>Discord に知らせる</a></li>
+    <li><a href="#month"><span class="n">3</span>いつごろかを聞く</a></li>
+    <li><a href="#recruit"><span class="n">4</span>メンバーを募集する</a></li>
+    <li><a href="#scenario"><span class="n">5</span>シナリオの候補から選ぶ</a></li>
+    <li><a href="#ng"><span class="n">6</span>一緒に組みたくない人</a></li>
+    <li><a href="#calendar"><span class="n">7</span>カレンダーと公開</a></li>
+    <li><a href="#follow"><span class="n">8</span>フォロー</a></li>
+    <li><a href="#auto"><span class="n">9</span>予定が被る日は自動で ×</a></li>
+    <li><a href="#done"><span class="n">10</span>終わったら片づける</a></li>
+    <li><a href="#me"><span class="n">11</span>自分の設定</a></li>
+    <li><a href="#plan"><span class="n">12</span>有料プラン</a></li>
+    <li><a href="#faq"><span class="n">?</span>そのほか・困ったとき</a></li>
+  </ul>
+</div>
+
+<div class="wrap">
+<nav class="toc" aria-label="目次"><b>目次</b><ol>
+  <li><a href="#make">日程調整を作る</a></li>
+  <li><a href="#notify">Discord に知らせる</a></li>
+  <li><a href="#month">いつごろかを聞く</a></li>
+  <li><a href="#recruit">メンバーを募集する</a></li>
+  <li><a href="#scenario">シナリオの候補から選ぶ</a></li>
+  <li><a href="#ng">一緒に組みたくない人</a></li>
+  <li><a href="#calendar">カレンダーと公開</a></li>
+  <li><a href="#follow">フォロー</a></li>
+  <li><a href="#auto">予定が被る日は自動で ×</a></li>
+  <li><a href="#done">終わったら片づける</a></li>
+  <li><a href="#me">自分の設定</a></li>
+  <li><a href="#plan">有料プラン</a></li>
+  <li><a href="#faq">そのほか・困ったとき</a></li>
+</ol></nav>
+
+<main>
+<section id="make">
+  <h2><span class="n">1</span>日程調整を作る</h2>
+  <p class="lead">Discord から作るか、卓日和の画面から作ります。</p>
+  <h3>Discord から作る</h3>
+  <pre class="type">/日程作成 名前:11月の卓 メンバー:@まちゃ けん さくら 開始日:11/9</pre>
+  <ul class="pts">
+    <li>公開用の URL がチャンネルに出ます。<b>答える人はログイン不要</b>です。</li>
+    <li>主催者用の URL は、実行した方にだけ見える形で届きます。候補日の追加や削除はこちらから行えます。</li>
+    <li><code>メンバー:</code> で呼んだ人は、先に表へ入れておけます。</li>
+    <li><code>開始日:</code> は <code>11/9</code> <code>11月9日</code> <code>2026-11-09</code> の形で指定できます。省くと今日からです。</li>
+    <li>日にちだけでなく <b>昼・夜それぞれの参加できる時間</b> も、はじめから集めます。日にちだけでよいときは <code>時間帯:</code> を「いいえ」にします。</li>
+  </ul>
+  <h3>卓日和の画面から作る</h3>
+  <ol class="steps">
+    <li><a href="https://macchan.onrender.com/sched" target="_blank" rel="noopener">卓日和</a> を開き、Discord でログインして <span class="k">＋ 新しく作る</span> を押します。</li>
+    <li><b>日程の聞き方</b> を選びます：<b>日にちを決める</b>（候補日に 全・夜・昼・×）か <b>いつごろかを聞く</b>（候補月に ○ △ ×）。</li>
+    <li><b>メンバーの募集</b> を選びます：<b>募集しない</b>／<b>シナリオを決めて募集</b>／<b>候補から選んでもらう</b>。</li>
+    <li>件名とコメントを入れ、候補日（候補月）を選んで <span class="k">この内容で作る</span> を押します。</li>
+  </ol>
+  <ul class="pts">
+    <li>できたページの URL は <span class="k">案内文ごとコピー</span> で、ひとことを添えた形でコピーできます。スマホでは <span class="k">共有する</span> も使えます。</li>
+    <li>主催者のページのいちばん上に、いまどこまで進んだか（URL を配る ▶ 答えてもらう ▶ 日を決める）が出ます。</li>
+    <li>時間帯を集めないときは、「時間帯も調整する」をオフにします。</li>
+  </ul>
+</section>
+
+<section id="notify">
+  <h2><span class="n">2</span>Discord に知らせる</h2>
+  <p class="lead">主催者のページの「Discord へのお知らせ」で、集まりの知らせをチャンネルに出せます。</p>
+  <p><code>/日程作成</code> から作ったときは、打ったチャンネルが最初から届け先になります。</p>
+  <table class="os">
+    <tr><th>日程が決まったとき <span class="tag free">無料</span></th><td>日が決まったら知らせます。</td></tr>
+    <tr><th>直前のアナウンス <span class="tag free">無料</span></th><td>1 週間前・前日・開始 1 時間前・開始時刻・当日の朝・連日のときの次回の集合時間から選べます。</td></tr>
+    <tr><th>誰かが答えたとき <span class="tag">有料</span></th><td>回答が入ったら知らせます。</td></tr>
+    <tr><th>催促 <span class="tag">有料</span></th><td>まだ答えていない人に知らせます。</td></tr>
+  </table>
+  <p>知らせの文面は有料プランで変えられます（種類の名前の横の鉛筆を押すと、文面の欄が開きます）。無料では決まった文で届きます。止めたい知らせは、種類ごとにオフにできます。</p>
+</section>
+
+<section id="month">
+  <h2><span class="n">3</span>いつごろかを聞く</h2>
+  <p class="lead">まだ先の予定で、日にちまでは決められないときに使います。卓日和の画面から作ります（<code>/日程作成</code> で作れるのは日にちの調整だけです）。</p>
+  <ul class="pts">
+    <li>候補は日にちではなく <b>候補月</b> です。<b>月ごと</b> か <b>上旬・中旬・下旬</b> で出せます。</li>
+    <li>答える人は、候補月ごとに <b>○（行ける）・△（たぶん）・×（むずかしい）</b> を押すだけです。もう一度押すと空欄に戻ります。</li>
+    <li>みんなの希望の表では、× がいちばん少なく ○ が多い候補月に <b>「有力」</b> の印が付きます。</li>
+  </ul>
+  <h3>日にちの調整に進む</h3>
+  <ol class="steps">
+    <li>候補月が絞れたら、表の左でチェックを入れて <span class="k">日にちの調整に進む</span> を押します。</li>
+    <li><b>同じ URL のまま</b>、全・夜・昼・× で答えてもらう画面に変わります。</li>
+  </ol>
+  <p>進んだあとも、参加者・コメント・シナリオの希望は残ります。候補月への答えは、表の上の <b>「候補月のときの答え」</b> で見返せます（だれがどの月に行けると答えていたかが、名前と候補月の表で出ます）。</p>
+</section>
+
+<section id="recruit">
+  <h2><span class="n">4</span>メンバーを募集する</h2>
+  <p class="lead">シナリオの案内と参加希望の人の一覧が載ったページを作れます。X や Discord に URL を貼ると、シナリオ・人数・形式・ツール・日時などが入った画像つきのカードで出ます。</p>
+  <ul class="pts">
+    <li><b>BOOTH の商品ページの URL を貼ると、サムネと名前が入ります。</b>卓日和は画像を預からないので、使えるのは BOOTH の商品画像だけです。</li>
+    <li>システム・KP・募集人数・概要・注意を書けます。「PL として KP と PL を募集」の形にもできます。</li>
+    <li><b>形式</b>（ボイセ・半テキ・テキセ）・<b>ツール</b>（Discord・ココフォリアなど）・<b>想定時間</b>・<b>日時の目安</b>・<b>募集範囲</b>（相互フォロー・フォロワー・だれでも）も選べます。どれも「その他」に自由に書けます。</li>
+    <li>主催者のページの <span class="k">募集画像を作る</span> で、X などに貼れる募集の画像（PNG）を作れます。スマホでは共有、パソコンでは保存です（BOOTH のサムネは画像に入りません）。</li>
+  </ul>
+  <h3>参加する人・募集する人</h3>
+  <ul class="pts">
+    <li>参加したい人は <span class="k">参加希望</span> を押して、名前と参加できる日（候補月）を入れます。<b>ログインは要りません。</b></li>
+    <li>募集者は、来てもらう人に <b>「決定」</b> の印を付けられます。「受け付ける」をオフにすると締め切れます。</li>
+    <li><b>「フォロワーに募集を表示」</b> をオンにすると、あなたをフォローしている人のマイページと、あなたの公開カレンダーのページにも、その募集が並びます（はじめはオフ。オフのあいだは、URL を知っている人しか見られません）。</li>
+  </ul>
+</section>
+
+<section id="scenario">
+  <h2><span class="n">5</span>シナリオの候補から選んでもらう</h2>
+  <p class="lead">「どれを回すかは、集まった人と日程で決めたい」ときに使います。</p>
+  <ul class="pts">
+    <li>候補は <b>2〜6 つ</b> 出せます。それぞれに募集人数・ひとこと・BOOTH の URL を付けられます。</li>
+    <li>参加する人は「やりたいシナリオ」をいくつでも選べます。</li>
+    <li>主催者のページには、候補ごとに <b>希望した人</b> と、その人たちの <b>都合が合う日（候補月）</b> が並びます。人数が足りていて日程も合うものには「成立しそう」と出ます。</li>
+  </ul>
+  <h3>決める</h3>
+  <ol class="steps">
+    <li>候補のカードで <b>名前を押して来てもらう人を選びます</b>（はじめは希望した人が全員選ばれています）。</li>
+    <li><b>日（候補月）を押して選びます。</b></li>
+    <li>下のボタンを押します。
+      <ul class="pts">
+        <li><span class="k">このシナリオの日程調整を作る</span> … その候補だけを、選んだ人で <b>別の日程調整</b> として作ります。元の募集は残るので、ほかのシナリオも続けて決められます。</li>
+        <li><span class="k">この募集ごと、このシナリオに決める</span> … 募集ぜんたいを、そのシナリオ 1 つに決めます。「決め直す」で戻せます。</li>
+      </ul>
+    </li>
+  </ol>
+  <ul class="pts">
+    <li>別の日程調整として作ると、選んだ人が「決定」の状態で入ります。候補月を選んでいれば、その月の日が候補日になって、日にちの調整から始まります。候補月への答えも引き継ぎます。</li>
+    <li>作った先は、元の募集のカードの「日程調整を作成済み」から開けます。この行き先が見えるのは主催者だけなので、来てもらう人には URL を送ってください。</li>
+    <li>別に作った日程調整も、作れる数に 1 件として数えます。</li>
+    <li>「いつごろかを聞く」と組み合わせて、候補月とシナリオを一緒に聞くこともできます。</li>
+  </ul>
+  <div class="note"><b>ヒント</b><span>キパビューの本棚でシナリオを 2〜6 つ選んで「募集する…」を押すと、選んだシナリオが候補に入った状態で、この形の募集を作れます。</span></div>
+</section>
+
+<section id="ng">
+  <h2><span class="n">6</span>一緒に組みたくない人</h2>
+  <p class="lead">メンバー募集では、参加する人が、同じ募集のほかの参加者に「一緒に組みたくない」の × を付けられます。</p>
+  <ol class="steps">
+    <li>参加希望を出したあと、答える画面の <span class="k">一緒に組みたくない人</span> を開きます。</li>
+    <li>ほかの参加者が並ぶので、名前を押すと × が付きます。もう一度押すと外れます。</li>
+  </ol>
+  <ul class="pts">
+    <li><b>× を付けたことは、相手やほかの参加者には見えません。</b>主催者にも、だれが付けたかは見えず、「この 2 人は一緒に組めない」とだけ伝わります。</li>
+    <li>× の付いた 2 人は、主催者でも <b>同じ卓に組めません</b>（「決定」にする・シナリオの日程調整を作る・この募集ごと決める、のどれも止まります）。</li>
+    <li>選べるのは、<b>参加希望を出した端末</b> か、<b>ログインして「マイページの『参加希望』に表示」にしたアカウント</b> からだけです。</li>
+    <li>× はその募集の中だけのものです。参加をとりやめたときや、日程調整が消えたときに、一緒に消えます。</li>
+  </ul>
+</section>
+
+<section id="calendar">
+  <h2><span class="n">7</span>カレンダーと公開</h2>
+  <p class="lead">マイページのカレンダーには、開催の決まった日と、まだ調整中の卓の候補日が、卓の名前で並びます（調整中は点線の枠）。</p>
+  <p>1 日に入りきらないときは「ほか○件」と出るので、日を押して下の一覧で見てください（スマホでは、日の中は色の印だけになります）。</p>
+  <h3>カレンダーを公開する</h3>
+  <p>マイページのカレンダーの下の <span class="k">カレンダーを公開する</span> から、自分の予定を見せるページを作れます。</p>
+  <ul class="pts">
+    <li>できた URL を知っている人は、<b>ログインなしで</b> 見られます。</li>
+    <li>出るのは <b>開催の決まった日</b> です。<b>「調整中の候補日も表示」</b> にすると、まだ日の決まっていない卓の候補日も点線で出ます（はじめはオフ）。ログインして参加している卓は、名前を出さず「調整中」とだけ出ます。ほかの参加者の名前は出ません。</li>
+    <li>表示のしかたは <b>「予定あり」とだけ表示</b>（はじめはこちら）か <b>卓の名前も表示</b>。表示する名前も変えられます。</li>
+    <li>ほかの人にどう見えるかは、カレンダーの上の <span class="k">公開プレビュー</span> で確かめられます。<span class="k">自分用（全部）</span> で戻ります。</li>
+    <li>同じ場所に、あなたをフォローしている人の名前が並びます。</li>
+    <li><span class="k">公開をやめる</span> で、いつでもやめられます。配った URL は開けなくなり、もう一度公開すると新しい URL になります。</li>
+  </ul>
+</section>
+
+<section id="follow">
+  <h2><span class="n">8</span>フォロー</h2>
+  <p class="lead">気になる人の公開カレンダーをフォローしておくと、その人の募集をまとめて見られます。</p>
+  <h3>フォローして「フォロー中の募集」を見る</h3>
+  <ul class="pts">
+    <li>相手の公開カレンダーのページで <span class="k">フォローする</span> を押します（Discord でのログインが要ります）。</li>
+    <li>相手が「フォロワーに募集を表示」にした受付中の募集が、<b>「フォロー中の募集」</b> のページに並びます。マイページの入口か、メニュー（≡）から開きます。</li>
+    <li>前に見たあとで増えた募集には <b>「新着」</b> が付きます（見たかどうかは、その端末で覚えます）。</li>
+    <li>だれがフォローしているかは、相手に名前で見えます。ほかの人には見えません。</li>
+    <li>やめるときは、相手のページの「フォロー中」をもう一度押すか、「フォロー中の募集」のページで名前の右の × を押します。</li>
+  </ul>
+  <h3>つながっている人を日程調整に追加する</h3>
+  <p>主催者は、フォローでつながっている人（自分がフォローしている人・自分のフォロワー）を、押すだけで参加者に入れられます。</p>
+  <ul class="pts">
+    <li>追加できるのは、相手が「自分の設定」の <b>「日程調整への追加」</b> を許可しているときだけです（はじめはオフ）。</li>
+    <li>主催者のページの「フォローでつながっている人を追加」に、追加できる人が並びます。名前を押すと表に入ります。</li>
+    <li>入った人の回答には、<b>確定済みの予定と被る日の ×</b> が自動で入ります。有料プランの人は、「自分の設定」の名前・フリカレ・参加できる時間も使われます。</li>
+    <li>追加された人のマイページには「追加されました」と出ます。本人が回答を直すことも、とりやめることもできます。</li>
+    <li>Discord の <code>/日程作成</code> で @ で呼んだ人も、その人のアカウントに結ばれます（ログインするとマイページに出ます）。</li>
+  </ul>
+</section>
+
+<section id="auto">
+  <h2><span class="n">9</span>予定が被る日は自動で ×</h2>
+  <p class="lead">ある卓の日が確定すると、あなたが参加しているほかの日程調整にも、その予定が自動で反映されます。</p>
+  <ul class="pts">
+    <li>対象は、<b>ログインして「マイページの『参加希望』に表示」にしている</b> 日程調整の、あなたの回答だけです。ログインせずに答えたものは変わりません。</li>
+    <li>昼も夜も被る日は <b>×</b> になります。夜だけ被る日は「全」が「昼」に変わる、というように、空いている時間帯は残します。</li>
+    <li><b>昼の卓と夜の卓は、同じ日に両方入れられます。</b>時間帯も調整している卓どうしは、開催する時間が重なるときだけ「被り」とみなします（13〜18 時の卓と 21〜24 時の卓は被りません）。</li>
+    <li><b>昼も夜も揃っている日は、主催者が帯を選ぶまで反映されません。</b>主催者が表の 全・夜・昼 のマスを押して帯を選ぶと、そこで反映されます。</li>
+    <li><b>手で入力してあった日も書き換わります。</b>入力画面では、自動で直した日に「被」の印が付きます。自動で直ったあとに自分で入れ直した日は、それ以上は書き換わりません。</li>
+    <li>確定が外れたり、その日程調整が消えたりすると、元の回答に戻ります。</li>
+    <li>メンバー募集では、「決定」の付いた人がいるとき、決定の付いた人の予定だけに反映されます。</li>
+  </ul>
+</section>
+
+<section id="done">
+  <h2><span class="n">10</span>終わったら片づける</h2>
+  <p class="lead">主催者のページのいちばん下の <span class="k">終了済みにする</span> で、終わった日程調整を片づけられます。</p>
+  <ul class="pts">
+    <li>マイページの「作った日程調整」「自分の募集」には並ばなくなり、下の「終了済み」にまとまります。<b>作れる数にも数えません。</b></li>
+    <li>消えるまでは、マイページのカレンダーやキパビューに出続けます。ページも開けるので、確定した日の一覧はそのまま見られます。</li>
+    <li>終了済みのあいだは、回答や設定は変えられません。メンバー募集は締め切った扱いになります。</li>
+    <li><span class="k">元に戻す</span> で、いつでも戻せます（作れる数に空きが要ります）。</li>
+  </ul>
+  <div class="note"><b>ポイント</b><span>作った日程調整は、<b>最後の候補日（候補月で聞いているあいだは最後の候補月）の 1 か月後に自動で消えます</b>。ためこまずに済みます。</span></div>
+</section>
+
+<section id="me">
+  <h2><span class="n">11</span>自分の設定</h2>
+  <p class="lead">Discord の <code>/個人設定</code> で出るリンクか、卓日和のメニューから「自分の設定」を開きます。</p>
+  <ul class="pts">
+    <li>日程調整の表に表示する <b>名前</b> を決められます。</li>
+    <li><b>フリーカレンダー</b> の公開 URL を覚えさせておくと、予定を自動で取り込めます（取り込みは無料でも使えます）。手で入力した日は、フリカレの取り込みで上書きされません。</li>
+    <li><b>ふだんの都合</b> では、フリカレの空欄をどう読むか（予定がない日は参加できる、など）を決められます。</li>
+    <li>有料プランの方は、<code>/日程作成</code> で @ で呼ばれたときに、ここの名前・フリカレ・参加できる時間がそのまま入ります（登録だけなら無料でもできて、有料にした日からそのまま効きます）。</li>
+    <li><b>日程調整への追加</b> を許可すると、フォローでつながっている人があなたを日程調整に入れられます。</li>
+    <li><span class="k">登録を消す</span> で、登録した内容をまるごと消せます。</li>
+  </ul>
+</section>
+
+<section id="plan">
+  <h2><span class="n">12</span>有料プラン</h2>
+  <p class="lead">卓日和の有料プランは <b>人（Discord アカウント）</b> に付きます。無料でも日程調整とメンバー募集は使えます。</p>
+  <table class="cmd">
+    <thead><tr><th></th><th>卓日和の有料プラン</th></tr></thead>
+    <tbody>
+      <tr><td>付く先</td><td><b>人</b>（Discord アカウント）</td></tr>
+      <tr><td>コード</td><td><code>HIYO-XXXX-XXXX-XXXX</code>。Macchan Bot の PRO を引き換えた方にも付きます</td></tr>
+      <tr><td>作れる日程調整</td><td>10 件 → 100 件（終了済みにしたものは数えません）</td></tr>
+      <tr><td>参加者</td><td>10 人 → 100 人</td></tr>
+      <tr><td>そのほか</td><td>@ で呼ばれたときに「自分の設定」がそのまま入る。Discord へのお知らせに「答えたとき」と「催促」が増え、文面も変えられる</td></tr>
+      <tr><td>入れる場所</td><td><a href="https://macchan.onrender.com/sched" target="_blank" rel="noopener">卓日和</a> の「プラン」</td></tr>
+    </tbody>
+  </table>
+  <p>Macchan Bot の PRO（<code>MACC-</code>・サーバーに付く）は <a href="./#plan">Macchan Bot のガイド</a> をご覧ください。</p>
+</section>
+
+<section id="faq">
+  <h2><span class="n">?</span>そのほか・困ったとき</h2>
+  <ul class="pts">
+    <li>左上の <b>≡</b> を押すとメニューが開きます。いま見ているページの見出しと、マイページ・新しく作る・フォロー中の募集・通知の一覧・自分の設定が並びます。パソコンでは、上の帯にもマイページ・新しく作る・フォロー中の募集・通知の一覧が並びます。</li>
+    <li>卓日和の入口やメニューの <span class="k">Bot を導入する</span> から、Macchan Bot を自分のサーバーに追加できます。</li>
+    <li>卓日和のどの画面の下にも、プライバシーポリシー・利用規約・お問い合わせへのリンクがあります。</li>
+  </ul>
+  <p style="margin-top:18px">使い方の質問、要望、不具合の報告は、サポートサーバーでお気軽にどうぞ。</p>
+  <div class="help">
+    <a class="btn" href="https://discord.gg/KTBmA3N7tW" target="_blank" rel="noopener">サポートサーバー</a>
+    <a class="btn sub" href="https://macchan.onrender.com/hiyori" target="_blank" rel="noopener">卓日和の紹介ページ</a>
+    <a class="btn sub" href="./">Macchan Bot のガイド</a>
+  </div>
+  <p class="updated">最終更新：2026-11-22</p>
+</section>
+</main>
+</div>
+
+<footer>© mogumogura ／ 卓日和は個人制作のツールです。Discord の公式とは関係ありません。</footer>
+
+<script>
+const links=[...document.querySelectorAll('nav.toc a')];
+const io=new IntersectionObserver(es=>{ es.forEach(en=>{ if(en.isIntersecting){ links.forEach(a=>a.classList.toggle('on', a.getAttribute('href')==='#'+en.target.id)); } }); }, {rootMargin:'-30% 0px -60% 0px'});
+document.querySelectorAll('main section').forEach(s=>io.observe(s));
+</script>
+</body>
+</html>

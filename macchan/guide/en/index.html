@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Macchan Bot Guide｜mogutools</title>
+<meta name="description" content="How to use Macchan Bot, a Discord dice bot for tabletop RPGs: dice, secret rolls, BCDice, tables, characters, voice channel controls and server settings.">
+<meta property="og:title" content="Macchan Bot Guide">
+<meta property="og:description" content="How to use Macchan Bot, by what you want to do.">
+<link rel="canonical" href="https://matumogura.github.io/mogutools/macchan/guide/en/">
+<link rel="alternate" hreflang="ja" href="https://matumogura.github.io/mogutools/macchan/guide/">
+<link rel="alternate" hreflang="en" href="https://matumogura.github.io/mogutools/macchan/guide/en/">
+<link rel="alternate" hreflang="ko" href="https://matumogura.github.io/mogutools/macchan/guide/ko/">
+<link rel="alternate" hreflang="zh-CN" href="https://matumogura.github.io/mogutools/macchan/guide/zh-CN/">
+<link rel="alternate" hreflang="zh-TW" href="https://matumogura.github.io/mogutools/macchan/guide/zh-TW/">
+<link rel="alternate" hreflang="x-default" href="https://matumogura.github.io/mogutools/macchan/guide/en/">
+<link rel="icon" href="../../../img/macchan.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../kipaview/guide/guide.css">
+<link rel="stylesheet" href="../guide-extra.css">
+<style>:root{--f:"Noto Sans","Noto Sans JP",system-ui,sans-serif}</style>
+</head>
+<body>
+<header class="top"><div class="topin">
+  <a class="brand" href="./"><img src="../../../img/macchan.png" alt=""><span>Macchan Bot</span><small>Guide</small></a>
+  <span class="sp"></span>
+  <details class="lang"><summary class="toplink" aria-label="Language">🌐 English</summary><ul><li><a href=".././" hreflang="ja" lang="ja">日本語</a></li><li><a href="../en/" hreflang="en" lang="en" aria-current="page">English</a></li><li><a href="../ko/" hreflang="ko" lang="ko">한국어</a></li><li><a href="../zh-CN/" hreflang="zh-CN" lang="zh-CN">简体中文</a></li><li><a href="../zh-TW/" hreflang="zh-TW" lang="zh-TW">繁體中文</a></li></ul></details>
+  <a class="toplink" href="../hiyori.html" hreflang="ja">Takubiyori guide (JA)</a>
+  <a class="toplink" href="../../../">Tools</a>
+</div></header>
+
+<div class="hero">
+  <span class="kicker">By what you want to do</span>
+  <h1>How to use Macchan Bot</h1>
+  <p>Macchan Bot is a Discord dice bot packed with everything you need to run a tabletop RPG session, centered on Call of Cthulhu (CoC). It handles dice, random tables, investigator creation, voice-channel controls and even scheduling. It also supports BCDice, so you can roll for other systems such as Call of Cthulhu 7th edition, Sword World and Shinobigami. Pick what you want to do below.</p>
+  <ul class="quick">
+    <li><a href="#start"><span class="n">1</span>Getting started</a></li>
+    <li><a href="#dice"><span class="n">2</span>Rolling dice</a></li>
+    <li><a href="#secret"><span class="n">3</span>Secret rolls</a></li>
+    <li><a href="#bcdice"><span class="n">4</span>Other game systems</a></li>
+    <li><a href="#tables"><span class="n">5</span>Tables and random picks</a></li>
+    <li><a href="#mytable"><span class="n">6</span>Your own tables</a></li>
+    <li><a href="#char"><span class="n">7</span>Investigators</a></li>
+    <li><a href="#vc"><span class="n">8</span>Voice and channels</a></li>
+    <li><a href="#remind"><span class="n">9</span>Reminders and breaks</a></li>
+    <li><a href="#sched"><span class="n">10</span>Scheduling sessions</a></li>
+    <li><a href="#server"><span class="n">11</span>Server settings</a></li>
+    <li><a href="#plan"><span class="n">12</span>Paid plans</a></li>
+    <li><a href="#list"><span class="n">13</span>Command list</a></li>
+    <li><a href="#faq"><span class="n">?</span>Troubleshooting</a></li>
+  </ul>
+</div>
+
+<div class="wrap">
+<nav class="toc" aria-label="Contents"><b>Contents</b><ol>
+  <li><a href="#start">Getting started</a></li>
+  <li><a href="#dice">Rolling dice</a></li>
+  <li><a href="#secret">Secret rolls</a></li>
+  <li><a href="#bcdice">Other game systems (BCDice)</a></li>
+  <li><a href="#tables">Tables and random picks</a></li>
+  <li><a href="#mytable">Your own tables (My Tables)</a></li>
+  <li><a href="#char">Creating and registering investigators</a></li>
+  <li><a href="#vc">Voice channel and channel controls</a></li>
+  <li><a href="#remind">Reminders and breaks</a></li>
+  <li><a href="#sched">Scheduling sessions (Takubiyori)</a></li>
+  <li><a href="#server">Server settings</a></li>
+  <li><a href="#plan">Paid plans</a></li>
+  <li><a href="#list">Command list</a></li>
+  <li><a href="#faq">Troubleshooting</a></li>
+</ol></nav>
+
+<main>
+<div class="note"><b>Note</b><span>Macchan Bot is made in Japan. The bot's replies and command names follow your Discord language, but the web pages (the Macchan Bot console, the character page and Takubiyori) are in Japanese only. Words in Japanese below are shown with their meaning.</span></div>
+
+<section id="start">
+  <h2><span class="n">1</span>Getting started</h2>
+  <p class="lead">Add the bot to Discord, then type <code>/</code> or just write in the chat.</p>
+  <h3>Add the bot</h3>
+  <p>Open <a href="https://macchan.onrender.com/invite" target="_blank" rel="noopener">Add Macchan Bot to Discord</a> and choose how to add it.</p>
+  <table class="os">
+    <tr><th>Add to server</th><td>Adds the bot to a server. Everyone on the server can use it.</td></tr>
+    <tr><th>Add to My Apps</th><td>Adds the bot to your own account. You can use the main commands (<code>/dice</code> <code>/choice</code> <code>/echo</code> <code>/help</code> <code>/gacha</code> <code>/pcmake</code> <code>/insanity</code> <code>/table</code> <code>/char</code> <code>/profile</code>) even in servers without the bot and in DMs. <code>/table</code> and <code>/char</code> then use your own tables and your My Apps character.</td></tr>
+  </table>
+  <p>User ID: <code>546059094537011211</code></p>
+  <h3>Two ways to use it</h3>
+  <ul class="pts">
+    <li><b>Slash commands</b>: type <code>/</code> to see the list. Each field shows a description, so type <code>/</code> whenever you are unsure.</li>
+    <li><b>Plain messages</b>: the bot also reacts when you simply write <code>1d100</code> or <code>80 spot</code>.</li>
+  </ul>
+  <div class="note"><b>Tip</b><span>Command names follow your Discord language: 日本語, English, 简体中文, 繁體中文 or 한국어. You can always search by the English name, so <code>/dice</code> works in any language.</span></div>
+</section>
+
+<section id="dice">
+  <h2><span class="n">2</span>Rolling dice</h2>
+  <p class="lead">Use <code>/dice</code> or just write the roll. The bot tells dice, skill checks, success checks and plain maths apart from how you write them.</p>
+  <table class="cmd">
+    <thead><tr><th>Write</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td><code>1d100</code> <code>2d6+3</code></td><td>Normal dice, or dice with maths</td></tr>
+      <tr><td><code>80 spot</code> <code>80 目星</code></td><td>Skill check with a two-digit skill value and a skill name (also shows critical, fumble, 1/2 and 1/5)</td></tr>
+      <tr><td><code>1d100&lt;=60 #spot</code></td><td>Success check with a target. Add the skill name as <code>#spot</code> or <code>【spot】</code></td></tr>
+      <tr><td><code>1d100&gt;80 【growth】</code></td><td>Checks with comparison signs (<code>&lt;=</code> <code>&lt;</code> <code>&gt;=</code> <code>&gt;</code>)</td></tr>
+      <tr><td><code>1d3*2+2*(4+5)</code> <code>1+1</code></td><td>Arithmetic, brackets and dice together. Also works as a calculator</td></tr>
+      <tr><td><code>d66</code></td><td>D66 (two six-sided dice read as a two-digit number)</td></tr>
+      <tr><td><code>res50-30</code></td><td>Resistance roll (active 50, passive 30)</td></tr>
+      <tr><td><code>siz13</code></td><td>Gives a rough height from a SIZ value</td></tr>
+    </tbody>
+  </table>
+  <p>If you leave out <code>expr:</code>, <code>/dice</code> rolls 1d100.</p>
+  <div class="note"><b>Tip</b><span>Letters and spaces can be half-width or full-width. Only skill names that start with a full-width character (such as Japanese) can follow the number without a space, as in <code>80目星</code>. For English, put a space: <code>80 spot</code>.</span></div>
+  <h3>Talking to the bot (chat mode)</h3>
+  <ul class="pts">
+    <li><code>@Macchan ...?</code>: answers with "maybe so" or "maybe not"</li>
+    <li>Greetings in Japanese such as こんにちは (hello), おやすみ (good night) and またね (see you): greets you back</li>
+    <li>Anything else: rolls some dice for fun</li>
+  </ul>
+</section>
+
+<section id="secret">
+  <h2><span class="n">3</span>Secret rolls</h2>
+  <p class="lead">Put <code>s</code> in front of a roll, or use <code>/secret</code>, and only the person who rolled gets the result.</p>
+  <ol class="steps">
+    <li>Write <code>s1d100</code>, <code>s80 spot</code> or <code>s1d100&lt;=60 #spot</code> (your message is deleted to hide it). You can also use <code>/secret content:</code>. Text that is not a roll becomes a secret message.</li>
+    <li>A notice that someone made a secret roll appears in the channel. Only the roller gets the result.</li>
+    <li>To reveal it, press <span class="k">🔓 Reveal</span> on the notice. The result is posted in the channel.</li>
+  </ol>
+  <div class="note"><b>Point</b><span><b>Only the person who rolled can press the button.</b> If someone else presses it, they just see a message that only the roller can use it.</span></div>
+  <h3>How results are delivered (per server)</h3>
+  <p>Choose this in the Macchan Bot console under 秘匿ロール (Secret rolls) → 結果の届け方と公開のしかた (Delivery and reveal).</p>
+  <table class="os">
+    <tr><th>Reveal with a channel button<br><span class="tag free">Default</span></th><td>The result goes to your DMs. Reveal it with <span class="k">🔓 Reveal</span> in the channel.</td></tr>
+    <tr><th>No DMs</th><td>Nothing is sent by DM. Press <span class="k">👁 See result</span> in the channel to see it privately (as many times as you like). With <code>/secret</code>, the result is shown to you privately right away.</td></tr>
+    <tr><th>Reveal with 🔓 in DMs</th><td>The older style. The result goes to your DMs, and pressing the 🔓 on that DM reveals it.</td></tr>
+  </table>
+  <p>If your DMs are closed, the default setting automatically switches to "No DMs" for you, so you can still roll.</p>
+</section>
+
+<section id="bcdice">
+  <h2><span class="n">4</span>Other game systems (BCDice)</h2>
+  <p class="lead">Macchan supports <a href="https://github.com/bcdice/BCDice" target="_blank" rel="noopener">BCDice</a>, so you can use the same commands as CCFolia and other tools. It is free on every plan.</p>
+  <h3>Commands that work with no setup</h3>
+  <p>Well-known commands that no other system uses are detected automatically. The system used is shown under the result, for example "Double Cross (auto)".</p>
+  <table class="cmd">
+    <thead><tr><th>Write</th><th>System</th></tr></thead>
+    <tbody>
+      <tr><td><code>3B6</code> <code>3R6</code> <code>3U6</code> <code>C(1+2)</code> <code>x3 2d6</code></td><td>Same in every system (generic dice)</td></tr>
+      <tr><td><code>CCB&lt;=60</code> <code>RESB(10-5)</code></td><td>Call of Cthulhu (6th edition)</td></tr>
+      <tr><td><code>CC&lt;=60</code> <code>CC(1)&lt;=60</code> <code>CBR(50,60)</code></td><td>Call of Cthulhu 7th edition</td></tr>
+      <tr><td><code>K20+5@10</code></td><td>Sword World 2.5</td></tr>
+      <tr><td><code>10DX+3@8</code></td><td>Double Cross</td></tr>
+      <tr><td><code>1NC</code> <code>NM</code></td><td>Nechronica</td></tr>
+      <tr><td><code>SG&gt;=5</code> <code>MT</code></td><td>Shinobigami</td></tr>
+      <tr><td><code>4SK</code> <code>HOT</code></td><td>Stellar Knights</td></tr>
+      <tr><td><code>AT</code></td><td>Magicalogia</td></tr>
+    </tbody>
+  </table>
+  <p>Commands such as <code>ST</code> (scene table), <code>DT</code>, <code>FT</code>, <code>BT</code> and <code>RTT</code> mean different things in different systems, so they are not detected automatically. Roll them in a channel where a system is chosen (see "Choosing a system" below), or pick the system in the <code>system</code> field of <code>/dice</code>. Rolls Macchan already understands, such as <code>1d100&lt;=60</code> and <code>80 spot</code>, are still answered by Macchan as before.</p>
+  <h3>Examples</h3>
+  <ul class="pts">
+    <li><code>CC&lt;=60 spot</code>: Call of Cthulhu 7th edition skill roll → 【spot】 Hard success</li>
+    <li><code>K20+5@10 #knife</code>: Sword World 2.5 power table</li>
+    <li><code>ST</code>: scene table for Shinobigami or Insane (in a channel with that system chosen)</li>
+    <li><code>sCC&lt;=40</code>: put <code>s</code> in front to make it a secret roll</li>
+  </ul>
+  <p>Add a skill name after a space, or as <code>#spot</code> or <code>【spot】</code>.</p>
+  <h3>Choosing a system <span class="who">Server admins</span></h3>
+  <p>Choose it in the Macchan Bot console under ダイスシステム（BCDice） (Dice system).</p>
+  <table class="os">
+    <tr><th>System for this server</th><td>Pick one system for the whole server. The default is none. You can search by part of the name or by its English name.</td></tr>
+    <tr><th>When no system is chosen</th><td>"Detect well-known commands automatically" (default) or "Macchan dice only". If Macchan and another dice bot both answer, choose "Macchan dice only".</td></tr>
+    <tr><th>Per-channel systems</th><td>If a CoC table and a Sword World table share a server, you can choose a different system for each channel. Threads use their parent channel's system.</td></tr>
+    <tr><th>When Macchan and BCDice overlap</th><td><b>Macchan first</b> (recommended): results look as before, and only commands Macchan does not know, such as <code>CC</code> or <code>K20</code>, go to BCDice.<br><b>BCDice first</b>: even <code>1d100&lt;=60</code> is judged by that system's rules (for example Hard success in 7th edition).</td></tr>
+  </table>
+  <p>Popular systems appear at the top of the list: Call of Cthulhu, Call of Cthulhu 7th edition, Sword World RPG / 2.0 / 2.5, Shinobigami, Insane, Double Cross The 2nd and 3rd Edition, Nechronica, Magicalogia, Stellar Knights and Futari Sousa. You can also choose from the 300+ other systems in BCDice.</p>
+  <div class="note"><b>Tip</b><span>Each system has its own commands. Type <code>/dice expr:help</code> to see, privately, how to use the system set for that channel. If you choose a system in the <code>system</code> field of <code>/dice</code>, you can roll any system anywhere, including channels with no system and DMs.</span></div>
+</section>
+
+<section id="tables">
+  <h2><span class="n">5</span>Tables and random picks</h2>
+  <p class="lead">Built-in tables such as madness tables and fortunes, plus tools that pick at random from a list.</p>
+  <h3>Built-in tables</h3>
+  <table class="cmd">
+    <thead><tr><th>Write</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td><code>/insanity kind:</code></td><td>CoC madness tables (temporary, indefinite, winter). The text exists in 日本語, English, 简体中文, 繁體中文 and 한국어, and appears in your language</td></tr>
+      <tr><td><code>一時的狂気</code> (also <code>一時的</code> <code>狂気表</code>)</td><td>Temporary insanity table (type the Japanese word)</td></tr>
+      <tr><td><code>不定の狂気</code> (also <code>不定</code> <code>長期的な狂気</code>)</td><td>Indefinite insanity table</td></tr>
+      <tr><td><code>冬の狂気</code> (also <code>冬狂気</code>)</td><td>Winter madness table</td></tr>
+      <tr><td><code>/gacha kind:</code></td><td>One random pick from fortune (omikuji), horoscope, meal, colour or date</td></tr>
+      <tr><td><code>おみくじ</code> <code>誕生日</code></td><td>Fortune slip and a random birthday (type the Japanese word)</td></tr>
+    </tbody>
+  </table>
+  <h3>Random picks, shuffles and polls</h3>
+  <table class="cmd">
+    <thead><tr><th>Write</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td><code>choice apple orange grape</code></td><td>Picks one from the list. Separate items with spaces or commas</td></tr>
+      <tr><td><code>choice2 apple orange grape pear</code></td><td>Picks the given number of items</td></tr>
+      <tr><td><code>choicex4 heads tails</code></td><td>Picks 4 times, repeats allowed</td></tr>
+      <tr><td><code>shuffle A B C D</code></td><td>Puts the items in random order</td></tr>
+      <tr><td><code>/choice items:</code></td><td>Set how many to pick and whether repeats are allowed in the fields</td></tr>
+      <tr><td><code>poll morning noon night</code> <code>/poll options:</code></td><td>Creates a poll (2 to 10 options)</td></tr>
+      <tr><td><code>echo hello</code> <code>/echo text:</code></td><td>The bot says it for you. Because nobody can tell who wrote it, <b>only members with permission can use it by default</b></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="mytable">
+  <h2><span class="n">6</span>Your own tables (My Tables)</h2>
+  <p class="lead">Register your own tables, then roll them with <code>/table</code> or just by typing the table's name.</p>
+  <ol class="steps">
+    <li>Create a table under マイ表 (My Tables) in the <a href="https://macchan.onrender.com/console" target="_blank" rel="noopener">Macchan Bot console</a>.</li>
+    <li>Type the table's name, or roll it with <code>/table name: times:</code> (1 to 10 times).</li>
+    <li>If you set it on a server where you have admin rights, <b>other members</b> on that server can roll it too.</li>
+  </ol>
+  <ul class="pts">
+    <li>A table belongs to the person who made it. If you add the bot to My Apps, you can roll your tables in servers without the bot and in DMs.</li>
+    <li>If you give a table the same name as a built-in one (<code>一時的狂気</code> <code>不定の狂気</code> <code>冬の狂気</code> <code>おみくじ</code> <code>誕生日</code>), your table is rolled instead (handy for house-rule madness tables).</li>
+    <li>Put <code>【秘】</code> at the start of an entry to send that result only to the roller. Wrap text in <code>||like this||</code> to hide just that part. Delivery follows the <a href="#secret">secret roll</a> setting.</li>
+    <li>Write <code>@サーバー主</code> in a result to notify the person who made the table.</li>
+    <li>A server cannot have two tables with the same name.</li>
+  </ul>
+  <table class="os">
+    <tr><th>Free</th><td>1 table, 10 entries per table, 100 characters per entry</td></tr>
+    <tr><th>Paid <span class="tag">PRO</span></th><td>10 tables, 500 entries, 2,000 characters (limits are per person)</td></tr>
+  </table>
+  <p>Your tables are not deleted when your support ends. Only your oldest table stays usable; the rest are paused and come back when you support again.</p>
+</section>
+
+<section id="char">
+  <h2><span class="n">7</span>Creating and registering investigators</h2>
+  <p class="lead">Roll characteristics to create an investigator. Once registered, just type a skill name to roll with your own skill value.</p>
+  <h3>Rolling characteristics</h3>
+  <p>Use <code>/pcmake</code>, or write <code>キャラ作成</code> (also <code>PC作成</code> <code>キャラ生成</code>). It rolls CoC 6th edition characteristics and can export them as a CCFolia piece.</p>
+  <h3>Registering a character</h3>
+  <ol class="steps">
+    <li>Open the <a href="https://macchan.onrender.com/character" target="_blank" rel="noopener">character page</a> (in Japanese) and log in with Discord. <b>No admin rights are needed</b>, so share this URL with your players.</li>
+    <li>Paste the <b>"Export for CCFolia" (ココフォリア用に出力)</b> output from Iachara or Character Hokanjo. (A piece copied inside CCFolia only contains the name.)</li>
+    <li>Check the skills and characteristics it read, then register.</li>
+    <li>Next to the name list, choose the servers to use the character on.</li>
+  </ol>
+  <ul class="pts">
+    <li>Registered characters go into your "stock". It is fine to have characters not set on any server.</li>
+    <li>You can use one character per server. The same character can be set on several servers.</li>
+    <li>Pasting a character with the same name replaces it. Your stock holds 1 character on the free plan and 5 with PRO. 30 days after PRO ends, characters beyond the first are deleted (your oldest one is kept).</li>
+    <li>You can set characters on servers where you have admin rights. Set one on "My Apps" to use it with <code>/char</code> in servers without the bot and in DMs <span class="tag">PRO</span>.</li>
+  </ul>
+  <h3>Rolling and changing stats</h3>
+  <table class="cmd">
+    <thead><tr><th>Write</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td><code>目星</code> (the skill name)</td><td>Rolls with your registered skill value. If there are two or more matches, such as <code>芸術</code> (Art), the bot asks which one</td></tr>
+      <tr><td><code>目星-20</code> <code>目星+10</code> <code>目星/2</code></td><td>One-off modifiers (not saved)</td></tr>
+      <tr><td><code>:HP-3</code> <code>:SAN-1d3</code> <code>:MP+2</code></td><td>Raise or lower HP, MP or SAN. Values stay between 0 and the maximum. Lowering SAN also lowers checks that use SAN</td></tr>
+      <tr><td><code>/char input:</code></td><td>Does the same as a command (no colon needed, as in <code>/char HP-3</code>). With no input, it privately shows your current status, characteristics and skills</td></tr>
+    </tbody>
+  </table>
+  <p>HP, MP and SAN changes are saved to the character itself (the same values on every server it is set on). To remove a character, open the character page from the link shown by <code>/profile</code>.</p>
+  <div class="note warn"><b>Caution</b><span>Skill names are checked <b>before</b> tables such as fortunes. If you have a skill with the same name as a table, the skill is rolled. If this clashes with another dice bot, you can turn off just the message input in <a href="#server">server settings</a> (<code>/char</code> still works).</span></div>
+</section>
+
+<section id="vc">
+  <h2><span class="n">8</span>Voice channel and channel controls</h2>
+  <p class="lead">Move people in and out of session rooms, and disconnect or mute voice channels in one go.</p>
+  <table class="cmd">
+    <thead><tr><th>Command</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td><code>/come user:</code> <code>/bye user:</code></td><td>Lets a member into this room or removes them (they do not need to do anything)</td></tr>
+      <tr><td><code>/vc kaisan</code></td><td>Disconnects everyone in the voice channel you are in</td></tr>
+      <tr><td><code>/nero member:</code></td><td>Disconnects the chosen member from voice</td></tr>
+      <tr><td><code>/vc secret action: member: channel:</code></td><td>Secret voice (mutes). With a target, only that person; without, everyone in the voice channel. Without a channel, the one you are in</td></tr>
+      <tr><td><code>/panel invite</code></td><td>Posts an invite button that lets whoever presses it into the chosen channel</td></tr>
+      <tr><td><code>/panel role</code></td><td>Creates a role panel that gives a role when pressed</td></tr>
+    </tbody>
+  </table>
+  <p>Voice controls need the bot to have the Move Members permission. Features that change channel access or roles need Manage Channels or Manage Roles.</p>
+  <h3>Automatic features</h3>
+  <p>For each one, choose the target voice channels and where notices go in the <a href="https://macchan.onrender.com/console" target="_blank" rel="noopener">Macchan Bot console</a>.</p>
+  <table class="os">
+    <tr><th>🔔 Voice notices</th><td>When a call starts in a voice channel, posts an invitation notice (and another when it ends). Notices can go to one shared channel, a channel per voice channel <span class="tag">PRO</span>, or a channel with the same name as the voice channel. Target voice channels can be chosen by a symbol in the name (🔔 by default), by picking them, or all of them. You can also choose the mention when a call starts (<code>@everyone</code> / <code>@here</code> / a role / none) and whether to post when it ends.</td></tr>
+    <tr><th>🕛 Good-night notice</th><td>At midnight, posts a good-night message for people in the target voice channels (chosen by the 🕛 symbol by default).</td></tr>
+    <tr><th>💤 Auto disconnect</th><td>At a set time (2:00 Japan time by default), disconnects everyone in the target voice channels. A warning is posted 5 minutes before; press ⏰ to extend by 30 minutes (up to twice a night). <b>Off by default.</b></td></tr>
+  </table>
+  <p>On servers with no settings, calls in voice channels with 🔔 in the name are announced with <code>@everyone</code> in a channel named <code>🔔ボイチャお知らせ</code>. If PRO ends, your per-channel mapping is kept; it just falls back to the shared-channel behaviour.</p>
+</section>
+
+<section id="remind">
+  <h2><span class="n">9</span>Reminders and breaks <span class="tag">PRO</span></h2>
+  <p class="lead">Posts a reminder in this channel at the time you set. Works on PRO servers, or anywhere if you have PRO yourself.</p>
+  <table class="cmd">
+    <thead><tr><th>Command</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td><code>/remind set when: content:</code></td><td>Write the time as, for example, <code>明日 21:00</code> (tomorrow 21:00), <code>10/15 21:00</code>, <code>30分後</code> (in 30 minutes) or <code>来週</code> (next week). Where the bot is not present, it arrives by DM</td></tr>
+      <tr><td><code>/remind break length:</code></td><td>Posts that you are on a break until the given time, then announces when it is time to start again. For breaks of 30 minutes or more, also warns 5 minutes before</td></tr>
+      <tr><td><code>/remind list</code></td><td>Shows your reminders so you can cancel them</td></tr>
+    </tbody>
+  </table>
+  <p>You can change the wording in the console.</p>
+</section>
+
+<section id="sched">
+  <h2><span class="n">10</span>Scheduling sessions (Takubiyori)</h2>
+  <p class="lead">Takubiyori (卓日和) finds session dates and recruits players. Start it from Discord; people answering just tick days in the browser, with no login.</p>
+  <pre class="type">/sched title:November session members:@macha ken sakura start:11/9</pre>
+  <ul class="pts">
+    <li>A public URL is posted in the channel. The organiser URL is sent only to you.</li>
+    <li><code>/profile</code> opens your own settings page for characters and scheduling.</li>
+    <li>The Takubiyori site is in Japanese only.</li>
+  </ul>
+  <a class="jump" href="../hiyori.html"><span><b>Takubiyori guide (Japanese)</b><small>Asking for rough dates, recruiting, scenario options, public calendars, following and more</small></span><span class="go">Open →</span></a>
+</section>
+
+<section id="server">
+  <h2><span class="n">11</span>Server settings</h2>
+  <span class="who">Server admins</span>
+  <p class="lead">Turn each feature on or off and choose who can use it.</p>
+  <ol class="steps">
+    <li>Open the <a href="https://macchan.onrender.com/console" target="_blank" rel="noopener">Macchan Bot console</a> (in Japanese) and log in with Discord (you need the Manage Server permission).</li>
+    <li>Choose a server to see the list of features. Use the switch to turn a feature on or off, open <span class="k">詳細</span> (Details) to change what it reacts to, who can use it and other options, then press <span class="k">保存する</span> (Save).</li>
+  </ol>
+  <ul class="pts">
+    <li><b>If Macchan and another dice bot both react, you can turn off only the overlapping features.</b> For example, stop dice in plain messages but keep <code>/dice</code>.</li>
+    <li>The BCDice system and how secret rolls are delivered are also set here.</li>
+    <li>Type <code>/config</code> in Discord to check the current settings.</li>
+  </ul>
+</section>
+
+<section id="plan">
+  <h2><span class="n">12</span>Paid plans</h2>
+  <p class="lead">Paid plans help cover the server cost ($7 a month). <b>The basics, such as dice, tables and investigator creation, will always be free.</b></p>
+  <p>There are two paid plans, and <b>they apply to different things</b>.</p>
+  <table class="cmd">
+    <thead><tr><th></th><th>Macchan Bot PRO</th></tr></thead>
+    <tbody>
+      <tr><td>Applies to</td><td><b>A server</b> (My Tables, characters and similar also apply to the person who redeemed it)</td></tr>
+      <tr><td>Code</td><td><code>MACC-XXXX-XXXX-XXXX</code> (<code>PATR-</code> for two servers)</td></tr>
+      <tr><td>For the server</td><td>A notice channel per voice channel. Reminders and break timers</td></tr>
+      <tr><td>For you</td><td>My Tables go from 1 to 10 (entries 10 → 500, characters 100 → 2,000). Character stock from 1 to 5, plus a My Apps character. Reminders anywhere. The Takubiyori paid plan</td></tr>
+      <tr><td>Where to enter it</td><td>プラン (Plan) in the <a href="https://macchan.onrender.com/console" target="_blank" rel="noopener">Macchan Bot console</a></td></tr>
+    </tbody>
+  </table>
+  <p>For the Takubiyori paid plan (<code>HIYO-</code> codes, applies to a person), see the <a href="../hiyori.html#plan">Takubiyori guide (Japanese)</a>. The first four letters tell the codes apart, and a code entered in the wrong place is simply rejected, so a mix-up never wastes it.</p>
+</section>
+
+<section id="list">
+  <h2><span class="n">13</span>Command list</h2>
+  <p class="lead">All slash commands. See each section for details.</p>
+  <table class="cmd">
+    <thead><tr><th>Command</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td><code>/dice expr: system:</code></td><td>Dice and maths (<a href="#dice">2</a>). Choose a BCDice system in <code>system</code> (<a href="#bcdice">4</a>)</td></tr>
+      <tr><td><code>/secret content:</code></td><td>Secret rolls and secret messages (<a href="#secret">3</a>)</td></tr>
+      <tr><td><code>/insanity kind:</code></td><td>CoC madness tables (<a href="#tables">5</a>)</td></tr>
+      <tr><td><code>/gacha kind:</code></td><td>Fortune, horoscope, meal, colour or date (<a href="#tables">5</a>)</td></tr>
+      <tr><td><code>/choice items:</code> <code>/poll options:</code> <code>/echo text:</code></td><td>Random picks, polls and echo (<a href="#tables">5</a>)</td></tr>
+      <tr><td><code>/table name: times:</code></td><td>Roll your own tables (<a href="#mytable">6</a>)</td></tr>
+      <tr><td><code>/pcmake</code> <code>/char input:</code></td><td>Create investigators and roll with registered characters (<a href="#char">7</a>)</td></tr>
+      <tr><td><code>/come</code> <code>/bye</code> <code>/nero</code> <code>/vc kaisan</code> <code>/vc secret</code> <code>/panel</code></td><td>Voice and channel controls (<a href="#vc">8</a>)</td></tr>
+      <tr><td><code>/remind set</code> <code>/remind break</code> <code>/remind list</code></td><td>Reminders and breaks (<a href="#remind">9</a>)</td></tr>
+      <tr><td><code>/sched</code> <code>/profile</code></td><td>Scheduling and your own settings (<a href="#sched">10</a>)</td></tr>
+      <tr><td><code>/config</code></td><td>Check this server's feature settings (<a href="#server">11</a>)</td></tr>
+      <tr><td><code>/help</code></td><td>How to use the bot and the command list</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="faq">
+  <h2><span class="n">?</span>Troubleshooting</h2>
+  <dl class="faq">
+    <dt>The bot does not react when I write a roll</dt>
+    <dd>Dice may be turned off in the server settings, or limited to <code>/dice</code> only. Check with <code>/config</code>. <code>/dice</code> always works.</dd>
+    <dt>Macchan and another dice bot both answer</dt>
+    <dd>In the console, turn off message input for the overlapping features. BCDice auto-detection stops if you set "When no system is chosen" to "Macchan dice only".</dd>
+    <dt>ST (scene table) does not roll</dt>
+    <dd><code>ST</code> differs between systems, so it only rolls in channels with a system chosen. You can also choose the system in the command, as in <code>/dice expr:ST system:Shinobigami</code>.</dd>
+    <dt>I cannot see my secret roll result</dt>
+    <dd>If your DMs are closed, nothing arrives by DM. If the channel notice has <span class="k">👁 See result</span>, you can see it there.</dd>
+    <dt>I typed a skill name and a skill was rolled instead of a table</dt>
+    <dd>Once you register a character, skill names are checked before tables. See <a href="#char">Creating and registering investigators</a>.</dd>
+  </dl>
+  <p style="margin-top:18px">For questions, requests or bug reports, feel free to visit the support server.</p>
+  <div class="help">
+    <a class="btn" href="https://discord.gg/KTBmA3N7tW" target="_blank" rel="noopener">Support server</a>
+    <a class="btn sub" href="https://macchan.onrender.com/terms" target="_blank" rel="noopener">Terms of service (Japanese)</a>
+    <a class="btn sub" href="https://macchan.onrender.com/privacy" target="_blank" rel="noopener">Privacy policy (Japanese)</a>
+  </div>
+  <p class="updated">Last updated: 2026-11-22</p>
+</section>
+</main>
+</div>
+
+<footer>© mogumogura / Macchan Bot is an unofficial bot made by an individual. It is not affiliated with Discord.</footer>
+
+<script>
+// 目次：いま見ている所に印
+const links=[...document.querySelectorAll('nav.toc a')];
+const io=new IntersectionObserver(es=>{ es.forEach(en=>{ if(en.isIntersecting){ links.forEach(a=>a.classList.toggle('on', a.getAttribute('href')==='#'+en.target.id)); } }); }, {rootMargin:'-30% 0px -60% 0px'});
+document.querySelectorAll('main section').forEach(s=>io.observe(s));
+// 言語メニュー：外を押したら閉じる
+document.addEventListener('click',e=>{ const d=document.querySelector('details.lang'); if(d&&d.open&&!d.contains(e.target)) d.open=false; });
+</script>
+</body>
+</html>

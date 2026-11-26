@@ -91,15 +91,33 @@ footer{text-align:center;padding:10px 20px 40px;font-size:13px;color:var(--dim)}
   nav.toc a.on{border-color:color-mix(in srgb,var(--cy) 50%,var(--line))}
 }
 @media (max-width:600px){
-  .topin{padding:10px 16px}
+  /* スマホ：文字を少し小さく・余白を詰めて、中途半端な改行を減らす */
+  body{font-size:15px;line-height:1.8;letter-spacing:.01em}
+  .topin{padding:10px 12px}
   .brand small{display:none}
-  .hero{padding:26px 16px 4px}
-  .wrap{padding:18px 16px 40px}
-  nav.toc{margin:0 -16px}
-  nav.toc b{padding-left:16px}
+  .hero{padding:20px 12px 4px}
+  .hero h1{font-size:25px}
+  .hero p{font-size:14.5px}
+  .quick{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}   /* 中身の幅で並べて、変な改行を出さない */
+  .quick a{padding:5px 12px 5px 5px;gap:6px;font-size:13px;line-height:1.4;border-radius:999px;white-space:nowrap}
+  .quick .n{width:22px;height:22px;font-size:11.5px}
+  .qsban{padding:12px 14px;gap:10px;margin-top:16px}
+  .qsban .qsi{width:36px;height:36px;font-size:13px}
+  .qsban b{font-size:15px}
+  .qsban small{font-size:12.5px}
+  .wrap{padding:14px 12px 36px}
+  nav.toc{margin:0 -12px}
+  nav.toc b{padding-left:12px}
   html{scroll-padding-top:116px}
-  main section{padding:22px 18px 24px;border-radius:18px}
-  main h2{font-size:20px}
+  main section{padding:18px 14px 20px;border-radius:16px;margin-bottom:14px}
+  main h2{font-size:19px;gap:10px}
+  main h2 .n{width:30px;height:30px;font-size:14px}
+  main h3{font-size:16px;margin-top:20px}
+  main .lead{font-size:14.5px;margin-bottom:14px}
+  ol.steps>li{padding-left:34px}
+  ol.steps>li::before{width:24px;height:24px;font-size:12px}
+  .note{padding:10px 12px;font-size:14px}
+  figcaption{font-size:12.5px}
   table.os th{width:auto}
   .k{white-space:normal}   /* 長いボタン名は折り返す */
   table.os tr{display:block;border-bottom:1px solid var(--line);padding:8px 0}

@@ -10,10 +10,11 @@
 <style>
   .doc{max-width:860px;margin:0 auto;padding:28px 20px 80px;line-height:1.85}
   .doc h1{font-size:26px;margin:8px 0 4px}.doc h2{font-size:19px;margin:34px 0 8px;padding-top:6px;border-top:1px solid #e6e2ef}
-  .doc table{border-collapse:collapse;width:100%;font-size:14px;margin:8px 0}.doc th,.doc td{border:1px solid #e3dfeb;padding:7px 9px;text-align:left;vertical-align:top}.doc th{background:#f6f3fb}
+  .doc table{border-collapse:collapse;width:100%;font-size:14px;margin:8px 0}.doc th,.doc td{border:1px solid #e3dfeb;padding:7px 9px;text-align:left;vertical-align:top}.doc th{background:#f6f3fb}.doc code{word-break:break-all}
+  @media (max-width:600px){.doc table{font-size:13px}.doc th,.doc td{padding:6px 7px}}
   .doc .en{background:#f7f9fc;border:1px solid #e1e8f3;border-radius:12px;padding:4px 18px 10px;margin-top:30px}
   .doc .lu{font-weight:700}
-  .doc td:first-child{white-space:nowrap}
+  @media (min-width:601px){.doc td:first-child{white-space:nowrap}}
   .doc small{color:#777}
 </style>
 </head>

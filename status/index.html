@@ -200,11 +200,10 @@ function lastDays(n, end){ const a=[]; const e=new Date(end+'T00:00:00Z'); for(l
 function drawNow(){
   const L=D.last, now=document.getElementById('now');
   if(!L){ return; }
-  const stale=Date.now()-new Date(L.at)>60*60e3;
+  // 確認の間隔（GitHub の定期実行）は遅れがちなので、時間が空いただけでは警告しない。最後の結果だけで決める
   const down=SV.filter(s=>L.result[s.id]===false);
   let st, msg;
-  if(stale){ st='none'; msg='しばらく確認できていません'; }
-  else if(!down.length){ st='ok'; msg='すべて動いています'; }
+  if(!down.length){ st='ok'; msg='すべて動いています'; }
   else if(down.length===SV.length){ st='down'; msg='いま、止まっています'; }
   else { st='part'; msg=down.map(s=>s.name).join('・')+' が止まっています'; }
   now.innerHTML=DOT[st].replace('class="dot"','class="big"')+'<div><b>'+esc(msg)+'</b><small>最後に確かめた時刻：'+fmtTime(L.at)+'（'+ago(L.at)+'）</small></div>';

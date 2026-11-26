@@ -130,24 +130,6 @@ footer{margin-top:34px; color:var(--text-faint); font-size:.8rem; text-align:cen
 /* --- Saböön のロゴ --- */
 .brand{display:inline-block; line-height:0; margin-bottom:10px; color:var(--accent)}
 .brand .mark{width:116px; height:auto; display:block}
-/* --- どちらのやり方を使うか --- */
-.pick{margin:18px 0}
-.pick-h{margin:0 0 9px; font-size:.88rem; font-weight:700; color:var(--text-dim)}
-.pick-g{display:grid; grid-template-columns:1fr 1fr; gap:12px}
-.pick-c{
-  background:var(--glass); border:1px solid var(--stroke); border-radius:var(--radius);
-  padding:14px 16px; font-size:.88rem; color:var(--text-dim);
-}
-.pick-c.on{border-color:var(--accent); background:var(--accent-soft)}
-.pick-c b{color:var(--text); font-size:.95rem; margin-right:7px}
-.pick-c p{margin:7px 0 0}
-.pick-t{
-  display:inline-block; font-size:.72rem; font-weight:700; color:var(--accent-strong);
-  background:#fff; border:1px solid var(--stroke); border-radius:999px; padding:1px 8px; vertical-align:2px;
-}
-.pick-c.on .pick-t{background:#fff; border-color:var(--accent)}
-.pick-s{color:var(--text-faint); font-size:.8rem}
-@media (max-width:560px){ .pick-g{grid-template-columns:1fr} }
 @media (max-width:560px){
   .wrap{padding:22px 13px 60px}
   .card{padding:18px 15px}
@@ -164,24 +146,6 @@ footer{margin-top:34px; color:var(--text-faint); font-size:.8rem; text-align:cen
   <h1>差分一括登録<span class="thin">ブックマークレット</span></h1>
   <p class="lede">ココフォリアにアップロードした画像を、ファイル名をそのまま差分名にして駒へ一括登録します。</p>
 </header>
-
-<div class="pick">
-  <p class="pick-h">同じことが、2つのやり方でできます</p>
-  <div class="pick-g">
-    <div class="pick-c">
-      <b>ココフォリアパレット</b><span class="pick-t">Chrome拡張</span>
-      <p>PC の Chrome / Edge を使っているなら、こちらが手軽です。
-      入れておけば、パレットの中から同じ登録ができます。</p>
-      <p class="pick-s">モグラの巣穴で配っています。</p>
-    </div>
-    <div class="pick-c on">
-      <b>このブックマークレット</b><span class="pick-t">拡張は不要</span>
-      <p>拡張機能を入れられない iPad・スマホでも使えます。
-      登録するのは最初の1回だけです。</p>
-      <p class="pick-s">このページで登録できます。</p>
-    </div>
-  </div>
-</div>
 
 <div class="card">
   <h2><span class="num">1</span>ブックマークに登録する</h2>

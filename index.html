@@ -127,16 +127,18 @@ h1,h2,.catch{text-wrap:balance;word-break:auto-phrase}
   body{padding-left:256px}
 }
 @media (max-width:1023.98px){
-  /* スマホ・タブレット：左からスワイプ（または左端のつまみ）で出す引き出し */
+  /* スマホ・タブレット：左からスワイプ（または左上のメニューボタン）で出す引き出し */
   .side{left:0;top:0;bottom:0;width:min(280px,82vw);border-radius:0 28px 28px 0;transform:translateX(-105%);transition:transform .32s var(--ease);visibility:hidden}
   .side.open{transform:none;visibility:visible}
   .side.drag{transition:none;visibility:visible}
   .side-veil{display:block;position:fixed;inset:0;z-index:29;background:rgba(46,58,94,.32);opacity:0;pointer-events:none;transition:opacity .32s}
   .side-veil.on{opacity:1;pointer-events:auto}
-  .side-tab{display:flex;position:fixed;z-index:28;left:0;top:50%;width:22px;height:64px;margin-top:-32px;padding:0;border:0;border-radius:0 14px 14px 0;background:var(--ink);box-shadow:0 4px 14px rgba(46,58,94,.25);align-items:center;justify-content:center;cursor:pointer;opacity:.85}
-  .side-tab::before{content:"";width:4px;height:24px;border-radius:2px;background:rgba(255,255,255,.75)}
-  .side-tab:hover{opacity:1}
+  /* 左上のメニューボタン（スクロールしても常に表示） */
+  .side-tab{display:flex;position:fixed;z-index:28;left:12px;top:12px;width:44px;height:44px;padding:0;border:0;border-radius:14px;background:#fff;color:var(--ink);box-shadow:0 4px 0 rgba(46,58,94,.12),0 6px 18px rgba(46,58,94,.14);align-items:center;justify-content:center;cursor:pointer;transition:transform .12s}
+  .side-tab svg{width:22px;height:22px}
+  .side-tab:active{transform:translateY(2px)}
   .side.open~.side-tab{opacity:0;pointer-events:none}
+  .top{padding-left:56px}   /* ロゴがメニューボタンに隠れないように */
 }
 
 @media (prefers-reduced-motion:no-preference){
@@ -162,7 +164,7 @@ h1,h2,.catch{text-wrap:balance;word-break:auto-phrase}
 @media (max-width:520px){
   /* スマホ：文字を少し小さく・余白を詰めて、中途半端な改行を減らす */
   body{font-size:15px;letter-spacing:.02em}
-  .top{padding:14px 0}
+  .top{padding-top:14px;padding-bottom:14px}
   .logo{font-size:18px}
   .top .ask{font-size:14px}
   .hero{padding:8px 0 20px}
@@ -240,7 +242,7 @@ h1,h2,.catch{text-wrap:balance;word-break:auto-phrase}
   </ul>
 </nav>
 <div class="side-veil" id="side-veil"></div>
-<button class="side-tab" id="side-tab" type="button" aria-controls="side" aria-expanded="false" aria-label="もくじを開く"></button>
+<button class="side-tab" id="side-tab" type="button" aria-controls="side" aria-expanded="false" aria-label="もくじを開く"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
 
 <header class="top-wrap" id="top">
   <nav class="top" aria-label="サイト">
@@ -416,7 +418,7 @@ const LINKS={
 };
 document.querySelectorAll('[data-link]').forEach(a=>{ const u=LINKS[a.dataset.link]; if(u) a.href=u; else { a.removeAttribute('href'); a.removeAttribute('target'); a.setAttribute('role','link'); a.setAttribute('aria-disabled','true'); a.textContent+='（準備中）'; } });
 
-/* 左のもくじ：スマホでは左端からのスワイプ／つまみで開く引き出し */
+/* 左のもくじ：スマホでは左端からのスワイプ／左上のメニューボタンで開く引き出し */
 (()=>{
   const side=document.getElementById('side'), veil=document.getElementById('side-veil'), tab=document.getElementById('side-tab');
   const mq=matchMedia('(max-width:1023.98px)');

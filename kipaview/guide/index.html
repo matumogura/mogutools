@@ -63,7 +63,7 @@
   <p class="lead">使う PC と、送り先のツールに合わせて準備します。</p>
   <table class="os">
     <tr><th>Windows</th><td>Microsoft Store の「Windowsアプリ版」を使います。ココフォリアへは、拡張機能なしでクリックから直接送れます。</td></tr>
-    <tr><th>Mac</th><td>「Macアプリ版」を使います。ココフォリアへ送るときは、Chrome の拡張機能「ココフォリアパレット」を入れてください。拡張なしでも、クリックでコピーして貼り付けられます。</td></tr>
+    <tr><th>Mac</th><td>「Macアプリ版」を使います。ココフォリアへは、クリックでコピーして貼り付けられます。</td></tr>
     <tr><th>Tekey</th><td>Windows・Mac とも、アプリから Tekey の部屋に直接送れます（<a href="#tekey">Tekey に送る</a>）。</td></tr>
     <tr><th>スマホ・iPad</th><td>ブラウザで <a href="https://kp-viewer.pages.dev" target="_blank" rel="noopener">kp-viewer.pages.dev</a> を開きます。購入者ログインで製品版になります（<a href="#mobile">スマホ・iPad で使う</a>）。ココフォリアへは、タップでコピーして貼り付けます。</td></tr>
     <tr><th>そのほかのツール</th><td>クリックでコピーして、チャット欄に貼り付けます。</td></tr>
@@ -108,15 +108,6 @@
     <li>「タブ名」で、メイン・情報・秘匿などのタブを、ココフォリアのタブの名前に合わせます。</li>
   </ol>
   <figure><a href="img/send.webp"><img src="img/send.webp" alt="送信先の設定。ココフォリアと Tekey の切り替え、送り先の部屋、タブ名" loading="lazy" width="1300" height="800"></a><figcaption>送信先：つなぎ方と、送るタブを決めます</figcaption></figure>
-  <h3>拡張機能「ココフォリアパレット」と一緒に使うとき</h3>
-  <p>キパビューから送る文は、キパビューの設定だけで決まります。拡張機能の「テキスト送信連携」の設定は、キパビュー以外から届いた文にだけ効きます。</p>
-  <table class="os">
-    <tr><th>送る・入れるだけ</th><td>キパビューの送信ドックの <span class="k">1クリック送信</span>／<span class="k">2クリック送信</span>（2 回目で送る）。拡張機能の「ビューア」の設定（OFF・入力のみ・自動送信）は関係しません。</td></tr>
-    <tr><th>止める</th><td>送信ドックの <span class="k">送信 ON／OFF</span>。</td></tr>
-    <tr><th>送り先のタブ</th><td>キパビューの「貼る先」と、段落ごとの送信先が優先です。拡張機能の「送信先タブ」は、送り先のタブを決めていない文にだけ効きます。</td></tr>
-    <tr><th>複数行</th><td>1 行ずつ／まとめて と、その間隔は、拡張機能の「複数行」の設定が効きます（キパビューのパレットの中でも変えられます）。</td></tr>
-  </table>
-  <p>キパビューの中に出すパレットでは、「ビューア」と「送信先タブ」の行は出しません。拡張機能 v3.25.2 以降で、この動きになります。</p>
   <h3>NPC の名前・PC の名前</h3>
   <p><span class="k">設定</span> の <span class="k">登場人物</span> で、NPC のセリフをその NPC の名前で送るか、本文の「PC1」などを探索者の名前に置き換えるかを決められます。</p>
   <figure><a href="img/names.webp"><img src="img/names.webp" alt="登場人物の設定。KP の名前、探索者の呼び方と人数" loading="lazy" width="1300" height="800"></a></figure>
@@ -252,14 +243,14 @@
     <li>画像を入れずに渡したときは、受け取る側にある画像を残します。</li>
     <li>シナリオの本文は入りません。</li>
   </ul>
-  <div class="note"><b>できないこと</b><span>ココフォリアパレット（Chrome の拡張機能）・Tekey への直接送信・フォルダからの自動の取り込み・まるごとバックアップは、パソコンのアプリ版だけです。</span></div>
+  <div class="note"><b>できないこと</b><span>Tekey への直接送信・フォルダからの自動の取り込み・まるごとバックアップは、パソコンのアプリ版だけです。</span></div>
 </section>
 
 <section id="faq">
   <h2><span class="n">?</span>困ったとき</h2>
   <dl class="faq">
     <dt>クリックしても送られない</dt>
-    <dd><span class="k">設定</span> → <span class="k">送信先</span> で、つなぎ方と送り先の部屋を確かめてください。Mac は拡張機能「ココフォリアパレット」とつながっている必要があります。</dd>
+    <dd><span class="k">設定</span> → <span class="k">送信先</span> で、つなぎ方と送り先の部屋を確かめてください。</dd>
     <dt>見出しや章がうまく分かれない</dt>
     <dd><span class="k">設定</span> → <span class="k">見出し</span>（解析の設定）で、記号ごとの役割を変えて再解析してください。1 行だけ変えたいときは、編集モードで段落の種類を選びます。</dd>
     <dt>間違えて消した・変えてしまった</dt>

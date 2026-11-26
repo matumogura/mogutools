@@ -396,7 +396,7 @@
 <script>
 // 目次：いま見ている所に印
 const links=[...document.querySelectorAll('nav.toc a')];
-const io=new IntersectionObserver(es=>{ es.forEach(en=>{ if(en.isIntersecting){ links.forEach(a=>a.classList.toggle('on', a.getAttribute('href')==='#'+en.target.id)); } }); }, {rootMargin:'-30% 0px -60% 0px'});
+const io=new IntersectionObserver(es=>{ es.forEach(en=>{ if(en.isIntersecting){ links.forEach(a=>{ const on=a.getAttribute('href')==='#'+en.target.id; a.classList.toggle('on', on); if(on){ const l=a.closest('ol'); if(l.scrollWidth>l.clientWidth) l.scrollTo({left:l.scrollLeft+a.getBoundingClientRect().left-l.getBoundingClientRect().left-(l.clientWidth-a.offsetWidth)/2, behavior:'smooth'}); } }); } }); }, {rootMargin:'-30% 0px -60% 0px'});
 document.querySelectorAll('main section').forEach(s=>io.observe(s));
 // 言語メニュー：外を押したら閉じる
 document.addEventListener('click',e=>{ const d=document.querySelector('details.lang'); if(d&&d.open&&!d.contains(e.target)) d.open=false; });

@@ -9,7 +9,7 @@
 <meta property="og:description" content="キパビュー・Saböön・CCDial・Macchan Bot。卓のためのちいさな道具たち。">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#d8eff7">
-<link rel="icon" href="img/kpviewer.png">
+<link rel="icon" href="img/mogura.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
@@ -183,10 +183,12 @@ h1,h2,.catch{text-wrap:balance;word-break:auto-phrase}
   .name h2{font-size:22px}
   .kind{font-size:12px;margin-top:8px;line-height:1.6}
   .catch{font-size:16px;margin:8px 0 12px;line-height:1.55}
-  .bubbles{gap:6px;margin-bottom:16px}
-  .bubbles li{font-size:12.5px;padding:3px 10px}
+  /* タグは必ず1行。はみ出す幅のときは下のスクリプトが --bf で文字を縮める */
+  .bubbles{flex-wrap:nowrap;gap:5px;margin-bottom:16px}
+  .bubbles li{flex:none;white-space:nowrap;font-size:var(--bf,12px);padding:3px 9px}
+  /* ボタンは1行に並ぶならそのまま、折り返すなら横いっぱい・文字は中央 */
   .btns{gap:8px}
-  .btn{padding:9px 14px;font-size:13.5px;box-shadow:0 3px 0 #1d2645}
+  .btn{flex:1 1 auto;justify-content:center;text-align:center;padding:10px 14px;font-size:13.5px;box-shadow:0 3px 0 #1d2645}
   .btn.sub{box-shadow:0 3px 0 rgba(46,58,94,.25)}
   .guide{gap:8px;margin-top:12px}
   .guide a{padding:8px 12px 8px 38px;border-radius:14px}
@@ -303,7 +305,7 @@ h1,h2,.catch{text-wrap:balance;word-break:auto-phrase}
       <div class="name"><img src="img/saboon.png" alt=""><h2 id="h-sb">Saböön</h2></div>
       <p class="kind">差分書き出しツール ／ ブラウザ・Windows</p>
       <p class="catch">表情差分を、まとめて書き出し。</p>
-      <ul class="bubbles"><li>.clip ・ .psd</li><li>組み合わせを全部</li><li>絵は手元から出ない</li></ul>
+      <ul class="bubbles"><li>.clip・.psd</li><li>組み合わせを全部</li><li>絵は手元から出ない</li></ul>
       <div class="btns">
         <a class="btn" data-link="saboonWeb" href="#" target="_blank" rel="noopener">ブラウザで使ってみる</a>
         <a class="btn sub" data-link="saboonStore" href="#" target="_blank" rel="noopener">Microsoft Store で見る</a>
@@ -344,7 +346,7 @@ h1,h2,.catch{text-wrap:balance;word-break:auto-phrase}
       <div class="name"><img src="img/hiyori-icon.png" alt=""><h2 id="h-hy"><ruby>卓日和<rt>たくびより</rt></ruby></h2></div>
       <p class="kind">日程調整・メンバー募集 ／ ブラウザ・Chrome 拡張</p>
       <p class="catch">みんなの空いてる日、すぐ見つかる。</p>
-      <ul class="bubbles"><li>候補日に ○ △ ×</li><li>カレンダーから入力</li><li>キパビューから募集</li></ul>
+      <ul class="bubbles"><li>候補日に○△×</li><li>カレンダー入力</li><li>キパビューから募集</li></ul>
       <div class="btns">
         <a class="btn" data-link="hiyori" href="#" target="_blank" rel="noopener">卓日和を使ってみる</a>
         <a class="btn" data-link="hiyoriAssist" href="#" target="_blank" rel="noopener">拡張機能を Chrome ウェブストアで見る</a>
@@ -360,7 +362,7 @@ h1,h2,.catch{text-wrap:balance;word-break:auto-phrase}
       <div class="name"><svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><use href="#ico-jizen"/></svg><h2 id="h-jz">事前チェックシート</h2></div>
       <p class="kind">苦手・NG・好みの事前共有 ／ ブラウザ</p>
       <p class="catch">地雷も好みも、卓の前にそっと共有。</p>
-      <ul class="bubbles"><li>◎〇△×× で回答</li><li>KP は日程もまとめて集計</li><li>キパビューで読める</li></ul>
+      <ul class="bubbles"><li>◎〇△××で回答</li><li>日程も集計</li><li>キパビューで読める</li></ul>
       <div class="btns">
         <a class="btn" data-link="jizenPL" href="#" target="_blank" rel="noopener">回答ページ（PL）</a>
         <a class="btn sub" data-link="jizenKP" href="#" target="_blank" rel="noopener">集計ページ（KP）</a>
@@ -373,7 +375,7 @@ h1,h2,.catch{text-wrap:balance;word-break:auto-phrase}
       <div class="name"><svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><use href="#ico-ugoki"/></svg><h2 id="h-ug">うごき画像メーカー</h2></div>
       <p class="kind">動画を動く画像に ／ ブラウザ</p>
       <p class="catch">動画を、ココフォリアで動く画像に。</p>
-      <ul class="bubbles"><li>MP4 → APNG・WebP</li><li>黒い背景を抜く</li><li>1MB に自動で収める</li></ul>
+      <ul class="bubbles"><li>MP4→APNG・WebP</li><li>黒背景を抜く</li><li>1MBに自動で収める</li></ul>
       <div class="btns">
         <a class="btn" href="ugoki/">ブラウザで使ってみる</a>
       </div>
@@ -396,7 +398,6 @@ h1,h2,.catch{text-wrap:balance;word-break:auto-phrase}
 <footer class="foot">
   <div class="in">
     <span>© mogumogura</span>
-    <a href="saboonmarklet.html">差分一括登録ブックマークレット</a>
     <a href="status/">稼働状況</a>
     <small>どのツールも個人制作の非公式ツールです。ココフォリア・Discord の公式とは関係ありません。</small>
   </div>
@@ -472,6 +473,24 @@ document.querySelectorAll('[data-link]').forEach(a=>{ const u=LINKS[a.dataset.li
     links.forEach(a=>a.setAttribute('aria-current',a.getAttribute('href')==='#'+en.target.id));
   }),{rootMargin:'-45% 0px -50% 0px'});
   links.forEach(a=>{ const s=document.querySelector(a.getAttribute('href')); if(s) io.observe(s); });
+})();
+
+/* スマホ：タグ（.bubbles）が1行に収まらない幅では、収まるまで文字を縮める */
+(()=>{
+  const mq=matchMedia('(max-width:520px)');
+  const fit=()=>document.querySelectorAll('.bubbles').forEach(ul=>{
+    ul.style.removeProperty('--bf');
+    if(!mq.matches||ul.scrollWidth<=ul.clientWidth) return;
+    const base=parseFloat(getComputedStyle(ul.firstElementChild).fontSize);
+    /* 余白・すき間は縮まないので、文字ぶんの幅だけで比率を出す */
+    const fixed=[...ul.children].reduce((a,li)=>{const c=getComputedStyle(li);return a+parseFloat(c.paddingLeft)+parseFloat(c.paddingRight)},0)+parseFloat(getComputedStyle(ul).columnGap)*(ul.children.length-1);
+    const size=base*(ul.clientWidth-fixed)/(ul.scrollWidth-fixed);
+    ul.style.setProperty('--bf',Math.max(9,Math.floor(size*10)/10-.1)+'px');
+  });
+  let raf=0;
+  addEventListener('resize',()=>{ cancelAnimationFrame(raf); raf=requestAnimationFrame(fit); });
+  document.fonts?.ready.then(fit);
+  fit();
 })();
 </script>
 </body>

@@ -143,9 +143,10 @@ footer{padding:26px 16px 40px;text-align:center;font-size:13px;color:var(--ink2)
       <h2 id="h-hist">日ごとの記録</h2>
       <span class="sp"></span>
       <div class="nav">
-        <button type="button" id="prev" aria-label="前の7日">‹</button>
+        <!-- 表は今日が左なので、左＝新しい週・右＝古い週 -->
+        <button type="button" id="next" aria-label="新しい7日">‹</button>
         <span id="range">—</span>
-        <button type="button" id="next" aria-label="次の7日">›</button>
+        <button type="button" id="prev" aria-label="前の7日">›</button>
       </div>
     </div>
     <table>

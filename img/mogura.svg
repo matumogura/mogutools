@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- 空と土の角丸タイル -->
+  <rect width="64" height="64" rx="16" fill="#d8eff7"/>
+  <path d="M0 46h64v2a16 16 0 0 1-16 16H16A16 16 0 0 1 0 48z" fill="#c9a07a"/>
+  <!-- 穴から顔を出すモグラ -->
+  <path d="M11 50V33a21 21 0 0 1 42 0v17z" fill="#6b4a36"/>
+  <ellipse cx="32" cy="38" rx="11" ry="8" fill="#f3e1c5"/>
+  <circle cx="23" cy="29" r="2.8" fill="#2e3a5e"/>
+  <circle cx="41" cy="29" r="2.8" fill="#2e3a5e"/>
+  <ellipse cx="32" cy="35" rx="4.6" ry="3.4" fill="#ff8f7a"/>
+  <circle cx="17" cy="37" r="2.6" fill="#ff8f7a" opacity=".55"/>
+  <circle cx="47" cy="37" r="2.6" fill="#ff8f7a" opacity=".55"/>
+  <!-- 穴のふち -->
+  <ellipse cx="32" cy="50" rx="27" ry="5" fill="#3f2a1d"/>
+</svg>
